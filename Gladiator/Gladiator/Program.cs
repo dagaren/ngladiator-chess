@@ -22,8 +22,6 @@ namespace Gladiator
                         break;
                 }
             }
-
-            Console.WriteLine("Normal termination of the program");
         }
     }
 }
