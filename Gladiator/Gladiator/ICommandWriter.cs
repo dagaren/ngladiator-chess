@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gladiator
 {
-    internal interface ICommandWriter
+    public interface ICommandWriter
     {
         void Write(string command);
     }

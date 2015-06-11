@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gladiator
 {
-    internal interface ICommandReader
+    public interface ICommandReader
     {
         string Read();
     }
