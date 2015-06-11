@@ -36,8 +36,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleCommandReader.cs" />
-    <Compile Include="Controller.cs" />
+    <Compile Include="ConsoleCommandWriter.cs" />
+    <Compile Include="Controller.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ICommandReader.cs" />
+    <Compile Include="ICommandWriter.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="IController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

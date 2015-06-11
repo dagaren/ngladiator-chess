@@ -13,7 +13,9 @@ namespace Gladiator
 
         private static IController GetController()
         {
-            return new Controller();
+            ICommandReader commandReader = new ConsoleCommandReader();
+            ICommandWriter commandWriter = new ConsoleCommandWriter();
+            return new Controller(commandReader, commandWriter);
         }
     }
 }
