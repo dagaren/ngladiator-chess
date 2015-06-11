@@ -6,22 +6,14 @@ namespace Gladiator
     {
         static void Main(string[] args)
         {
-            bool exit = false;
+            IController controller = GetController();
 
-            while (!exit)
-            {
-                string command = Console.ReadLine();
+            controller.Run();
+        }
 
-                switch (command)
-                {
-                    case "xboard":
-                        Console.WriteLine("> xboard command received!");
-                        break;
-                    case "quit":
-                        exit = true;
-                        break;
-                }
-            }
+        private static IController GetController()
+        {
+            return new Controller();
         }
     }
 }
