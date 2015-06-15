@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Gladiator.Communication;
+using Gladiator.Communication.Protocols;
+using Gladiator.Communication.Protocols.XBoard;
+using System;
+using System.Collections.Generic;
 
 namespace Gladiator
 {
@@ -13,9 +17,12 @@ namespace Gladiator
 
         private static IController GetController()
         {
+            IDictionary<string, object> container = new Dictionary<string, object>();
+            ICommandFactory commandFactory = new CommandFactory(container);
             ICommandReader commandReader = new ConsoleCommandReader();
             ICommandWriter commandWriter = new ConsoleCommandWriter();
-            return new Controller(commandReader, commandWriter);
+            IProtocol protocol = new XBoardProtocol(commandFactory);
+            return new Controller(commandReader, commandWriter, protocol);
         }
     }
 }

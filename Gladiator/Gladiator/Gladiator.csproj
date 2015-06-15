@@ -35,6 +35,18 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Communication\CommandFactory.cs" />
+    <Compile Include="Communication\CommandMatcher.cs" />
+    <Compile Include="Communication\ICommand.cs" />
+    <Compile Include="Communication\ICommandFactory.cs" />
+    <Compile Include="Communication\ICommandMatcher.cs" />
+    <Compile Include="Communication\NotificableCommand.cs" />
+    <Compile Include="Communication\Protocols\IProtocol.cs" />
+    <Compile Include="Communication\Protocols\XBoard\QuitCommand.cs" />
+    <Compile Include="Communication\Protocols\XBoard\QuitCommandMatcher.cs" />
+    <Compile Include="Communication\Protocols\XBoard\XboardCommand.cs" />
+    <Compile Include="Communication\Protocols\XBoard\XBoardCommandMatcher.cs" />
+    <Compile Include="Communication\Protocols\XBoard\XBoardProtocol.cs" />
     <Compile Include="ConsoleCommandReader.cs" />
     <Compile Include="ConsoleCommandWriter.cs" />
     <Compile Include="Controller.cs">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gladiator.Communication.Protocols;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,9 +17,11 @@ namespace Gladiator
 
         private ICommandWriter commandWriter;
 
-        public Controller(ICommandReader commandReader, ICommandWriter commandWriter)
+        private IProtocol protocol;
+
+        public Controller(ICommandReader commandReader, ICommandWriter commandWriter, IProtocol protocol)
         {
-            if(commandReader ==  null)
+            if (commandReader ==  null)
             {
                 throw new ArgumentNullException("commandReader");
             }
@@ -28,8 +31,14 @@ namespace Gladiator
                 throw new ArgumentNullException("commandWriter");
             }
 
+            if (protocol == null)
+            {
+                throw new ArgumentNullException("protocol");
+            }
+
             this.commandReader = commandReader;
             this.commandWriter = commandWriter;
+            this.protocol = protocol;
         }
 
         public void Run()
@@ -38,17 +47,15 @@ namespace Gladiator
 
             while (!exit)
             {
-                string command = this.commandReader.Read();
-
-                switch (command)
+                try
                 {
-                    case "xboard":
-                        this.commandWriter.Write(XboardReceivedCommand);
-                        break;
-                    case "quit":
-                        this.commandWriter.Write(QuitReceivedCommand);
-                        exit = true;
-                        break;
+                    string command = this.commandReader.Read();
+
+                    this.protocol.ProcessCommand(command);
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(string.Format("Exception catched: {0}", ex.Message));
                 }
             }
         }
