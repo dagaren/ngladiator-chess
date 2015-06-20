@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Gladiator.Communication;
+using Gladiator.Communication.Protocols;
+using Gladiator.Utils;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,49 +12,52 @@ namespace Gladiator
 {
     internal class Controller : IController
     {
-        internal const string XboardReceivedCommand = "> xboard received";
-
-        internal const string QuitReceivedCommand = "> quit received";
-
         private ICommandReader commandReader;
 
         private ICommandWriter commandWriter;
 
-        public Controller(ICommandReader commandReader, ICommandWriter commandWriter)
-        {
-            if(commandReader ==  null)
-            {
-                throw new ArgumentNullException("commandReader");
-            }
+        private IProtocol protocol;
 
-            if (commandWriter == null)
-            {
-                throw new ArgumentNullException("commandWriter");
-            }
+        private bool exit;
+
+        public Controller(ICommandReader commandReader, ICommandWriter commandWriter, IProtocol protocol)
+        {
+            Check.ArgumentNotNull(commandReader, "commandReader");
+            Check.ArgumentNotNull(commandWriter, "commandWriter");
+            Check.ArgumentNotNull(protocol, "protocol");
 
             this.commandReader = commandReader;
             this.commandWriter = commandWriter;
+            this.protocol = protocol;
         }
 
         public void Run()
         {
-            bool exit = false;
+            exit = false;
 
             while (!exit)
             {
-                string command = this.commandReader.Read();
-
-                switch (command)
+                try
                 {
-                    case "xboard":
-                        this.commandWriter.Write(XboardReceivedCommand);
-                        break;
-                    case "quit":
-                        this.commandWriter.Write(QuitReceivedCommand);
+                    string command = this.commandReader.Read();
+
+                    if(command == "quit")
+                    {
                         exit = true;
-                        break;
+                    }
+
+                    this.protocol.ProcessCommand(command);
+                }
+                catch(Exception ex)
+                {
+                    Debug.WriteLine(string.Format("Exception catched processing command: {0}", ex.Message));
                 }
             }
+        }
+
+        public void Finish()
+        {
+            exit = true;
         }
     }
 }

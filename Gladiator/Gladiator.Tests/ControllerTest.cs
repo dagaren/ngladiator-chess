@@ -1,7 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Gladiator.Communication.Protocols;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,17 +18,14 @@ namespace Gladiator.Tests
         {
             ICommandReader commandReaderMock = Substitute.For<ICommandReader>();
             ICommandWriter commandWriterMock = Substitute.For<ICommandWriter>();
+            IProtocol protocolMock = Substitute.For<IProtocol>();
 
             commandReaderMock.Read().Returns("xboard", "quit");
 
-            IController controller = new Controller(commandReaderMock, commandWriterMock);
+            IController controller = new Controller(commandReaderMock, commandWriterMock, protocolMock);
             controller.Run();
 
-            Received.InOrder(() =>
-            {
-                commandWriterMock.Write(Controller.XboardReceivedCommand);
-                commandWriterMock.Write(Controller.QuitReceivedCommand);
-            });
+            protocolMock.Received().ProcessCommand("xboard");
         }
     }
 }
