@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gladiator.Communication
 {
-    interface ICommandMatcher<out TCommand> where TCommand : ICommand
+    public interface ICommandMatcher<out TCommand> where TCommand : ICommand
     {
         TCommand Match(string commandString);
     }

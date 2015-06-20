@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Gladiator.Tests.Communication.Protocols.XBoard
 {
     [TestClass]
-    class XBoardCommandTest
+    public class XBoardCommandTest
     {
         [TestMethod]
         public void ExecuteOk()
@@ -22,7 +22,7 @@ namespace Gladiator.Tests.Communication.Protocols.XBoard
                 XBoardCommand command = new XBoardCommand();
                 command.Execute();
 
-                string expected = "XBoard command received";
+                string expected = "XBoard command received" + System.Environment.NewLine;
                 Assert.AreEqual<string>(expected, sw.ToString());
             }
         }

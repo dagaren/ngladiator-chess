@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gladiator
+namespace Gladiator.Communication
 {
     public interface ICommandWriter
     {

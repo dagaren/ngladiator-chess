@@ -2,6 +2,7 @@
 using Gladiator.Communication.Protocols;
 using Gladiator.Communication.Protocols.XBoard;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Gladiator
@@ -19,10 +20,12 @@ namespace Gladiator
 
         private static IController GetController()
         {
+            ICommandFactory commandFactory = new CommandFactory();
+            List<ICommandMatcher<ICommand>> commandMatchers = new List<ICommandMatcher<ICommand>>();
+            commandMatchers.Add(new XBoardCommandMatcher(commandFactory));
             ICommandReader commandReader = new ConsoleCommandReader();
             ICommandWriter commandWriter = new ConsoleCommandWriter();
-            ICommandFactory commandFactory = new CommandFactory();
-            IProtocol protocol = new XBoardProtocol(commandFactory);
+            IProtocol protocol = new XBoardProtocol(commandMatchers);
             return new Controller(commandReader, commandWriter, protocol);
         }
 

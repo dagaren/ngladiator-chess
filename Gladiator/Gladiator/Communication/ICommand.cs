@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gladiator.Communication
 {
-    interface ICommand
+    public interface ICommand
     {
         void Execute();
     }

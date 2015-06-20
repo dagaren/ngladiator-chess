@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gladiator.Communication
 {
-    interface ICommandFactory
+    public interface ICommandFactory
     {
         TCommand Construct<TCommand>(IDictionary<string, string> parameters) where TCommand : ICommand;
     }

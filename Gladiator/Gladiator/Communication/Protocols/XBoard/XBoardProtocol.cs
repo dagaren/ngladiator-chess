@@ -9,19 +9,14 @@ namespace Gladiator.Communication.Protocols.XBoard
 {
     class XBoardProtocol : IProtocol
     {
-        private ICollection<ICommandMatcher<ICommand>> commandMatchers;
+        private List<ICommandMatcher<ICommand>> commandMatchers;
 
-        private ICommandFactory commandFactory;
-
-        public XBoardProtocol(ICommandFactory commandFactory)
+        public XBoardProtocol(IEnumerable<ICommandMatcher<ICommand>> commandMatchers)
         {
-            Check.ArgumentNotNull(commandFactory, "commandFactory");
-
-            this.commandFactory = commandFactory;
+            Check.ArgumentNotNull(commandMatchers, "commandMatchers");
 
             this.commandMatchers = new List<ICommandMatcher<ICommand>>();
-
-            this.PopulateCommandMatchers();
+            this.commandMatchers.AddRange(commandMatchers);
         }
 
         public void ProcessCommand(string commandString)
@@ -39,11 +34,6 @@ namespace Gladiator.Communication.Protocols.XBoard
             }
 
             throw new ArgumentException(string.Format("Command '{0}' not found", commandString));
-        }
-
-        private void PopulateCommandMatchers()
-        {
-            this.commandMatchers.Add(new XBoardCommandMatcher(this.commandFactory));
         }
     }
 }

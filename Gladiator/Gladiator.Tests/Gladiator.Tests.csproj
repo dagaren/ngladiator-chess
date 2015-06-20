@@ -53,7 +53,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Communication\CommandFactoryTest.cs" />
+    <Compile Include="Communication\CommandMatcherTest.cs" />
+    <Compile Include="Communication\ConsoleCommandWriterTest.cs" />
+    <Compile Include="Communication\ConsoseCommandReaderTest.cs" />
+    <Compile Include="Communication\Fakes\FakeCommand.cs" />
+    <Compile Include="Communication\Protocols\XBoard\XBoardCommandMatcherTest.cs" />
     <Compile Include="Communication\Protocols\XBoard\XBoardCommandTest.cs" />
+    <Compile Include="Communication\Protocols\XBoard\XBoardProtocolTest.cs" />
     <Compile Include="ControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
