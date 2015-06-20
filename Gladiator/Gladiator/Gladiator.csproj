@@ -41,6 +41,8 @@
     <Compile Include="Communication\ICommandFactory.cs" />
     <Compile Include="Communication\ICommandMatcher.cs" />
     <Compile Include="Communication\Protocols\IProtocol.cs" />
+    <Compile Include="Communication\Protocols\XBoard\QuitCommand.cs" />
+    <Compile Include="Communication\Protocols\XBoard\QuitCommandMatcher.cs" />
     <Compile Include="Communication\Protocols\XBoard\XBoardCommand.cs" />
     <Compile Include="Communication\Protocols\XBoard\XBoardCommandMatcher.cs" />
     <Compile Include="Communication\Protocols\XBoard\XBoardProtocol.cs" />

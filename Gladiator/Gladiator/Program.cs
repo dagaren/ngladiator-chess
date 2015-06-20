@@ -23,6 +23,7 @@ namespace Gladiator
             ICommandFactory commandFactory = new CommandFactory();
             List<ICommandMatcher<ICommand>> commandMatchers = new List<ICommandMatcher<ICommand>>();
             commandMatchers.Add(new XBoardCommandMatcher(commandFactory));
+            commandMatchers.Add(new QuitCommandMatcher(commandFactory));
             ICommandReader commandReader = new ConsoleCommandReader();
             ICommandWriter commandWriter = new ConsoleCommandWriter();
             IProtocol protocol = new XBoardProtocol(commandMatchers);

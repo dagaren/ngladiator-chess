@@ -41,11 +41,6 @@ namespace Gladiator
                 {
                     string command = this.commandReader.Read();
 
-                    if(command == "quit")
-                    {
-                        exit = true;
-                    }
-
                     this.protocol.ProcessCommand(command);
                 }
                 catch(Exception ex)

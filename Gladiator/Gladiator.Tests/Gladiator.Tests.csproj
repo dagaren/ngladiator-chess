@@ -58,6 +58,8 @@
     <Compile Include="Communication\ConsoleCommandWriterTest.cs" />
     <Compile Include="Communication\ConsoseCommandReaderTest.cs" />
     <Compile Include="Communication\Fakes\FakeCommand.cs" />
+    <Compile Include="Communication\Protocols\XBoard\QuitCommandMatcherTest.cs" />
+    <Compile Include="Communication\Protocols\XBoard\QuitCommandTest.cs" />
     <Compile Include="Communication\Protocols\XBoard\XBoardCommandMatcherTest.cs" />
     <Compile Include="Communication\Protocols\XBoard\XBoardCommandTest.cs" />
     <Compile Include="Communication\Protocols\XBoard\XBoardProtocolTest.cs" />

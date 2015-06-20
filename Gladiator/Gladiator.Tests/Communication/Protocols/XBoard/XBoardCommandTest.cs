@@ -13,7 +13,7 @@ namespace Gladiator.Tests.Communication.Protocols.XBoard
     public class XBoardCommandTest
     {
         [TestMethod]
-        public void ExecuteOk()
+        public void Execute_Ok()
         {
             using (StringWriter sw = new StringWriter())
             {

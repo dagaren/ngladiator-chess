@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Gladiator.Communication.Protocols.XBoard
 {
-    class XBoardCommandMatcher : CommandMatcher<XBoardCommand>
+    class QuitCommandMatcher : CommandMatcher<QuitCommand>
     {
-        public XBoardCommandMatcher(ICommandFactory commandFactory)
+        public QuitCommandMatcher(ICommandFactory commandFactory)
             : base(
-                new Regex(@"^xboard\s*$"),
-                commandFactory)
+                new Regex(@"^quit\s*$"),
+                commandFactory)   
         {
         }
     }

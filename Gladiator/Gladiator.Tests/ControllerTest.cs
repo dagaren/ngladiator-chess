@@ -22,11 +22,13 @@ namespace Gladiator.Tests
             IProtocol protocolMock = Substitute.For<IProtocol>();
 
             commandReaderMock.Read().Returns("xboard", "quit");
+            Controller controller = new Controller(commandReaderMock, commandWriterMock, protocolMock);
+            protocolMock.When(x => x.ProcessCommand("quit")).Do(x => controller.Finish());
 
-            IController controller = new Controller(commandReaderMock, commandWriterMock, protocolMock);
             controller.Run();
 
             protocolMock.Received().ProcessCommand("xboard");
+            protocolMock.Received().ProcessCommand("quit");
         }
     }
 }
