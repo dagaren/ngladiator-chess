@@ -20,14 +20,18 @@ namespace Gladiator
 
         private static IController GetController()
         {
-            ICommandFactory commandFactory = new CommandFactory();
+            IDictionary<string, object> container = new Dictionary<string, object>();
+            ICommandFactory commandFactory = new CommandFactory(container);
             List<ICommandMatcher<ICommand>> commandMatchers = new List<ICommandMatcher<ICommand>>();
             commandMatchers.Add(new XBoardCommandMatcher(commandFactory));
             commandMatchers.Add(new QuitCommandMatcher(commandFactory));
             ICommandReader commandReader = new ConsoleCommandReader();
             ICommandWriter commandWriter = new ConsoleCommandWriter();
             IProtocol protocol = new XBoardProtocol(commandMatchers);
-            return new Controller(commandReader, commandWriter, protocol);
+            var controller = new Controller(commandReader, commandWriter, protocol);
+            container["quitAction"] = new Action(controller.Finish);
+
+            return controller;
         }
 
         private static void Initialize()

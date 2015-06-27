@@ -13,33 +13,34 @@ namespace Gladiator.Tests.Communication.Protocols.XBoard
     [TestClass]
     public class QuitCommandMatcherTest
     {
-        [TestMethod]
-        public void Match_Ok()
+        private CommandMatcherTester<QuitCommandMatcher, QuitCommand> tester;
+
+        [TestInitialize]
+        public void TestInitialize()
         {
-            ICommandFactory commandFactory = Substitute.For<ICommandFactory>();
-            QuitCommand command = new QuitCommand(() => { });
-            commandFactory.Construct<QuitCommand>(Arg.Any<IDictionary<string, string>>()).Returns(command);
-
-            var commandMatcher = new QuitCommandMatcher(commandFactory);
-
-            QuitCommand matchedCommand = commandMatcher.Match("quit");
-
-            Assert.IsNotNull(matchedCommand);
-            Assert.AreSame(command, matchedCommand);
+            this.tester = new CommandMatcherTester<QuitCommandMatcher, QuitCommand>(
+                    new QuitCommand(() => { }),
+                    x => new QuitCommandMatcher(x));
         }
 
         [TestMethod]
-        public void Match_WithNotMatchingCommand_NullReturned()
+        public void TestNotMatchingCommands()
         {
-            ICommandFactory commandFactory = Substitute.For<ICommandFactory>();
-            QuitCommand command = new QuitCommand(() => { });
-            commandFactory.Construct<QuitCommand>(Arg.Any<IDictionary<string, string>>()).Returns(command);
+            this.tester.TestNotMatching(new string[]{
+                "invalid",
+                " quit"
+            });
+        }
 
-            var commandMatcher = new QuitCommandMatcher(commandFactory);
-
-            QuitCommand matchedCommand = commandMatcher.Match("invalid");
-
-            Assert.IsNull(matchedCommand);
+        [TestMethod]
+        public void TestMatchingCommands()
+        {
+            this.tester.TestMatching(new CommandMatching[] {
+                new CommandMatching { 
+                    CommandString = "quit", 
+                    CommandParameters = new Dictionary<string, string>() {
+                    }}
+            });
         }
     }
 }

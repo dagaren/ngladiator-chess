@@ -58,6 +58,10 @@
     <Compile Include="Communication\ConsoleCommandWriterTest.cs" />
     <Compile Include="Communication\ConsoseCommandReaderTest.cs" />
     <Compile Include="Communication\Fakes\FakeCommand.cs" />
+    <Compile Include="Communication\Fakes\FakeCommandWithMultipleConstructors.cs" />
+    <Compile Include="Communication\Fakes\FakeCommandWithParameterizedConstructor.cs" />
+    <Compile Include="Communication\CommandMatcherTester.cs" />
+    <Compile Include="Communication\CommandMatching.cs" />
     <Compile Include="Communication\Protocols\XBoard\QuitCommandMatcherTest.cs" />
     <Compile Include="Communication\Protocols\XBoard\QuitCommandTest.cs" />
     <Compile Include="Communication\Protocols\XBoard\XBoardCommandMatcherTest.cs" />

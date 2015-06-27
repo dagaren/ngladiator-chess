@@ -45,6 +45,11 @@ namespace Gladiator.Communication
 
             foreach (string groupName in groupNames)
             {
+                if(groupName == "0")
+                {
+                    continue;
+                }
+
                 string groupValue = match.Groups[groupName].Value;
 
                 parameters.Add(groupName, groupValue);

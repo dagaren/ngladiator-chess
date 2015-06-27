@@ -13,33 +13,34 @@ namespace Gladiator.Tests.Communication.Protocols.XBoard
     [TestClass]
     public class XBoardCommandMatcherTest
     {
-        [TestMethod]
-        public void Match_Ok()
+        private CommandMatcherTester<XBoardCommandMatcher, XBoardCommand> tester;
+
+        [TestInitialize]
+        public void TestInitialize()
         {
-            ICommandFactory commandFactory = Substitute.For<ICommandFactory>();
-            XBoardCommand command = new XBoardCommand();
-            commandFactory.Construct<XBoardCommand>(Arg.Any<IDictionary<string, string>>()).Returns(command);
-
-            var commandMatcher = new XBoardCommandMatcher(commandFactory);
-
-            XBoardCommand matchedCommand = commandMatcher.Match("xboard");
-
-            Assert.IsNotNull(matchedCommand);
-            Assert.AreSame(command, matchedCommand);
+            this.tester = new CommandMatcherTester<XBoardCommandMatcher, XBoardCommand>(
+                    new XBoardCommand(),
+                    x => new XBoardCommandMatcher(x));
         }
 
         [TestMethod]
-        public void Match_WithNotMatchingCommand_NullReturned()
+        public void TestNotMatchingCommands()
         {
-            ICommandFactory commandFactory = Substitute.For<ICommandFactory>();
-            XBoardCommand command = new XBoardCommand();
-            commandFactory.Construct<XBoardCommand>(Arg.Any<IDictionary<string, string>>()).Returns(command);
+            this.tester.TestNotMatching(new string[]{
+                "invalid",
+                " xboard"
+            });
+        }
 
-            var commandMatcher = new XBoardCommandMatcher(commandFactory);
-
-            XBoardCommand matchedCommand = commandMatcher.Match("invalid");
-
-            Assert.IsNull(matchedCommand);
+        [TestMethod]
+        public void TestMatchingCommands()
+        {
+            this.tester.TestMatching(new CommandMatching[] {
+                new CommandMatching { 
+                    CommandString = "xboard", 
+                    CommandParameters = new Dictionary<string, string>() {
+                    }}
+            });
         }
     }
 }
