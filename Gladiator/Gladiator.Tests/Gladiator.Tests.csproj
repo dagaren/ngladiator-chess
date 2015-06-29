@@ -69,6 +69,7 @@
     <Compile Include="Communication\Protocols\XBoard\XBoardProtocolTest.cs" />
     <Compile Include="ControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Representation\Notation\AlgebraicCoordinateParserTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

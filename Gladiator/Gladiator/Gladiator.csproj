@@ -58,8 +58,14 @@
     <Compile Include="IController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Representation\Move.cs" />
+    <Compile Include="Representation\Notation\AlgebraicCoordinateParser.cs" />
+    <Compile Include="Representation\Notation\IMoveParser.cs" />
+    <Compile Include="Representation\Piece.cs" />
+    <Compile Include="Representation\Square.cs" />
     <Compile Include="Utils\Check.cs" />
     <Compile Include="Utils\DictionaryExtensions.cs" />
+    <Compile Include="Utils\StringEnumExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
