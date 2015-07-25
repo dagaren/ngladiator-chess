@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace Gladiator.Representation
 {
-    public enum Piece
+    enum File
     {
         None = -1,
-        Pawn = 0,
-        King = 1,
-        Queen = 2,
-        Bishop = 3,
-        Knight = 4,
-        Rook = 5
+        a = 0,
+        b,
+        c,
+        d,
+        e,
+        f,
+        g,
+        h
     }
 }

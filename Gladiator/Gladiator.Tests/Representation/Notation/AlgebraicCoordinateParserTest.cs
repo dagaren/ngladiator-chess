@@ -21,7 +21,7 @@ namespace Gladiator.Tests.Representation.Notation
         [TestMethod]
         public void Parse_InvalidMove_ArgumentExceptionExpected()
         {
-            TestParseInvalid <ArgumentException>("n1m4");
+            TestParseInvalid<ArgumentException>("n1m4");
         }
 
         [TestMethod]

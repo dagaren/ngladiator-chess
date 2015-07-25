@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gladiator.Representation
 {
-    enum Square
+    public enum Square : int
     {
         None = -1,
         a1 = 0,

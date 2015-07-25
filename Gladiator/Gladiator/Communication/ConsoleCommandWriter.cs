@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Gladiator.Utils;
+using System;
 
 namespace Gladiator.Communication
 {
@@ -10,7 +7,7 @@ namespace Gladiator.Communication
     {
         public void Write(string command)
         {
-            Console.WriteLine(command);
+            ConsoleExtensions.WriteLineColoured(command, ConsoleColor.Red);
         }
     }
 }

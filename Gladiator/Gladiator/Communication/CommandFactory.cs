@@ -1,10 +1,12 @@
-﻿using Gladiator.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Gladiator.Utils;
+using Gladiator.Utils.Reflection;
+using System.Globalization;
 
 namespace Gladiator.Communication
 {
@@ -12,39 +14,53 @@ namespace Gladiator.Communication
     {
         private IDictionary<string, object> container;
 
-        public CommandFactory(IDictionary<string, object> container)
+        private IConstructorRetriever constructorRetriever;
+
+        private IConstructorInvoker constructorInvoker;
+
+        public CommandFactory(
+            IDictionary<string, object> container,
+            IConstructorRetriever constructorRetriever,
+            IConstructorInvoker constructorInvoker)
         {
             Check.ArgumentNotNull(container, "container");
+            Check.ArgumentNotNull(constructorRetriever, "constructorRetriever");
+            Check.ArgumentNotNull(constructorInvoker, "constructorInvoker");
 
             this.container = container;
+            this.constructorRetriever = constructorRetriever;
+            this.constructorInvoker = constructorInvoker;
         }
 
         public TCommand Construct<TCommand>(IDictionary<string, string> parameters) where TCommand : ICommand
         {
-            Type commandType = typeof(TCommand);
+            Check.ArgumentNotNull(parameters, "parameters");
 
-            ConstructorInfo[] constructors = commandType.GetConstructors();
-            if(constructors.Length != 1)
-            {
-                throw new ArgumentException(
-                    string.Format(
-                        "The command of type <{0}> has <{1}> constructors. In order to construct a command, it must have just one constructor.", 
-                        commandType.Name,
-                        constructors.Length));
-            }
-            ConstructorInfo constructor = constructors.First();
+            ConstructorInfo constructor = this.constructorRetriever.GetConstructor(typeof(TCommand));
 
-            ParameterInfo[] constructorParameters = constructor.GetParameters();
-            object[] parameterInstances = new object[constructorParameters.Length];
-            foreach(ParameterInfo constructorParameter in constructorParameters)
-            {
-                if(this.container.ContainsKey(constructorParameter.Name))
+            IParameterFactory parameterFactory = new ConfigurableParameterFactory(parameter => {
+                if (parameters.ContainsKey(parameter.Name))
                 {
-                    parameterInstances[constructorParameter.Position] = this.container[constructorParameter.Name];
-                }
-            }
+                    var attribute = parameter.GetCustomAttribute<CommmandParameterAttribute>(false);
+                    if (attribute != null)
+                    {
+                        Type parserType = attribute.ParserType;
+                        dynamic parser = Activator.CreateInstance(parserType);
+                        return parser.Parse(parameters[parameter.Name]);
+                    }
 
-            return (TCommand)constructor.Invoke(parameterInstances);
+                    return Convert.ChangeType(parameters[parameter.Name], parameter.ParameterType, CultureInfo.InvariantCulture);
+                }
+
+                if (this.container.ContainsKey(parameter.Name))
+                {
+                    return this.container[parameter.Name];
+                }
+
+                throw new ArgumentException(string.Format("Value for parameter '{0}' not found", parameter.Name));
+            });
+
+            return (TCommand)this.constructorInvoker.Invoke(constructor, parameterFactory);
         }
     }
 }

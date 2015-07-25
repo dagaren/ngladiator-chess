@@ -22,7 +22,7 @@ namespace Gladiator.Representation.Notation
             PromotionKey));
 
         private readonly IDictionary<string, Piece> promotionMapping = new Dictionary<string, Piece> {
-            { "r", Piece.Rock },
+            { "r", Piece.Rook },
             { "n", Piece.Knight },
             { "q", Piece.Queen },
             { "b", Piece.Bishop }

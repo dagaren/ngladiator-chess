@@ -45,7 +45,7 @@ namespace Gladiator
                 }
                 catch(Exception ex)
                 {
-                    Debug.WriteLine(string.Format("Exception catched processing command: {0}", ex.Message));
+                    ConsoleExtensions.WriteLineColoured(string.Format("==> Exception catched processing command: {0}", ex.Message), ConsoleColor.Red);
                 }
             }
         }
