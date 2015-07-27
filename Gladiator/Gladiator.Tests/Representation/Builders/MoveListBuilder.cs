@@ -20,9 +20,21 @@ namespace Gladiator.Tests.Representation.Builders
             return this;
         }
 
+        public MoveListBuilder AddMoves(IEnumerable<Move> moves)
+        {
+            this.moveList.AddRange(moves);
+
+            return this;
+        }
+
         public List<Move> Build()
         {
             return moveList;
+        }
+
+        public static implicit operator List<Move>(MoveListBuilder instance)
+        {
+            return instance.Build();
         }
     }
 }

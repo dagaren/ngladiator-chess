@@ -31,8 +31,6 @@ namespace Gladiator.Communication.Protocols.XBoard
         {
             try
             {
-                this.position.Board.WriteConsolePretty();
-
                 this.position.DoMove(this.move);
 
                 Console.WriteLine("Making move " + move.Format());

@@ -66,14 +66,17 @@
     <Compile Include="Representation\Bitboard\BitboardBoard.cs" />
     <Compile Include="Representation\Bitboard\BitboardExtensions.cs" />
     <Compile Include="Representation\Bitboard\BitboardFormatExtensions.cs" />
+    <Compile Include="Representation\Bitboard\BitboardKnightMoveGenerator.cs" />
     <Compile Include="Representation\Bitboard\FileExtensions.cs" />
     <Compile Include="Representation\Bitboard\KingBitboards.cs" />
+    <Compile Include="Representation\Bitboard\KnightBitboards.cs" />
     <Compile Include="Representation\Bitboard\RankExtensions.cs" />
     <Compile Include="Representation\Bitboard\SquareExtensions.cs" />
     <Compile Include="Representation\BoardExtensions.cs" />
     <Compile Include="Representation\Colour.cs" />
     <Compile Include="Representation\ColouredPiece.cs" />
     <Compile Include="Representation\ColourExtensions.cs" />
+    <Compile Include="Representation\CompositeMoveGenerator.cs" />
     <Compile Include="Representation\File.cs" />
     <Compile Include="Representation\FileExtensions.cs" />
     <Compile Include="Representation\IMoveGenerator.cs" />

@@ -36,11 +36,21 @@ namespace Gladiator
             ICommandWriter commandWriter = new ConsoleCommandWriter();
             IProtocol protocol = new XBoardProtocol(commandMatchers);
             var controller = new Controller(commandReader, commandWriter, protocol);
-            IMoveGenerator<Position<BitboardBoard>, BitboardBoard> moveGenerator = new BitboardKingMoveGenerator<Position<BitboardBoard>>();
+            var kingMoveGenerator = new BitboardKingMoveGenerator<Position<BitboardBoard>>();
+            var knightMoveGenerator = new BitboardKnightMoveGenerator<Position<BitboardBoard>>();
+            IMoveGenerator<Position<BitboardBoard>, BitboardBoard>[] moveGenerators = new IMoveGenerator<Position<BitboardBoard>, BitboardBoard>[] {
+                kingMoveGenerator,
+                knightMoveGenerator
+            };
+            var compositeMoveGenerator = new CompositeMoveGenerator<Position<BitboardBoard>, BitboardBoard>(moveGenerators);
             BitboardBoard board = new BitboardBoard();
-            var position = new Position<BitboardBoard>(board, moveGenerator);
+            var position = new Position<BitboardBoard>(board, compositeMoveGenerator);
             position.Board.PutPiece(ColouredPiece.WhiteKing, Square.e1);
             position.Board.PutPiece(ColouredPiece.BlackKing, Square.e8);
+            position.Board.PutPiece(ColouredPiece.WhiteKnight, Square.b1);
+            position.Board.PutPiece(ColouredPiece.WhiteKnight, Square.g1);
+            position.Board.PutPiece(ColouredPiece.BlackKnight, Square.b8);
+            position.Board.PutPiece(ColouredPiece.BlackKnight, Square.g8);
             container["quitAction"] = new Action(controller.Finish);
             container["position"] = position;
             container["commandWriter"] = commandWriter;

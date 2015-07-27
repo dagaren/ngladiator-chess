@@ -78,10 +78,14 @@
     <Compile Include="Representation\Bitboard\BitboardExtensionsTest.cs" />
     <Compile Include="Representation\Bitboard\BitboardKingMoveGeneratorTest.cs" />
     <Compile Include="Representation\Bitboard\BitboardBoardTest.cs" />
+    <Compile Include="Representation\Bitboard\BitboardKnightMoveGeneratorTests.cs" />
+    <Compile Include="Representation\Bitboard\KingBitboardsTest.cs" />
+    <Compile Include="Representation\Bitboard\KnightBitboardsTests.cs" />
     <Compile Include="Representation\Builders\BitboardPositionBuilder.cs" />
     <Compile Include="Representation\Builders\MoveListBuilder.cs" />
     <Compile Include="Representation\Builders\PositionBuilder.cs" />
     <Compile Include="Representation\Builders\PositionTestBuilder.cs" />
+    <Compile Include="Representation\CompositeMoveGeneratorTest.cs" />
     <Compile Include="Representation\Fakes\BoardProxy.cs" />
     <Compile Include="Representation\Fakes\SimpleBoard.cs" />
     <Compile Include="Representation\Notation\AlgebraicCoordinateParserTest.cs" />
