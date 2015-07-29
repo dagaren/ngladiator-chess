@@ -79,8 +79,14 @@
     <Compile Include="Representation\Bitboard\BitboardKingMoveGeneratorTest.cs" />
     <Compile Include="Representation\Bitboard\BitboardBoardTest.cs" />
     <Compile Include="Representation\Bitboard\BitboardKnightMoveGeneratorTests.cs" />
+    <Compile Include="Representation\Bitboard\DirectionBitboardTest.cs" />
     <Compile Include="Representation\Bitboard\KingBitboardsTest.cs" />
     <Compile Include="Representation\Bitboard\KnightBitboardsTests.cs" />
+    <Compile Include="Representation\Bitboard\RankExtensionTest.cs" />
+    <Compile Include="Representation\Bitboard\RotationBitboardExtensionsTest.cs" />
+    <Compile Include="Representation\Bitboard\RotationSquareExtensionsTest.cs" />
+    <Compile Include="Representation\Bitboard\SlidingBitboardsTest.cs" />
+    <Compile Include="Representation\Bitboard\SquareExtensionsTest.cs" />
     <Compile Include="Representation\Builders\BitboardPositionBuilder.cs" />
     <Compile Include="Representation\Builders\MoveListBuilder.cs" />
     <Compile Include="Representation\Builders\PositionBuilder.cs" />

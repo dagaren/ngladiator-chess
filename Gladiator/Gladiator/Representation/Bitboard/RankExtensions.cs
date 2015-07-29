@@ -26,5 +26,10 @@ namespace Gladiator.Representation.Bitboard
         {
             return Ranks[(int)rank];
         }
+
+        public static ulong OccupationBitboard(this Rank rank, byte occupation)
+        {
+            return ((ulong)occupation).ShiftRight((int)rank * 8);
+        }
     }
 }

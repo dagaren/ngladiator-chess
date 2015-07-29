@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gladiator.Representation
 {
@@ -27,10 +23,60 @@ namespace Gladiator.Representation
 
             return (Rank)((int)square >> 3);
         }
+        
+        public static Square NextInRank(this Square square)
+        {
+            return FromRankAndFile(square.GetRank().Next(), square.GetFile());
+        }
+
+        public static Square PreviousInRank(this Square square)
+        {
+            return FromRankAndFile(square.GetRank().Previous(), square.GetFile());
+        }
+
+        public static Square NextInFile(this Square square)
+        {
+            return FromRankAndFile(square.GetRank(), square.GetFile().Next());
+        }
+
+        public static Square PreviousInFile(this Square square)
+        {
+            return FromRankAndFile(square.GetRank(), square.GetFile().Previous());
+        }
+
+        public static Square NextInDiagonal(this Square square)
+        {
+            return FromRankAndFile(square.GetRank().Next(), square.GetFile().Next());
+        }
+
+        public static Square PreviousInDiagonal(this Square square)
+        {
+            return FromRankAndFile(square.GetRank().Previous(), square.GetFile().Previous());
+        }
+
+        public static Square NextInAntiDiagonal(this Square square)
+        {
+            return FromRankAndFile(square.GetRank().Next(), square.GetFile().Previous());
+        }
+
+        public static Square PreviousInAntiDiagonal(this Square square)
+        {
+            return FromRankAndFile(square.GetRank().Previous(), square.GetFile().Next());
+        }
 
         public static int GetValue(this Square square)
         {
             return (int)square;
+        }
+
+        public static Square FromRankAndFile(Rank rank, File file)
+        {
+            if(file == File.None || rank == Rank.None)
+            {
+                return Square.None;
+            }
+
+            return (Square)(((int)rank << 3) + (int)file);
         }
     }
 }

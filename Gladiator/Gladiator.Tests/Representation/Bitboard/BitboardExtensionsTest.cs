@@ -1,5 +1,6 @@
 ﻿using Gladiator.Representation;
 using Gladiator.Representation.Bitboard;
+using Gladiator.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -11,7 +12,7 @@ namespace Gladiator.Tests.Representation.Bitboard
         [TestMethod]
         public void Inverse_EmptyBitboard_FullBitboardExpected()
         {
-            ulong empty = ulong.MinValue;
+            ulong empty = BitboardExtensions.Empty;
             ulong inverse = empty.Inverse();
 
             Assert.AreEqual(ulong.MaxValue, inverse);
@@ -29,41 +30,49 @@ namespace Gladiator.Tests.Representation.Bitboard
         [TestMethod]
         public void ShiftLeft_OnePosition_Ok()
         {
-            ulong bitboard = 4;
+            ulong bitboard = Square.c1.GetBitboard();
+            ulong expectedResult = Square.b1.GetBitboard();
+
             ulong shifted = bitboard.ShiftLeft(1);
-            Assert.AreEqual(2UL, shifted);
+            Assert.AreEqual(expectedResult, shifted);
         }
 
         [TestMethod]
         public void ShiftLeft_ThreePosition_Ok()
         {
-            ulong bitboard = 8;
+            ulong bitboard = Square.d1.GetBitboard();
+            ulong expectedResult = Square.a1.GetBitboard();
+
             ulong shifted = bitboard.ShiftLeft(3);
-            Assert.AreEqual(1UL, shifted);
+            Assert.AreEqual(expectedResult, shifted);
         }
 
         [TestMethod]
         public void ShifRight_OnePosition_Ok()
         {
-            ulong bitboard = 2;
+            ulong bitboard = Square.b1.GetBitboard();
+            ulong expectedResult = Square.c1.GetBitboard();
+
             ulong shifted = bitboard.ShiftRight(1);
-            Assert.AreEqual(4UL, shifted);
+            Assert.AreEqual(expectedResult, shifted);
         }
 
         [TestMethod]
         public void ShiftRight_ThreePosition_Ok()
         {
-            ulong bitboard = 1;
+            ulong bitboard = Square.a1.GetBitboard();
+            ulong expectedResult = Square.d1.GetBitboard();
+
             ulong shifted = bitboard.ShiftRight(3);
-            Assert.AreEqual(8UL, shifted);
+            Assert.AreEqual(expectedResult, shifted);
         }
 
         [TestMethod]
         public void Or_DifferentBitboards_Ok()
         {
-            const ulong firstBitboard = 1;
-            const ulong secondBitboard = 4;
-            const ulong expectedOrResult = 5;
+            ulong firstBitboard = Square.a1.GetBitboard();
+            ulong secondBitboard = Square.c1.GetBitboard();
+            ulong expectedOrResult = Square.c1.GetBitboard() | Square.a1.GetBitboard();
 
             ulong orResult = firstBitboard.Or(secondBitboard);
             Assert.AreEqual(expectedOrResult, orResult);
@@ -72,8 +81,8 @@ namespace Gladiator.Tests.Representation.Bitboard
         [TestMethod]
         public void Or_SameBitboards_Ok()
         {
-            const ulong bitboard = 4;
-            const ulong expectedOrResult = 4;
+            ulong bitboard = Square.c1.GetBitboard();
+            ulong expectedOrResult = Square.c1.GetBitboard();
 
             ulong orResult = bitboard.Or(bitboard);
             Assert.AreEqual(expectedOrResult, orResult);
@@ -82,9 +91,9 @@ namespace Gladiator.Tests.Representation.Bitboard
         [TestMethod]
         public void And_DifferentBitboards_Ok()
         {
-            const ulong firstBitboard = 12;
-            const ulong secondBitboard = 5;
-            const ulong expectedAndResult = 4;
+            ulong firstBitboard = Square.c1.GetBitboard() | Square.d1.GetBitboard();
+            ulong secondBitboard = Square.c1.GetBitboard() | Square.a1.GetBitboard();
+            ulong expectedAndResult = Square.c1.GetBitboard();
 
             ulong andResult = firstBitboard.And(secondBitboard);
             Assert.AreEqual(expectedAndResult, andResult);
@@ -93,8 +102,8 @@ namespace Gladiator.Tests.Representation.Bitboard
         [TestMethod]
         public void And_SameBitboards_Ok()
         {
-            const ulong bitboard = 4;
-            const ulong expectedAndResult = 4;
+            ulong bitboard = Square.d1.GetBitboard();
+            ulong expectedAndResult = Square.d1.GetBitboard();
 
             ulong andResult = bitboard.And(bitboard);
             Assert.AreEqual(expectedAndResult, andResult);
@@ -103,9 +112,9 @@ namespace Gladiator.Tests.Representation.Bitboard
         [TestMethod]
         public void Xor_DifferentBitboards_Ok()
         {
-            const ulong firstBitboard = 12;
-            const ulong secondBitboard = 5;
-            const ulong expectedXorResult = 9;
+            ulong firstBitboard = Square.c1.GetBitboard() | Square.d1.GetBitboard();
+            ulong secondBitboard = Square.d1.GetBitboard() | Square.b1.GetBitboard();
+            ulong expectedXorResult = Square.b1.GetBitboard() | Square.c1.GetBitboard();
 
             ulong xorResult = firstBitboard.Xor(secondBitboard);
             Assert.AreEqual(expectedXorResult, xorResult);
@@ -114,8 +123,8 @@ namespace Gladiator.Tests.Representation.Bitboard
         [TestMethod]
         public void Xor_SameBitboards_Ok()
         {
-            const ulong bitboard = 4;
-            const ulong expectedXorResult = 0;
+            ulong bitboard = Square.d1.GetBitboard();
+            ulong expectedXorResult = BitboardExtensions.Empty;
 
             ulong xorResult = bitboard.Xor(bitboard);
             Assert.AreEqual(expectedXorResult, xorResult);
@@ -124,9 +133,9 @@ namespace Gladiator.Tests.Representation.Bitboard
         [TestMethod]
         public void Unset_DifferentBitboards_Ok()
         {
-            const ulong firstBitboard = 12;
-            const ulong secondBitboard = 5;
-            const ulong expectedUnsetResult = 8;
+            ulong firstBitboard = Square.c1.GetBitboard() | Square.d1.GetBitboard();
+            ulong secondBitboard = Square.d1.GetBitboard() | Square.b1.GetBitboard();
+            ulong expectedUnsetResult = Square.c1.GetBitboard();
 
             ulong unsetResult = firstBitboard.Unset(secondBitboard);
             Assert.AreEqual(expectedUnsetResult, unsetResult);
@@ -135,8 +144,8 @@ namespace Gladiator.Tests.Representation.Bitboard
         [TestMethod]
         public void Unset_SameBitboard_Ok()
         {
-            const ulong bitboard = 4;
-            const ulong expectedUnsetResult = 0;
+            ulong bitboard = Square.d1.GetBitboard();
+            ulong expectedUnsetResult = BitboardExtensions.Empty;
 
             ulong unsetResult = bitboard.Unset(bitboard);
             Assert.AreEqual(expectedUnsetResult, unsetResult);
@@ -145,7 +154,7 @@ namespace Gladiator.Tests.Representation.Bitboard
         [TestMethod]
         public void BitCount_EmptyBitboard_ZeroExpected()
         {
-            const ulong bitboard = 0L;
+            const ulong bitboard = BitboardExtensions.Empty;
             const int expectedCount = 0;
 
             int count = bitboard.BitCount();
@@ -155,7 +164,7 @@ namespace Gladiator.Tests.Representation.Bitboard
         [TestMethod]
         public void BitCount_FullBitboard_SixtyFourExpected()
         {
-            const ulong bitboard = ulong.MaxValue;
+            ulong bitboard = BitboardExtensions.Empty.Inverse();
             const int expectedCount = 64;
 
             int count = bitboard.BitCount();
@@ -165,7 +174,7 @@ namespace Gladiator.Tests.Representation.Bitboard
         [TestMethod]
         public void FirstBitScan_EmptyBitboard_ZeroExpected()
         {
-            const ulong bitboard = ulong.MinValue;
+            const ulong bitboard = BitboardExtensions.Empty;
             const int expectedPosition = -1;
 
             int position = bitboard.FirstBitScan();
@@ -175,7 +184,7 @@ namespace Gladiator.Tests.Representation.Bitboard
         [TestMethod]
         public void FirstBitScan_Ok()
         {
-            const ulong bitboard = 12;
+            ulong bitboard = Square.c1.GetBitboard() | Square.d1.GetBitboard();
             const int expectedPosition = 2;
 
             int position = bitboard.FirstBitScan();
@@ -185,7 +194,7 @@ namespace Gladiator.Tests.Representation.Bitboard
         [TestMethod]
         public void FirstSquareScan_EmptyBitboard_ZeroExpected()
         {
-            const ulong bitboard = ulong.MinValue;
+            const ulong bitboard = BitboardExtensions.Empty;
             const Square expectedSquare = Square.None;
 
             Square square = bitboard.FirstSquareScan();
@@ -195,11 +204,85 @@ namespace Gladiator.Tests.Representation.Bitboard
         [TestMethod]
         public void FirstSquareScan_Ok()
         {
-            const ulong bitboard = 12;
+            ulong bitboard = Square.c1.GetBitboard() | Square.d1.GetBitboard();
             const Square expectedSquare = Square.c1;
 
             Square square = bitboard.FirstSquareScan();
             Assert.AreEqual(expectedSquare, square);
+        }
+
+        ////////////////////////////////////////////////////
+        [TestMethod]
+        public void LastBitScan_EmptyBitboard_ZeroExpected()
+        {
+            const ulong bitboard = BitboardExtensions.Empty;
+            const int expectedPosition = -1;
+
+            int position = bitboard.LastBitScan();
+            Assert.AreEqual(expectedPosition, position);
+        }
+
+        [TestMethod]
+        public void LastBitScan_Ok()
+        {
+            ulong bitboard = Square.c1.GetBitboard() | Square.d1.GetBitboard();
+            const int expectedPosition = 3;
+
+            int position = bitboard.LastBitScan();
+            Assert.AreEqual(expectedPosition, position);
+        }
+
+        [TestMethod]
+        public void LastSquareScan_EmptyBitboard_ZeroExpected()
+        {
+            const ulong bitboard = BitboardExtensions.Empty;
+            const Square expectedSquare = Square.None;
+
+            Square square = bitboard.LastSquareScan();
+            Assert.AreEqual(expectedSquare, square);
+        }
+
+        [TestMethod]
+        public void LastSquareScan_Ok()
+        {
+            ulong bitboard = Square.c1.GetBitboard() | Square.d1.GetBitboard();
+            const Square expectedSquare = Square.d1;
+
+            Square square = bitboard.LastSquareScan();
+            Assert.AreEqual(expectedSquare, square);
+        }
+
+        [TestMethod]
+        public void RankBitboard_Ok()
+        {
+            ulong bitboard = Square.a1.GetBitboard() |
+                             Square.b4.GetBitboard() |
+                             Square.f4.GetBitboard() |
+                             Square.a7.GetBitboard();
+            Rank rank = Rank._4;
+
+            ulong expected = Square.b4.GetBitboard() |
+                             Square.f4.GetBitboard();
+
+            ulong result = bitboard.RankBitboard(rank);
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void RankOccupation_Ok()
+        {
+            ulong bitboard = Square.a1.GetBitboard() |
+                             Square.b4.GetBitboard() |
+                             Square.f4.GetBitboard() |
+                             Square.a7.GetBitboard();
+            Rank rank = Rank._4;
+
+            byte expected = 34;
+
+            byte result = bitboard.RankOccupation(rank);
+
+            Assert.AreEqual(result, expected);
         }
     }
 }

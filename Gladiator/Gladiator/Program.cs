@@ -57,6 +57,27 @@ namespace Gladiator
 
             position.Board.WriteConsolePretty();
 
+
+            ulong bb = 12;
+            Console.WriteLine("Numero");
+            Console.WriteLine(bb.Format());
+
+            Square s = Square.b4;
+            ulong bitboard = 255;
+            bitboard |= Square.a4.GetBitboard();
+            bitboard |= Square.b4.GetBitboard();
+            bitboard |= Square.h4.GetBitboard();
+            bitboard |= Square.c4.GetBitboard();
+            bitboard |= Square.h8.GetBitboard();
+            bitboard |= Square.f5.GetBitboard();
+            bitboard |= Square.f4.GetBitboard();
+
+            //Console.WriteLine(string.Format("Square: {0}, Rotated 90 right: {1}, Rotated 90 left: {2}", s, s.Rotated90DegreesRight(), s.Rotated90DegreesLeft()));
+            Console.WriteLine(bitboard.Format());
+            Console.WriteLine("Attacking squares from " + s);
+            Console.WriteLine(SlidingBitboards.GetFileAttack(s, bitboard).Format());
+            //Console.WriteLine(SlidingBitboards.RankAttack[s.GetValue(), ])
+
             return controller;
         }
 

@@ -37,5 +37,85 @@ namespace Gladiator.Representation.Bitboard
 
             return bitboard;
         }
+
+        public static ulong RightBitboard(this Square square)
+        {
+            if(square == Square.None)
+            {
+                return BitboardExtensions.Empty;
+            }
+
+            return DirectionBitboards.Right[square.GetValue()];
+        }
+
+        public static ulong LeftBitboard(this Square square)
+        {
+            if (square == Square.None)
+            {
+                return BitboardExtensions.Empty;
+            }
+
+            return DirectionBitboards.Left[square.GetValue()];
+        }
+
+        public static ulong TopBitboard(this Square square)
+        {
+            if (square == Square.None)
+            {
+                return BitboardExtensions.Empty;
+            }
+
+            return DirectionBitboards.Top[square.GetValue()];
+        }
+
+        public static ulong BottomBitboard(this Square square)
+        {
+            if (square == Square.None)
+            {
+                return BitboardExtensions.Empty;
+            }
+
+            return DirectionBitboards.Bottom[square.GetValue()];
+        }
+
+        public static ulong TopRightBitboard(this Square square)
+        {
+            if (square == Square.None)
+            {
+                return BitboardExtensions.Empty;
+            }
+
+            return DirectionBitboards.TopRight[square.GetValue()];
+        }
+
+        public static ulong TopLeftBitboard(this Square square)
+        {
+            if (square == Square.None)
+            {
+                return BitboardExtensions.Empty;
+            }
+
+            return DirectionBitboards.TopLeft[square.GetValue()];
+        }
+
+        public static ulong BottomRightBitboard(this Square square)
+        {
+            if (square == Square.None)
+            {
+                return BitboardExtensions.Empty;
+            }
+
+            return DirectionBitboards.BottomRight[square.GetValue()];
+        }
+
+        public static ulong BottomLeftBitboard(this Square square)
+        {
+            if (square == Square.None)
+            {
+                return BitboardExtensions.Empty;
+            }
+
+            return DirectionBitboards.BottomLeft[square.GetValue()];
+        }
     }
 }

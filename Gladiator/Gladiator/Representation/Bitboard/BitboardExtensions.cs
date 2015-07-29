@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gladiator.Representation.Bitboard
 {
@@ -20,6 +18,8 @@ namespace Gladiator.Representation.Bitboard
             };
 
         const ulong debruijn64 = 0x03f79d71b4cb0a89UL;
+
+        const ulong debruijn64Reverse = 0x03f79d71b4cb0a89UL;
 
         public const ulong Empty = 0UL;
 
@@ -79,9 +79,53 @@ namespace Gladiator.Representation.Bitboard
             return index64[((bitboard ^ (bitboard - 1)) * debruijn64) >> 58];
         }
 
+        public static int LastBitScan(this ulong bitboard)
+        {
+            if(bitboard == 0UL)
+            {
+                return -1;
+            }
+
+            bitboard |= bitboard >> 1;
+            bitboard |= bitboard >> 2;
+            bitboard |= bitboard >> 4;
+            bitboard |= bitboard >> 8;
+            bitboard |= bitboard >> 16;
+            bitboard |= bitboard >> 32;
+
+            return index64[(bitboard * debruijn64Reverse) >> 58];
+        }
+
         public static Square FirstSquareScan(this ulong bitboard)
         {
             return (Square)FirstBitScan(bitboard);
+        }
+
+        public static Square LastSquareScan(this ulong bitboard)
+        {
+            return (Square)LastBitScan(bitboard);
+        }
+
+        public static ulong RankBitboard(this ulong bitboard, Rank rank)
+        {
+            return bitboard.And(rank.GetBitboard());
+        }
+
+        public static byte RankOccupation(this ulong bitboard, Rank rank)
+        {
+            return (byte)bitboard.ShiftLeft((int)rank * 8).And(Rank._1.GetBitboard());
+        }
+
+        public static ulong FromSquares(params Square[] squares)
+        {
+            ulong bitboard = Empty;
+
+            foreach(Square square in squares)
+            {
+                bitboard |= square.GetBitboard();
+            }
+
+            return bitboard;
         }
     }
 }
