@@ -38,9 +38,11 @@ namespace Gladiator
             var controller = new Controller(commandReader, commandWriter, protocol);
             var kingMoveGenerator = new BitboardKingMoveGenerator<Position<BitboardBoard>>();
             var knightMoveGenerator = new BitboardKnightMoveGenerator<Position<BitboardBoard>>();
+            var rookMoveGenerator = new BitboardRookMoveGenerator<Position<BitboardBoard>>();
             IMoveGenerator<Position<BitboardBoard>, BitboardBoard>[] moveGenerators = new IMoveGenerator<Position<BitboardBoard>, BitboardBoard>[] {
                 kingMoveGenerator,
-                knightMoveGenerator
+                knightMoveGenerator,
+                rookMoveGenerator
             };
             var compositeMoveGenerator = new CompositeMoveGenerator<Position<BitboardBoard>, BitboardBoard>(moveGenerators);
             BitboardBoard board = new BitboardBoard();
@@ -51,32 +53,16 @@ namespace Gladiator
             position.Board.PutPiece(ColouredPiece.WhiteKnight, Square.g1);
             position.Board.PutPiece(ColouredPiece.BlackKnight, Square.b8);
             position.Board.PutPiece(ColouredPiece.BlackKnight, Square.g8);
+            position.Board.PutPiece(ColouredPiece.WhiteRook, Square.a1);
+            position.Board.PutPiece(ColouredPiece.WhiteRook, Square.h1);
+            position.Board.PutPiece(ColouredPiece.BlackRook, Square.a8);
+            position.Board.PutPiece(ColouredPiece.BlackRook, Square.h8);
+
             container["quitAction"] = new Action(controller.Finish);
             container["position"] = position;
             container["commandWriter"] = commandWriter;
 
             position.Board.WriteConsolePretty();
-
-
-            ulong bb = 12;
-            Console.WriteLine("Numero");
-            Console.WriteLine(bb.Format());
-
-            Square s = Square.b4;
-            ulong bitboard = 255;
-            bitboard |= Square.a4.GetBitboard();
-            bitboard |= Square.b4.GetBitboard();
-            bitboard |= Square.h4.GetBitboard();
-            bitboard |= Square.c4.GetBitboard();
-            bitboard |= Square.h8.GetBitboard();
-            bitboard |= Square.f5.GetBitboard();
-            bitboard |= Square.f4.GetBitboard();
-
-            //Console.WriteLine(string.Format("Square: {0}, Rotated 90 right: {1}, Rotated 90 left: {2}", s, s.Rotated90DegreesRight(), s.Rotated90DegreesLeft()));
-            Console.WriteLine(bitboard.Format());
-            Console.WriteLine("Attacking squares from " + s);
-            Console.WriteLine(SlidingBitboards.GetFileAttack(s, bitboard).Format());
-            //Console.WriteLine(SlidingBitboards.RankAttack[s.GetValue(), ])
 
             return controller;
         }
