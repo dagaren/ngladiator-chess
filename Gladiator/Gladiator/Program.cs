@@ -39,10 +39,12 @@ namespace Gladiator
             var kingMoveGenerator = new BitboardKingMoveGenerator<Position<BitboardBoard>>();
             var knightMoveGenerator = new BitboardKnightMoveGenerator<Position<BitboardBoard>>();
             var rookMoveGenerator = new BitboardRookMoveGenerator<Position<BitboardBoard>>();
+            var bishopMoveGenerator = new BitboardBishopMoveGenerator<Position<BitboardBoard>>();
             IMoveGenerator<Position<BitboardBoard>, BitboardBoard>[] moveGenerators = new IMoveGenerator<Position<BitboardBoard>, BitboardBoard>[] {
                 kingMoveGenerator,
                 knightMoveGenerator,
-                rookMoveGenerator
+                rookMoveGenerator,
+                bishopMoveGenerator
             };
             var compositeMoveGenerator = new CompositeMoveGenerator<Position<BitboardBoard>, BitboardBoard>(moveGenerators);
             BitboardBoard board = new BitboardBoard();
@@ -57,6 +59,10 @@ namespace Gladiator
             position.Board.PutPiece(ColouredPiece.WhiteRook, Square.h1);
             position.Board.PutPiece(ColouredPiece.BlackRook, Square.a8);
             position.Board.PutPiece(ColouredPiece.BlackRook, Square.h8);
+            position.Board.PutPiece(ColouredPiece.WhiteBishop, Square.c1);
+            position.Board.PutPiece(ColouredPiece.WhiteBishop, Square.f1);
+            position.Board.PutPiece(ColouredPiece.BlackBishop, Square.c8);
+            position.Board.PutPiece(ColouredPiece.BlackBishop, Square.f8);
 
             container["quitAction"] = new Action(controller.Finish);
             container["position"] = position;
