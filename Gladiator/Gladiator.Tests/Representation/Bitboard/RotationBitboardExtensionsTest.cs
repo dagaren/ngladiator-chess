@@ -28,7 +28,6 @@ namespace Gladiator.Tests.Representation.Bitboard
             ulong result = bitboard.Rotate90DegreesRight();
 
             Assert.AreEqual(expected, result);
-
         }
 
         [TestMethod]

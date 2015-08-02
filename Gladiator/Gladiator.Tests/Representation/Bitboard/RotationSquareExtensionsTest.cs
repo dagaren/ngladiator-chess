@@ -51,5 +51,49 @@ namespace Gladiator.Tests.Representation.Bitboard
 
             Assert.AreEqual(expected, rotated);
         }
+
+        [TestMethod]
+        public void RotatedDiagonal45DegreesLeft_Ok()
+        {
+            Square square = Square.d1;
+            Square expected = Square.d4;
+
+            Square rotated = square.DiagonalRotated45DegreesLeft();
+
+            Assert.AreEqual(expected, rotated);
+        }
+
+        [TestMethod]
+        public void RotatedDiagonal45DegreesRight_Ok()
+        {
+            Square square = Square.d4;
+            Square expected = Square.d1;
+
+            Square rotated = square.DiagonalRotated45DegreesRight();
+
+            Assert.AreEqual(expected, rotated);
+        }
+
+        [TestMethod]
+        public void RotatedAntidiagonal45DegreesRight_Ok()
+        {
+            Square square = Square.d1;
+            Square expected = Square.d5;
+
+            Square rotated = square.AntidiagonalRotated45DegreesRight();
+
+            Assert.AreEqual(expected, rotated);
+        }
+
+        [TestMethod]
+        public void RotatedAntidiagonal45DegreesLeft_Ok()
+        {
+            Square square = Square.d5;
+            Square expected = Square.d1;
+
+            Square rotated = square.AntidiagonalRotated45DegreesLeft();
+
+            Assert.AreEqual(expected, rotated);
+        }
     }
 }

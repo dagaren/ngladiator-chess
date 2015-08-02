@@ -10,6 +10,10 @@ namespace Gladiator.Representation.Bitboard
 
         private static readonly ulong[,] FileAttack = new ulong[64, 256];
 
+        private static readonly ulong[,] DiagonalAttack = new ulong[64, 256];
+
+        private static readonly ulong[,] AntidiagonalAttack = new ulong[64, 256];
+
         static SlidingBitboards()
         {
             foreach(Square square in EnumExtensions.GetValues<Square>())
@@ -57,8 +61,14 @@ namespace Gladiator.Representation.Bitboard
                         RankAttack[square.GetValue(), occupation] = BitboardExtensions.Empty;
                     }
 
-                    // The attack in files is calculated based on the rank attack (by rotating)
+                    // The attack in files is calculated based on the rank attack (by rotation)
                     FileAttack[square.Rotated90DegreesRight().GetValue(), occupation] = RankAttack[square.GetValue(), occupation].Rotate90DegreesRight();
+
+                    // The attack in diagonal is calculated based on the rank attack (by rotation)
+                    DiagonalAttack[square.DiagonalRotated45DegreesLeft().GetValue(), occupation] = (RankAttack[square.GetValue(), occupation] & square.DiagonalRotatedMask()).RotateDiagonal45DegreesLeft();
+
+                    // The attack in antidiagonals is calculated based on the rank attack (by rotating)
+                    AntidiagonalAttack[square.AntidiagonalRotated45DegreesRight().GetValue(), occupation] = (RankAttack[square.GetValue(), occupation] & square.AntidiagonalRotatedMask()).RotateAntidiagonal45DegreesRight();
                 }
             }
         }
@@ -75,6 +85,20 @@ namespace Gladiator.Representation.Bitboard
             byte occupation = bitboard.Rotate90DegreesLeft().RankOccupation(square.Rotated90DegreesLeft().GetRank());
 
             return FileAttack[square.GetValue(), occupation];
+        }
+
+        public static ulong GetDiagonalAttack(Square square, ulong bitboard)
+        {
+            byte occupation = bitboard.RotateDiagonal45DegreesRight().RankOccupation(square.DiagonalRotated45DegreesRight().GetRank());
+
+            return DiagonalAttack[square.GetValue(), occupation];
+        }
+
+        public static ulong GetAntidiagonalAttack(Square square, ulong bitboard)
+        {
+            byte occupation = bitboard.RotateAntidiagonal45DegreesLeft().RankOccupation(square.AntidiagonalRotated45DegreesLeft().GetRank());
+            
+            return AntidiagonalAttack[square.GetValue(), occupation];
         }
     }
 }

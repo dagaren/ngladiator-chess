@@ -14,6 +14,67 @@ namespace Gladiator.Representation.Bitboard
             return bitboard.FlipDiagonal().FlipVertical();
         }
 
+        public static ulong RotateDiagonal45DegreesRight(this ulong bitboard)
+        {
+            const ulong k1 = 0xAAAAAAAAAAAAAAAAUL;
+            const ulong k2 = 0xCCCCCCCCCCCCCCCCUL;
+            const ulong k4 = 0xF0F0F0F0F0F0F0F0UL;
+            bitboard ^= k1 & (bitboard ^ bitboard.RotateRight(8));
+            bitboard ^= k2 & (bitboard ^ bitboard.RotateRight(16));
+            bitboard ^= k4 & (bitboard ^ bitboard.RotateRight(32));
+
+            return bitboard;
+        }
+
+        public static ulong RotateDiagonal45DegreesLeft(this ulong bitboard)
+        {
+            const ulong k1 = 0xAAAAAAAAAAAAAAAAUL;
+            const ulong k2 = 0xCCCCCCCCCCCCCCCCUL;
+            const ulong k4 = 0xF0F0F0F0F0F0F0F0UL;
+
+            bitboard ^= k4 & (bitboard ^ bitboard.RotateLeft(32));
+            bitboard ^= k2 & (bitboard ^ bitboard.RotateLeft(16));
+            bitboard ^= k1 & (bitboard ^ bitboard.RotateLeft(8));
+
+            return bitboard;
+        }
+
+        public static ulong RotateAntidiagonal45DegreesRight(this ulong bitboard)
+        {
+            const ulong k1 = 0x5555555555555555UL;
+            const ulong k2 = 0x3333333333333333UL;
+            const ulong k4 = 0x0F0F0F0F0F0F0F0FUL;
+
+            bitboard ^= k4 & (bitboard ^ bitboard.RotateLeft(32));
+            bitboard ^= k2 & (bitboard ^ bitboard.RotateLeft(16));
+            bitboard ^= k1 & (bitboard ^ bitboard.RotateLeft(8));
+            
+            return bitboard;
+        }
+
+        public static ulong RotateAntidiagonal45DegreesLeft(this ulong bitboard)
+        {
+            const ulong k1 = 0x5555555555555555UL;
+            const ulong k2 = 0x3333333333333333UL;
+            const ulong k4 = 0x0F0F0F0F0F0F0F0FUL;
+
+            bitboard ^= k1 & (bitboard ^ bitboard.RotateRight(8));
+            bitboard ^= k2 & (bitboard ^ bitboard.RotateRight(16));
+            bitboard ^= k4 & (bitboard ^ bitboard.RotateRight(32));
+            
+            return bitboard;
+        }
+
+        public static ulong RotateRight(this ulong bitboard, int offset)
+        {
+            return (bitboard >> offset) | (bitboard << (64 - offset));
+        }
+
+        public static ulong RotateLeft(this ulong bitboard, int offset)
+        {
+            return (bitboard << offset) | (bitboard >> (64 - offset));
+        }
+
         public static ulong FlipDiagonal(this ulong bitboard)
         {
             ulong a;
