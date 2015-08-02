@@ -75,6 +75,7 @@
     <Compile Include="Communication\Protocols\XBoard\XBoardProtocolTest.cs" />
     <Compile Include="ControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Representation\Bitboard\BitboardBishopMoveGeneratorTest.cs" />
     <Compile Include="Representation\Bitboard\BitboardExtensionsTest.cs" />
     <Compile Include="Representation\Bitboard\BitboardKingMoveGeneratorTest.cs" />
     <Compile Include="Representation\Bitboard\BitboardBoardTest.cs" />
