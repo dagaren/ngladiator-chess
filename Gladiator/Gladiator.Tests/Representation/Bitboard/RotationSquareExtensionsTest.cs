@@ -95,5 +95,53 @@ namespace Gladiator.Tests.Representation.Bitboard
 
             Assert.AreEqual(expected, rotated);
         }
+
+        [TestMethod]
+        public void DiagonalRotatedMask_Ok()
+        {
+            Square square = Square.d1;
+
+            ulong expected = BitboardExtensions.FromSquares(
+                                Square.a1,
+                                Square.b1,
+                                Square.c1,
+                                Square.d1,
+                                Square.e1,
+                                Square.f1,
+                                Square.g1,
+                                Square.h1
+                             );
+
+            ulong mask = square.DiagonalRotatedMask();
+
+            Console.WriteLine(expected.Format());
+            Console.WriteLine(mask.Format());
+
+            Assert.AreEqual(expected, mask);
+        }
+
+        [TestMethod]
+        public void AntidiagonalRotatedMask_Ok()
+        {
+            Square square = Square.d1;
+
+            ulong expected = BitboardExtensions.FromSquares(
+                                Square.a1,
+                                Square.b1,
+                                Square.c1,
+                                Square.d1,
+                                Square.e1,
+                                Square.f1,
+                                Square.g1,
+                                Square.h1
+                             );
+
+            ulong mask = square.AntidiagonalRotatedMask();
+
+            Console.WriteLine(expected.Format());
+            Console.WriteLine(mask.Format());
+
+            Assert.AreEqual(expected, mask);
+        }
     }
 }
