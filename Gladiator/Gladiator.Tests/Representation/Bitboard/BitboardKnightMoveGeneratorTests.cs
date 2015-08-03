@@ -9,69 +9,42 @@ using System.Linq;
 namespace Gladiator.Tests.Representation.Bitboard
 {
     [TestClass]
-    public class BitboardKnightMoveGeneratorTests
+    public class BitboardKnightMoveGeneratorTests : BitboardMoveGeneratorTest
     {
         [TestMethod]
         public void GetMoves_BlackKnightInCorner_Ok()
         {
-            List<Move> expectedMoves = new MoveListBuilder()
-                                                .AddMove(Square.a1, Square.b3)
-                                                .AddMove(Square.a1, Square.c2)
-                                                .Build();
-            var moveGenerator = new BitboardKnightMoveGenerator<Position<BitboardBoard>>();
-            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
-                                                .SetTurn(Colour.Black)
-                                                .PutPiece(ColouredPiece.BlackKnight, Square.a1)
-                                                .Build();
+            TestKnightInCorner(Colour.Black);
+        }
 
-            TestMoveGenerator(moveGenerator, expectedMoves, position);
+        [TestMethod]
+        public void GetMoves_WhiteKnightInCorner_Ok()
+        {
+            TestKnightInCorner(Colour.White);
         }
 
         [TestMethod]
         public void GetMoves_BlacKnightInTheCenter_Ok()
         {
-            List<Move> expectedMoves = new MoveListBuilder()
-                                                .AddMove(Square.d4, Square.e2)
-                                                .AddMove(Square.d4, Square.f3)
-                                                .AddMove(Square.d4, Square.f5)
-                                                .AddMove(Square.d4, Square.e6)
-                                                .AddMove(Square.d4, Square.c6)
-                                                .AddMove(Square.d4, Square.b5)
-                                                .AddMove(Square.d4, Square.b3)
-                                                .AddMove(Square.d4, Square.c2)
-                                                .Build();
+            TestKnightInTheCenter(Colour.Black);
+        }
 
-            var moveGenerator = new BitboardKnightMoveGenerator<Position<BitboardBoard>>();
-            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
-                                                .SetTurn(Colour.Black)
-                                                .PutPiece(ColouredPiece.BlackKnight, Square.d4)
-                                                .Build();
-
-            TestMoveGenerator(moveGenerator, expectedMoves, position);
+        [TestMethod]
+        public void GetMoves_WhiteKnightInTheCenter_Ok()
+        {
+            TestKnightInTheCenter(Colour.White);
         }
 
         [TestMethod]
         public void GetMoves_BlackKnightInTheCenterWithPiecesIntercepting_Ok()
         {
-            List<Move> expectedMoves = new MoveListBuilder()
-                                                .AddMove(Square.d4, Square.e2)
-                                                .AddMove(Square.d4, Square.f3)
-                                                .AddMove(Square.d4, Square.f5)
-                                                .AddMove(Square.d4, Square.e6)
-                                                .AddMove(Square.d4, Square.c6)
-                                                .AddMove(Square.d4, Square.b3)
-                                                .AddMove(Square.d4, Square.c2)
-                                                .Build();
+            TestKnightInTheCenterWithPiecesIntercepting(Colour.Black);
+        }
 
-            var moveGenerator = new BitboardKnightMoveGenerator<Position<BitboardBoard>>();
-            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
-                                                .SetTurn(Colour.Black)
-                                                .PutPiece(ColouredPiece.BlackKnight, Square.d4)
-                                                .PutPiece(ColouredPiece.BlackKing, Square.b5)
-                                                .PutPiece(ColouredPiece.WhiteBishop, Square.b3)
-                                                .Build();
-
-            TestMoveGenerator(moveGenerator, expectedMoves, position);
+        [TestMethod]
+        public void GetMoves_WhiteKnightInTheCenterWithPiecesIntercepting_Ok()
+        {
+            TestKnightInTheCenterWithPiecesIntercepting(Colour.White);
         }
 
         [TestMethod]
@@ -84,45 +57,6 @@ namespace Gladiator.Tests.Representation.Bitboard
             Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
                                                 .SetTurn(Colour.White)
                                                 .PutPiece(ColouredPiece.BlackKnight, Square.a1)
-                                                .Build();
-
-            TestMoveGenerator(moveGenerator, expectedMoves, position);
-        }
-
-        [TestMethod]
-        public void GetMoves_WhiteKnightInCorner_Ok()
-        {
-            List<Move> expectedMoves = new MoveListBuilder()
-                                                .AddMove(Square.a1, Square.b3)
-                                                .AddMove(Square.a1, Square.c2)
-                                                .Build();
-            var moveGenerator = new BitboardKnightMoveGenerator<Position<BitboardBoard>>();
-            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
-                                                .SetTurn(Colour.White)
-                                                .PutPiece(ColouredPiece.WhiteKnight, Square.a1)
-                                                .Build();
-
-            TestMoveGenerator(moveGenerator, expectedMoves, position);
-        }
-
-        [TestMethod]
-        public void GetMoves_WhiteKnightInTheCenter_Ok()
-        {
-            List<Move> expectedMoves = new MoveListBuilder()
-                                                .AddMove(Square.d4, Square.e2)
-                                                .AddMove(Square.d4, Square.f3)
-                                                .AddMove(Square.d4, Square.f5)
-                                                .AddMove(Square.d4, Square.e6)
-                                                .AddMove(Square.d4, Square.c6)
-                                                .AddMove(Square.d4, Square.b5)
-                                                .AddMove(Square.d4, Square.b3)
-                                                .AddMove(Square.d4, Square.c2)
-                                                .Build();
-
-            var moveGenerator = new BitboardKnightMoveGenerator<Position<BitboardBoard>>();
-            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
-                                                .SetTurn(Colour.White)
-                                                .PutPiece(ColouredPiece.WhiteKnight, Square.d4)
                                                 .Build();
 
             TestMoveGenerator(moveGenerator, expectedMoves, position);
@@ -154,15 +88,64 @@ namespace Gladiator.Tests.Representation.Bitboard
             TestMoveGenerator(moveGenerator, expectedMoves, position);
         }
 
-        private static void TestMoveGenerator(
-            BitboardKnightMoveGenerator<Position<BitboardBoard>> moveGenerator,
-            List<Move> expectedMoves,
-            Position<BitboardBoard> position)
+        private static void TestKnightInTheCenterWithPiecesIntercepting(Colour colour)
         {
-            Move[] moves = moveGenerator.GetMoves(position).ToArray();
+            List<Move> expectedMoves = new MoveListBuilder()
+                                                .AddMove(Square.d4, Square.e2)
+                                                .AddMove(Square.d4, Square.f3)
+                                                .AddMove(Square.d4, Square.f5)
+                                                .AddMove(Square.d4, Square.e6)
+                                                .AddMove(Square.d4, Square.c6)
+                                                .AddMove(Square.d4, Square.b3)
+                                                .AddMove(Square.d4, Square.c2)
+                                                .Build();
 
-            Assert.AreEqual(expectedMoves.Count(), moves.Count());
-            expectedMoves.ForEach(expectedMove => CollectionAssert.Contains(moves, expectedMove));
+            var moveGenerator = new BitboardKnightMoveGenerator<Position<BitboardBoard>>();
+            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
+                                                .SetTurn(colour)
+                                                .PutPiece(Piece.Knight.GetColoured(colour), Square.d4)
+                                                .PutPiece(Piece.King.GetColoured(colour), Square.b5)
+                                                .PutPiece(Piece.Bishop.GetColoured(colour.GetOpponent()), Square.b3)
+                                                .Build();
+
+            TestMoveGenerator(moveGenerator, expectedMoves, position);
+        }
+
+        private static void TestKnightInTheCenter(Colour colour)
+        {
+            List<Move> expectedMoves = new MoveListBuilder()
+                                                            .AddMove(Square.d4, Square.e2)
+                                                            .AddMove(Square.d4, Square.f3)
+                                                            .AddMove(Square.d4, Square.f5)
+                                                            .AddMove(Square.d4, Square.e6)
+                                                            .AddMove(Square.d4, Square.c6)
+                                                            .AddMove(Square.d4, Square.b5)
+                                                            .AddMove(Square.d4, Square.b3)
+                                                            .AddMove(Square.d4, Square.c2)
+                                                            .Build();
+
+            var moveGenerator = new BitboardKnightMoveGenerator<Position<BitboardBoard>>();
+            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
+                                                .SetTurn(colour)
+                                                .PutPiece(Piece.Knight.GetColoured(colour), Square.d4)
+                                                .Build();
+
+            TestMoveGenerator(moveGenerator, expectedMoves, position);
+        }
+
+        private static void TestKnightInCorner(Colour colour)
+        {
+            List<Move> expectedMoves = new MoveListBuilder()
+                                                .AddMove(Square.a1, Square.b3)
+                                                .AddMove(Square.a1, Square.c2)
+                                                .Build();
+            var moveGenerator = new BitboardKnightMoveGenerator<Position<BitboardBoard>>();
+            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
+                                                .SetTurn(colour)
+                                                .PutPiece(Piece.Knight.GetColoured(colour), Square.a1)
+                                                .Build();
+
+            TestMoveGenerator(moveGenerator, expectedMoves, position);
         }
     }
 }

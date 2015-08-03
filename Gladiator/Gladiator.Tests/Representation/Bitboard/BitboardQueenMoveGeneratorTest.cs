@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace Gladiator.Tests.Representation.Bitboard
 {
     [TestClass]
-    public class BitboardQueenMoveGeneratorTest
+    public class BitboardQueenMoveGeneratorTest : BitboardMoveGeneratorTest
     {
         [TestMethod]
         public void GetMoves_BlackQueenInCorner_Ok()
@@ -158,17 +158,6 @@ namespace Gladiator.Tests.Representation.Bitboard
                                                 .Build();
 
             TestMoveGenerator(moveGenerator, expectedMoves, position);
-        }
-
-        private static void TestMoveGenerator(
-            BitboardQueenMoveGenerator<Position<BitboardBoard>> moveGenerator,
-            List<Move> expectedMoves,
-            Position<BitboardBoard> position)
-        {
-            Move[] moves = moveGenerator.GetMoves(position).ToArray();
-            
-            Assert.AreEqual(expectedMoves.Count(), moves.Count());
-            expectedMoves.ForEach(expectedMove => CollectionAssert.Contains(moves, expectedMove));
         }
     }
 }

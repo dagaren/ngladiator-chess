@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Gladiator.Representation.Bitboard
 {
-    class BitboardBoard : IBoard
+    public class BitboardBoard : IBoard
     {
         internal ColouredPiece[] piecesInSquare;
 

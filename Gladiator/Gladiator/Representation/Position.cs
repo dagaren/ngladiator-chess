@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Gladiator.Representation
 {
-    class Position<TBoard> : IPosition<TBoard> where TBoard : IBoard
+    public class Position<TBoard> : IPosition<TBoard> where TBoard : IBoard
     {
         public TBoard Board { get; private set; }
 

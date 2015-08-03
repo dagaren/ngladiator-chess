@@ -3,44 +3,19 @@ using System.Collections.Generic;
 
 namespace Gladiator.Representation.Bitboard
 {
-    class BitboardRookMoveGenerator<TPosition> : IMoveGenerator<TPosition, BitboardBoard> where TPosition : IPosition<BitboardBoard>
+    class BitboardRookMoveGenerator<TPosition> : BitboardMoveGenerator<TPosition> where TPosition : IPosition<BitboardBoard>
     {
-        public IList<Move> GetMoves(TPosition position)
+        protected override Piece GetPiece()
         {
-            IList<Move> movesList = new List<Move>();
+            return Piece.Rook;
+        }
 
-            ColouredPiece colouredPiece = Piece.Rook.GetColoured(position.Turn);
+        protected override ulong GetAttackedFrom(Square source, TPosition position)
+        {
+            ulong attackedBitboard = SlidingBitboards.GetFileAttack(source, position.Board.occupation);
+            attackedBitboard |= SlidingBitboards.GetRankAttack(source, position.Board.occupation);
 
-            ulong pieceBitboard = position.Board.pieceOccupation[colouredPiece.GetValue()];
-
-            while (pieceBitboard != BitboardExtensions.Empty)
-            {
-                Square source = pieceBitboard.FirstSquareScan();
-
-                ulong attackedBitboard = SlidingBitboards.GetFileAttack(source, position.Board.occupation);
-                attackedBitboard |= SlidingBitboards.GetRankAttack(source, position.Board.occupation);
-
-                attackedBitboard = attackedBitboard.Unset(position.Board.colourOccupation[position.Turn.GetValue()]);
-
-                while (attackedBitboard != BitboardExtensions.Empty)
-                {
-                    Square destination = attackedBitboard.FirstSquareScan();
-
-                    Move move = new Move()
-                    {
-                        Source = source,
-                        Destination = destination
-                    };
-
-                    movesList.Add(move);
-
-                    attackedBitboard = attackedBitboard.Xor(destination.GetBitboard());
-                }
-
-                pieceBitboard = pieceBitboard.Xor(source.GetBitboard());
-            }
-
-            return movesList;
+            return attackedBitboard;
         }
     }
 }

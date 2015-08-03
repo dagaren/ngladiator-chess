@@ -9,128 +9,42 @@ using Gladiator.Tests.Representation.Builders;
 namespace Gladiator.Tests.Representation.Bitboard
 {
     [TestClass]
-    public class BitboardBishopMoveGeneratorTest
+    public class BitboardBishopMoveGeneratorTest : BitboardMoveGeneratorTest
     {
         [TestMethod]
         public void GetMoves_BlackBishopInCorner_Ok()
         {
-            List<Move> expectedMoves = new MoveListBuilder()
-                                                .AddMove(Square.a1, Square.b2)
-                                                .AddMove(Square.a1, Square.c3)
-                                                .AddMove(Square.a1, Square.d4)
-                                                .AddMove(Square.a1, Square.e5)
-                                                .AddMove(Square.a1, Square.f6)
-                                                .AddMove(Square.a1, Square.g7)
-                                                .AddMove(Square.a1, Square.h8)
-                                                .Build();
-            var moveGenerator = new BitboardBishopMoveGenerator<Position<BitboardBoard>>();
-            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
-                                                .SetTurn(Colour.Black)
-                                                .PutPiece(ColouredPiece.BlackBishop, Square.a1)
-                                                .Build();
-
-            TestMoveGenerator(moveGenerator, expectedMoves, position);
+            TestBishopInCorner(Colour.Black);
         }
 
         [TestMethod]
         public void GetMoves_WhiteBishopInCorner_Ok()
         {
-            List<Move> expectedMoves = new MoveListBuilder()
-                                                .AddMove(Square.a1, Square.b2)
-                                                .AddMove(Square.a1, Square.c3)
-                                                .AddMove(Square.a1, Square.d4)
-                                                .AddMove(Square.a1, Square.e5)
-                                                .AddMove(Square.a1, Square.f6)
-                                                .AddMove(Square.a1, Square.g7)
-                                                .AddMove(Square.a1, Square.h8)
-                                                .Build();
-            var moveGenerator = new BitboardBishopMoveGenerator<Position<BitboardBoard>>();
-            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
-                                                .SetTurn(Colour.White)
-                                                .PutPiece(ColouredPiece.WhiteBishop, Square.a1)
-                                                .Build();
-
-            TestMoveGenerator(moveGenerator, expectedMoves, position);
+            TestBishopInCorner(Colour.White);
         }
 
         [TestMethod]
         public void GetMoves_BlackBishopInCenter_Ok()
         {
-            List<Move> expectedMoves = new MoveListBuilder()
-                                                .AddMove(Square.d4, Square.c3)
-                                                .AddMove(Square.d4, Square.b2)
-                                                .AddMove(Square.d4, Square.a1)
-                                                .AddMove(Square.d4, Square.c5)
-                                                .AddMove(Square.d4, Square.b6)
-                                                .AddMove(Square.d4, Square.a7)
-                                                .AddMove(Square.d4, Square.e5)
-                                                .AddMove(Square.d4, Square.f6)
-                                                .AddMove(Square.d4, Square.g7)
-                                                .AddMove(Square.d4, Square.h8)
-                                                .AddMove(Square.d4, Square.e3)
-                                                .AddMove(Square.d4, Square.f2)
-                                                .AddMove(Square.d4, Square.g1)
-                                                .Build();
-            var moveGenerator = new BitboardBishopMoveGenerator<Position<BitboardBoard>>();
-            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
-                                                .SetTurn(Colour.Black)
-                                                .PutPiece(ColouredPiece.BlackBishop, Square.d4)
-                                                .Build();
-
-            TestMoveGenerator(moveGenerator, expectedMoves, position);
+            TestBishopInCenter(Colour.Black);
         }
 
         [TestMethod]
         public void GetMoves_WhiteBishopInCenter_Ok()
         {
-            List<Move> expectedMoves = new MoveListBuilder()
-                                                .AddMove(Square.d4, Square.c3)
-                                                .AddMove(Square.d4, Square.b2)
-                                                .AddMove(Square.d4, Square.a1)
-                                                .AddMove(Square.d4, Square.c5)
-                                                .AddMove(Square.d4, Square.b6)
-                                                .AddMove(Square.d4, Square.a7)
-                                                .AddMove(Square.d4, Square.e5)
-                                                .AddMove(Square.d4, Square.f6)
-                                                .AddMove(Square.d4, Square.g7)
-                                                .AddMove(Square.d4, Square.h8)
-                                                .AddMove(Square.d4, Square.e3)
-                                                .AddMove(Square.d4, Square.f2)
-                                                .AddMove(Square.d4, Square.g1)
-                                                .Build();
-            var moveGenerator = new BitboardBishopMoveGenerator<Position<BitboardBoard>>();
-            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
-                                                .SetTurn(Colour.White)
-                                                .PutPiece(ColouredPiece.WhiteBishop, Square.d4)
-                                                .Build();
-
-            TestMoveGenerator(moveGenerator, expectedMoves, position);
+            TestBishopInCenter(Colour.White);
         }
 
         [TestMethod]
         public void GetMoves_BlackBishopInTheCenterWithPiecesIntercepting_Ok()
         {
-            List<Move> expectedMoves = new MoveListBuilder()
-                                                .AddMove(Square.d4, Square.c3)
-                                                .AddMove(Square.d4, Square.b2)
-                                                .AddMove(Square.d4, Square.c5)
-                                                .AddMove(Square.d4, Square.b6)
-                                                .AddMove(Square.d4, Square.e5)
-                                                .AddMove(Square.d4, Square.e3)
-                                                .AddMove(Square.d4, Square.f2)
-                                                .Build();
+            TestBishopInTheCenterWithPiecesIntercepting(Colour.Black);
+        }
 
-            var moveGenerator = new BitboardBishopMoveGenerator<Position<BitboardBoard>>();
-            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
-                                                .SetTurn(Colour.Black)
-                                                .PutPiece(ColouredPiece.BlackBishop, Square.d4)
-                                                .PutPiece(ColouredPiece.BlackKing, Square.f6)
-                                                .PutPiece(ColouredPiece.WhiteBishop, Square.f2)
-                                                .PutPiece(ColouredPiece.BlackRook, Square.a7)
-                                                .PutPiece(ColouredPiece.WhiteBishop, Square.b2)
-                                                .Build();
-
-            TestMoveGenerator(moveGenerator, expectedMoves, position);
+        [TestMethod]
+        public void GetMoves_WhiteBishopInTheCenterWithPiecesIntercepting_Ok()
+        {
+            TestBishopInTheCenterWithPiecesIntercepting(Colour.White);
         }
 
         [TestMethod]
@@ -148,15 +62,75 @@ namespace Gladiator.Tests.Representation.Bitboard
             TestMoveGenerator(moveGenerator, expectedMoves, position);
         }
 
-        private static void TestMoveGenerator(
-            BitboardBishopMoveGenerator<Position<BitboardBoard>> moveGenerator,
-            List<Move> expectedMoves,
-            Position<BitboardBoard> position)
+        private static void TestBishopInTheCenterWithPiecesIntercepting(Colour colour)
         {
-            Move[] moves = moveGenerator.GetMoves(position).ToArray();
+            List<Move> expectedMoves = new MoveListBuilder()
+                                               .AddMove(Square.d4, Square.c3)
+                                               .AddMove(Square.d4, Square.b2)
+                                               .AddMove(Square.d4, Square.c5)
+                                               .AddMove(Square.d4, Square.b6)
+                                               .AddMove(Square.d4, Square.e5)
+                                               .AddMove(Square.d4, Square.e3)
+                                               .AddMove(Square.d4, Square.f2)
+                                               .Build();
 
-            Assert.AreEqual(expectedMoves.Count(), moves.Count());
-            expectedMoves.ForEach(expectedMove => CollectionAssert.Contains(moves, expectedMove));
+            var moveGenerator = new BitboardBishopMoveGenerator<Position<BitboardBoard>>();
+            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
+                                                .SetTurn(colour)
+                                                .PutPiece(Piece.Bishop.GetColoured(colour), Square.d4)
+                                                .PutPiece(Piece.King.GetColoured(colour), Square.f6)
+                                                .PutPiece(Piece.Bishop.GetColoured(colour.GetOpponent()), Square.f2)
+                                                .PutPiece(Piece.Rook.GetColoured(colour), Square.a7)
+                                                .PutPiece(Piece.Bishop.GetColoured(colour.GetOpponent()), Square.b2)
+                                                .Build();
+
+            TestMoveGenerator(moveGenerator, expectedMoves, position);
+        }
+
+        private static void TestBishopInCenter(Colour colour)
+        {
+            List<Move> expectedMoves = new MoveListBuilder()
+                                                .AddMove(Square.d4, Square.c3)
+                                                .AddMove(Square.d4, Square.b2)
+                                                .AddMove(Square.d4, Square.a1)
+                                                .AddMove(Square.d4, Square.c5)
+                                                .AddMove(Square.d4, Square.b6)
+                                                .AddMove(Square.d4, Square.a7)
+                                                .AddMove(Square.d4, Square.e5)
+                                                .AddMove(Square.d4, Square.f6)
+                                                .AddMove(Square.d4, Square.g7)
+                                                .AddMove(Square.d4, Square.h8)
+                                                .AddMove(Square.d4, Square.e3)
+                                                .AddMove(Square.d4, Square.f2)
+                                                .AddMove(Square.d4, Square.g1)
+                                                .Build();
+            var moveGenerator = new BitboardBishopMoveGenerator<Position<BitboardBoard>>();
+            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
+                                                .SetTurn(colour)
+                                                .PutPiece(Piece.Bishop.GetColoured(colour), Square.d4)
+                                                .Build();
+
+            TestMoveGenerator(moveGenerator, expectedMoves, position);
+        }
+
+        private static void TestBishopInCorner(Colour colour)
+        {
+            List<Move> expectedMoves = new MoveListBuilder()
+                                                .AddMove(Square.a1, Square.b2)
+                                                .AddMove(Square.a1, Square.c3)
+                                                .AddMove(Square.a1, Square.d4)
+                                                .AddMove(Square.a1, Square.e5)
+                                                .AddMove(Square.a1, Square.f6)
+                                                .AddMove(Square.a1, Square.g7)
+                                                .AddMove(Square.a1, Square.h8)
+                                                .Build();
+            var moveGenerator = new BitboardBishopMoveGenerator<Position<BitboardBoard>>();
+            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
+                                                .SetTurn(colour)
+                                                .PutPiece(Piece.Bishop.GetColoured(colour), Square.a1)
+                                                .Build();
+
+            TestMoveGenerator(moveGenerator, expectedMoves, position);
         }
     }
 }
