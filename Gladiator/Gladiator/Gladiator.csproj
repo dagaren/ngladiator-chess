@@ -69,12 +69,14 @@
     <Compile Include="Representation\Bitboard\BitboardFormatExtensions.cs" />
     <Compile Include="Representation\Bitboard\BitboardKnightMoveGenerator.cs" />
     <Compile Include="Representation\Bitboard\BitboardMoveGenerator.cs" />
+    <Compile Include="Representation\Bitboard\BitboardPawnMoveGenerator.cs" />
     <Compile Include="Representation\Bitboard\BitboardQueenMoveGenerator.cs" />
     <Compile Include="Representation\Bitboard\BitboardRookMoveGenerator.cs" />
     <Compile Include="Representation\Bitboard\DirectionBitboards.cs" />
     <Compile Include="Representation\Bitboard\FileExtensions.cs" />
     <Compile Include="Representation\Bitboard\KingBitboards.cs" />
     <Compile Include="Representation\Bitboard\KnightBitboards.cs" />
+    <Compile Include="Representation\Bitboard\PawnBitboards.cs" />
     <Compile Include="Representation\Bitboard\RankExtensions.cs" />
     <Compile Include="Representation\Bitboard\RotationBitboardExtensions.cs" />
     <Compile Include="Representation\Bitboard\RotationSquareExtensions.cs" />

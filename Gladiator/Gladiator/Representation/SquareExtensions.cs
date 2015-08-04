@@ -24,22 +24,22 @@ namespace Gladiator.Representation
             return (Rank)((int)square >> 3);
         }
         
-        public static Square NextInRank(this Square square)
+        public static Square NextInFile(this Square square)
         {
             return FromRankAndFile(square.GetRank().Next(), square.GetFile());
         }
 
-        public static Square PreviousInRank(this Square square)
+        public static Square PreviousInFile(this Square square)
         {
             return FromRankAndFile(square.GetRank().Previous(), square.GetFile());
         }
 
-        public static Square NextInFile(this Square square)
+        public static Square NextInRank(this Square square)
         {
             return FromRankAndFile(square.GetRank(), square.GetFile().Next());
         }
 
-        public static Square PreviousInFile(this Square square)
+        public static Square PreviousInRank(this Square square)
         {
             return FromRankAndFile(square.GetRank(), square.GetFile().Previous());
         }

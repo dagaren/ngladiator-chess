@@ -25,14 +25,8 @@ namespace Gladiator.Representation.Bitboard
                 {
                     Square destination = attackedBitboard.FirstSquareScan();
 
-                    Move move = new Move()
-                    {
-                        Source = source,
-                        Destination = destination
-                    };
-
-                    movesList.Add(move);
-
+                    this.AddMove(source, destination, movesList);
+                    
                     attackedBitboard = attackedBitboard.Xor(destination.GetBitboard());
                 }
 
@@ -45,5 +39,15 @@ namespace Gladiator.Representation.Bitboard
         protected abstract Piece GetPiece();
 
         protected abstract ulong GetAttackedFrom(Square square, TPosition position);
+
+        protected virtual void AddMove(Square source, Square destination, IList<Move> movesList)
+        {
+            Move move = new Move()
+                        {
+                            Source = source,
+                            Destination = destination
+                        };
+            movesList.Add(move);
+        }
     }
 }

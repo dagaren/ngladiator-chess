@@ -41,12 +41,14 @@ namespace Gladiator
             var rookMoveGenerator = new BitboardRookMoveGenerator<Position<BitboardBoard>>();
             var bishopMoveGenerator = new BitboardBishopMoveGenerator<Position<BitboardBoard>>();
             var queenMoveGenerator = new BitboardQueenMoveGenerator<Position<BitboardBoard>>();
+            var pawnMoveGenerator = new BitboardPawnMoveGenerator<Position<BitboardBoard>>();
             IMoveGenerator<Position<BitboardBoard>, BitboardBoard>[] moveGenerators = new IMoveGenerator<Position<BitboardBoard>, BitboardBoard>[] {
                 kingMoveGenerator,
                 knightMoveGenerator,
                 rookMoveGenerator,
                 bishopMoveGenerator,
-                queenMoveGenerator
+                queenMoveGenerator,
+                pawnMoveGenerator
             };
             var compositeMoveGenerator = new CompositeMoveGenerator<Position<BitboardBoard>, BitboardBoard>(moveGenerators);
             BitboardBoard board = new BitboardBoard();
@@ -67,6 +69,22 @@ namespace Gladiator
             position.Board.PutPiece(ColouredPiece.BlackBishop, Square.f8);
             position.Board.PutPiece(ColouredPiece.WhiteQueen, Square.d1);
             position.Board.PutPiece(ColouredPiece.BlackQueen, Square.d8);
+            position.Board.PutPiece(ColouredPiece.WhitePawn, Square.a2);
+            position.Board.PutPiece(ColouredPiece.WhitePawn, Square.b2);
+            position.Board.PutPiece(ColouredPiece.WhitePawn, Square.c2);
+            position.Board.PutPiece(ColouredPiece.WhitePawn, Square.d2);
+            position.Board.PutPiece(ColouredPiece.WhitePawn, Square.e2);
+            position.Board.PutPiece(ColouredPiece.WhitePawn, Square.f2);
+            position.Board.PutPiece(ColouredPiece.WhitePawn, Square.g2);
+            position.Board.PutPiece(ColouredPiece.WhitePawn, Square.h2);
+            position.Board.PutPiece(ColouredPiece.BlackPawn, Square.a7);
+            position.Board.PutPiece(ColouredPiece.BlackPawn, Square.b7);
+            position.Board.PutPiece(ColouredPiece.BlackPawn, Square.c7);
+            position.Board.PutPiece(ColouredPiece.BlackPawn, Square.d7);
+            position.Board.PutPiece(ColouredPiece.BlackPawn, Square.e7);
+            position.Board.PutPiece(ColouredPiece.BlackPawn, Square.f7);
+            position.Board.PutPiece(ColouredPiece.BlackPawn, Square.g7);
+            position.Board.PutPiece(ColouredPiece.BlackPawn, Square.h7);
 
             container["quitAction"] = new Action(controller.Finish);
             container["position"] = position;

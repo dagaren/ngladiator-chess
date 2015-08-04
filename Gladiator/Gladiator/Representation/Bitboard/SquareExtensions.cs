@@ -23,6 +23,11 @@ namespace Gladiator.Representation.Bitboard
 
         public static ulong GetBitboard(this Square square)
         {
+            if(square == Square.None)
+            {
+                return BitboardExtensions.Empty;
+            }
+
             return Squares[square.GetValue()];
         }
 

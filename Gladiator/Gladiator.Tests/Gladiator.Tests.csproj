@@ -81,6 +81,7 @@
     <Compile Include="Representation\Bitboard\BitboardBoardTest.cs" />
     <Compile Include="Representation\Bitboard\BitboardKnightMoveGeneratorTests.cs" />
     <Compile Include="Representation\Bitboard\BitboardMoveGeneratorTest.cs" />
+    <Compile Include="Representation\Bitboard\BitboardPawnMoveGeneratorTest.cs" />
     <Compile Include="Representation\Bitboard\BitboardQueenMoveGeneratorTest.cs" />
     <Compile Include="Representation\Bitboard\BitboardRookMoveGeneratorTest.cs" />
     <Compile Include="Representation\Bitboard\DirectionBitboardTest.cs" />

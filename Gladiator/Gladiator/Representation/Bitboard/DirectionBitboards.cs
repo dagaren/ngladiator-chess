@@ -47,7 +47,7 @@ namespace Gladiator.Representation.Bitboard
 
             Right[square.GetValue()] = 0;
             
-            while((square = square.NextInFile()) != Square.None)
+            while((square = square.NextInRank()) != Square.None)
             {
                 Right[originalSquare.GetValue()] |= square.GetBitboard();
             }
@@ -59,7 +59,7 @@ namespace Gladiator.Representation.Bitboard
 
             Left[square.GetValue()] = 0;
 
-            while ((square = square.PreviousInFile()) != Square.None)
+            while ((square = square.PreviousInRank()) != Square.None)
             {
                 Left[originalSquare.GetValue()] |= square.GetBitboard();
             }
@@ -71,7 +71,7 @@ namespace Gladiator.Representation.Bitboard
 
             Top[square.GetValue()] = 0;
 
-            while ((square = square.NextInRank()) != Square.None)
+            while ((square = square.NextInFile()) != Square.None)
             {
                 Top[originalSquare.GetValue()] |= square.GetBitboard();
             }
@@ -83,7 +83,7 @@ namespace Gladiator.Representation.Bitboard
 
             Bottom[square.GetValue()] = 0;
 
-            while ((square = square.PreviousInRank()) != Square.None)
+            while ((square = square.PreviousInFile()) != Square.None)
             {
                 Bottom[originalSquare.GetValue()] |= square.GetBitboard();
             }
