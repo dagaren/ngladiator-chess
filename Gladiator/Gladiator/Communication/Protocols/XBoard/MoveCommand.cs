@@ -11,20 +11,21 @@ namespace Gladiator.Communication.Protocols.XBoard
 
         private Move move;
 
-        private ICommandWriter commandWriter;
+        private Action<Move, string> illegalMoveAction;
 
         public MoveCommand(
             IPosition<IBoard> position,
             [CommmandParameter(typeof(AlgebraicCoordinateParser))]Move move,
-            ICommandWriter commandWriter)
+            Action<Move, string> illegalMoveAction
+            )
         {
             Check.ArgumentNotNull(position, "position");
             Check.ArgumentNotNull(move, "move");
-            Check.ArgumentNotNull(commandWriter, "commandWriter");
+            Check.ArgumentNotNull(illegalMoveAction, "illegalMoveAction");
 
             this.position = position;
             this.move = move;
-            this.commandWriter = commandWriter;
+            this.illegalMoveAction = illegalMoveAction;
         }
 
         public void Execute()
@@ -39,7 +40,7 @@ namespace Gladiator.Communication.Protocols.XBoard
             }
             catch(Exception)
             {
-                this.commandWriter.Write(string.Format("Invalid move: {0}", this.move.Format()));
+                this.illegalMoveAction(this.move, string.Empty);
             }
         }
     }

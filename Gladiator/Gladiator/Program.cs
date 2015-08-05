@@ -8,6 +8,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Gladiator.Utils.Reflection;
+using Gladiator.Communication.Protocols.XBoard.Output;
 
 namespace Gladiator
 {
@@ -86,6 +87,9 @@ namespace Gladiator
             position.Board.PutPiece(ColouredPiece.BlackPawn, Square.g7);
             position.Board.PutPiece(ColouredPiece.BlackPawn, Square.h7);
 
+            var illegalMoveCommand = new IllegalMoveCommand(commandWriter);
+
+            container["illegalMoveAction"] = new Action<Move, string>(illegalMoveCommand.Execute);
             container["quitAction"] = new Action(controller.Finish);
             container["position"] = position;
             container["commandWriter"] = commandWriter;
