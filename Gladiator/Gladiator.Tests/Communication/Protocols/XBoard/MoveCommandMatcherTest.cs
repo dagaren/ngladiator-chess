@@ -20,7 +20,7 @@ namespace Gladiator.Tests.Communication.Protocols.XBoard
                     new MoveCommand(
                         Substitute.For<IPosition<IBoard>>(),
                         new Move(),
-                        Substitute.For<ICommandWriter>()
+                        Substitute.For<Action<Move, string>>()
                     ),
                     x => new MoveCommandMatcher(x));
         }
