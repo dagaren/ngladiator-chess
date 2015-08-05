@@ -33,6 +33,7 @@ namespace Gladiator
             commandMatchers.Add(new XBoardCommandMatcher(commandFactory));
             commandMatchers.Add(new QuitCommandMatcher(commandFactory));
             commandMatchers.Add(new MoveCommandMatcher(commandFactory));
+            commandMatchers.Add(new ProtoverCommandMatcher(commandFactory));
             ICommandReader commandReader = new ConsoleCommandReader();
             ICommandWriter commandWriter = new ConsoleCommandWriter();
             IProtocol protocol = new XBoardProtocol(commandMatchers);

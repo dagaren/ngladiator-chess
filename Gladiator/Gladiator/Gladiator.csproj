@@ -47,6 +47,8 @@
     <Compile Include="Communication\Protocols\XBoard\MoveCommandMatcher.cs" />
     <Compile Include="Communication\Protocols\XBoard\Output\IllegalMoveCommand.cs" />
     <Compile Include="Communication\Protocols\XBoard\Output\OutputCommand.cs" />
+    <Compile Include="Communication\Protocols\XBoard\ProtoverCommand.cs" />
+    <Compile Include="Communication\Protocols\XBoard\ProtoverCommandMatcher.cs" />
     <Compile Include="Communication\Protocols\XBoard\QuitCommand.cs" />
     <Compile Include="Communication\Protocols\XBoard\QuitCommandMatcher.cs" />
     <Compile Include="Communication\Protocols\XBoard\XBoardCommand.cs" />

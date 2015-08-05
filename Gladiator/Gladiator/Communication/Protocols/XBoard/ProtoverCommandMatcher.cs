@@ -3,11 +3,11 @@ using System.Text.RegularExpressions;
 
 namespace Gladiator.Communication.Protocols.XBoard
 {
-    class XBoardCommandMatcher : CommandMatcher<XBoardCommand>
+    class ProtoverCommandMatcher : CommandMatcher<ProtoverCommand>
     {
-        public XBoardCommandMatcher(ICommandFactory commandFactory)
+        public ProtoverCommandMatcher(ICommandFactory commandFactory)
             : base(
-                new Regex(@"^xboard\s*$"),
+                new Regex(@"^protover (?<version>\d)$"),
                 commandFactory)
         {
         }

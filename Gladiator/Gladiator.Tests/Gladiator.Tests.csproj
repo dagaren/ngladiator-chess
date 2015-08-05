@@ -68,6 +68,8 @@
     <Compile Include="Communication\Fakes\FakeIntParser.cs" />
     <Compile Include="Communication\Protocols\XBoard\MoveCommandMatcherTest.cs" />
     <Compile Include="Communication\Protocols\XBoard\MoveCommandTest.cs" />
+    <Compile Include="Communication\Protocols\XBoard\ProtoverCommandMatcherTest.cs" />
+    <Compile Include="Communication\Protocols\XBoard\ProtoverCommandTest.cs" />
     <Compile Include="Communication\Protocols\XBoard\QuitCommandMatcherTest.cs" />
     <Compile Include="Communication\Protocols\XBoard\QuitCommandTest.cs" />
     <Compile Include="Communication\Protocols\XBoard\XBoardCommandMatcherTest.cs" />
