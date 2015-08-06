@@ -6,7 +6,6 @@ namespace Gladiator.Communication.Protocols.XBoard
     {
         public void Execute()
         {
-            Console.WriteLine("XBoard command received");
         }
     }
 }

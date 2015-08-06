@@ -42,9 +42,14 @@
     <Compile Include="Communication\ICommand.cs" />
     <Compile Include="Communication\ICommandFactory.cs" />
     <Compile Include="Communication\ICommandMatcher.cs" />
+    <Compile Include="Communication\LoggedCommandReader.cs" />
+    <Compile Include="Communication\LoggedCommandWriter.cs" />
     <Compile Include="Communication\Protocols\IProtocol.cs" />
     <Compile Include="Communication\Protocols\XBoard\MoveCommand.cs" />
     <Compile Include="Communication\Protocols\XBoard\MoveCommandMatcher.cs" />
+    <Compile Include="Communication\Protocols\XBoard\Output\FeatureCommand.cs" />
+    <Compile Include="Communication\Protocols\XBoard\Output\FeatureContainer.cs" />
+    <Compile Include="Communication\Protocols\XBoard\Output\FeatureNames.cs" />
     <Compile Include="Communication\Protocols\XBoard\Output\IllegalMoveCommand.cs" />
     <Compile Include="Communication\Protocols\XBoard\Output\OutputCommand.cs" />
     <Compile Include="Communication\Protocols\XBoard\ProtoverCommand.cs" />

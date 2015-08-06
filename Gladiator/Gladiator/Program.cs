@@ -89,11 +89,13 @@ namespace Gladiator
             position.Board.PutPiece(ColouredPiece.BlackPawn, Square.h7);
 
             var illegalMoveCommand = new IllegalMoveCommand(commandWriter);
+            var featureCommand  = new FeatureCommand(commandWriter);
 
             container["illegalMoveAction"] = new Action<Move, string>(illegalMoveCommand.Execute);
             container["quitAction"] = new Action(controller.Finish);
             container["position"] = position;
             container["commandWriter"] = commandWriter;
+            container["featureCommandAction"] = new Action(featureCommand.Execute);
 
             position.Board.WriteConsolePretty();
 

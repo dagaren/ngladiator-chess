@@ -15,24 +15,8 @@ namespace Gladiator.Tests.Communication.Protocols.XBoard
         [TestMethod]
         public void Execute_Ok()
         {
-            using (StringWriter sw = new StringWriter())
-            {
-                Console.SetOut(sw);
-
-                XBoardCommand command = new XBoardCommand();
-                command.Execute();
-
-                string expected = "XBoard command received" + System.Environment.NewLine;
-                Assert.AreEqual<string>(expected, sw.ToString());
-            }
-        }
-        
-        [TestCleanup]
-        public void TestCleanup()
-        {
-            StreamWriter standardOut = new StreamWriter(Console.OpenStandardOutput());
-            standardOut.AutoFlush = true;
-            Console.SetOut(standardOut);
+            XBoardCommand command = new XBoardCommand();
+            command.Execute();
         }
     }
 }

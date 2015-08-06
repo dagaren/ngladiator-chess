@@ -14,7 +14,7 @@ namespace Gladiator.Tests.Communication.Protocols.XBoard
         public void TestInitialize()
         {
             this.tester = new CommandMatcherTester<ProtoverCommandMatcher, ProtoverCommand>(
-                    new ProtoverCommand(1),
+                    new ProtoverCommand(1, () => { }),
                     x => new ProtoverCommandMatcher(x));
         }
 
