@@ -7,8 +7,8 @@
     <ProjectGuid>{4DE8EDA6-EF80-47AE-8F68-B62C5D22F26F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Representation</RootNamespace>
-    <AssemblyName>Representation</AssemblyName>
+    <RootNamespace>Gladiator.Representation</RootNamespace>
+    <AssemblyName>Gladiator.Representation</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -34,8 +34,37 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoardExtensions.cs" />
+    <Compile Include="Colour.cs" />
+    <Compile Include="ColouredPiece.cs" />
+    <Compile Include="ColourExtensions.cs" />
+    <Compile Include="CompositeMoveGenerator.cs" />
+    <Compile Include="File.cs" />
+    <Compile Include="FileExtensions.cs" />
+    <Compile Include="IBoard.cs" />
+    <Compile Include="IMoveGenerator.cs" />
+    <Compile Include="IPosition.cs" />
+    <Compile Include="Move.cs" />
+    <Compile Include="MoveExtensions.cs" />
+    <Compile Include="Notation\AlgebraicCoordinateParser.cs" />
+    <Compile Include="Notation\ColouredPieceFormatExtensions.cs" />
+    <Compile Include="Notation\IMoveParser.cs" />
+    <Compile Include="Piece.cs" />
+    <Compile Include="PieceExtensions.cs" />
+    <Compile Include="Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rank.cs" />
+    <Compile Include="RankExtensions.cs" />
+    <Compile Include="Square.cs" />
+    <Compile Include="SquareExtensions.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{d7877873-ebc8-4831-b69f-3504f87907c1}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

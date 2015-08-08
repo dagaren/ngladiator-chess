@@ -1,5 +1,5 @@
 ﻿using Gladiator.Communication;
-using Gladiator.Communication.Protocols;
+using Gladiator.Communication;
 using Gladiator.Utils;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,4 @@
 ﻿using Gladiator.Communication;
-using Gladiator.Communication.Protocols;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System;

@@ -53,70 +53,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Communication\Builders\CommandFactoryBuilder.cs" />
-    <Compile Include="Communication\CommandFactoryTest.cs" />
-    <Compile Include="Communication\CommandMatcherTest.cs" />
-    <Compile Include="Communication\CommmandParameterAttributeTest.cs" />
-    <Compile Include="Communication\ConsoleCommandWriterTest.cs" />
-    <Compile Include="Communication\ConsoseCommandReaderTest.cs" />
-    <Compile Include="Communication\Fakes\FakeCommand.cs" />
-    <Compile Include="Communication\Fakes\FakeCommandConstructorWithCommandParameterAttribute.cs" />
-    <Compile Include="Communication\Fakes\FakeCommandWithMultipleConstructors.cs" />
-    <Compile Include="Communication\Fakes\FakeCommandWithParameterizedConstructor.cs" />
-    <Compile Include="Communication\CommandMatcherTester.cs" />
-    <Compile Include="Communication\CommandMatching.cs" />
-    <Compile Include="Communication\Fakes\FakeIntParser.cs" />
-    <Compile Include="Communication\Protocols\XBoard\MoveCommandMatcherTest.cs" />
-    <Compile Include="Communication\Protocols\XBoard\MoveCommandTest.cs" />
-    <Compile Include="Communication\Protocols\XBoard\ProtoverCommandMatcherTest.cs" />
-    <Compile Include="Communication\Protocols\XBoard\ProtoverCommandTest.cs" />
-    <Compile Include="Communication\Protocols\XBoard\QuitCommandMatcherTest.cs" />
-    <Compile Include="Communication\Protocols\XBoard\QuitCommandTest.cs" />
-    <Compile Include="Communication\Protocols\XBoard\UnknownCommandCommandMatcherTest.cs" />
-    <Compile Include="Communication\Protocols\XBoard\UnknownCommandCommandTest.cs" />
-    <Compile Include="Communication\Protocols\XBoard\XBoardCommandMatcherTest.cs" />
-    <Compile Include="Communication\Protocols\XBoard\XBoardCommandTest.cs" />
-    <Compile Include="Communication\Protocols\XBoard\XBoardProtocolTest.cs" />
     <Compile Include="ControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Representation\Bitboard\BitboardBishopMoveGeneratorTest.cs" />
-    <Compile Include="Representation\Bitboard\BitboardExtensionsTest.cs" />
-    <Compile Include="Representation\Bitboard\BitboardKingMoveGeneratorTest.cs" />
-    <Compile Include="Representation\Bitboard\BitboardBoardTest.cs" />
-    <Compile Include="Representation\Bitboard\BitboardKnightMoveGeneratorTests.cs" />
-    <Compile Include="Representation\Bitboard\BitboardMoveGeneratorTest.cs" />
-    <Compile Include="Representation\Bitboard\BitboardPawnMoveGeneratorTest.cs" />
-    <Compile Include="Representation\Bitboard\BitboardQueenMoveGeneratorTest.cs" />
-    <Compile Include="Representation\Bitboard\BitboardRookMoveGeneratorTest.cs" />
-    <Compile Include="Representation\Bitboard\DirectionBitboardTest.cs" />
-    <Compile Include="Representation\Bitboard\KingBitboardsTest.cs" />
-    <Compile Include="Representation\Bitboard\KnightBitboardsTests.cs" />
-    <Compile Include="Representation\Bitboard\RankExtensionTest.cs" />
-    <Compile Include="Representation\Bitboard\RotationBitboardExtensionsTest.cs" />
-    <Compile Include="Representation\Bitboard\RotationSquareExtensionsTest.cs" />
-    <Compile Include="Representation\Bitboard\SlidingBitboardsTest.cs" />
-    <Compile Include="Representation\Bitboard\SquareExtensionsTest.cs" />
-    <Compile Include="Representation\Builders\BitboardPositionBuilder.cs" />
-    <Compile Include="Representation\Builders\MoveListBuilder.cs" />
-    <Compile Include="Representation\Builders\PositionBuilder.cs" />
-    <Compile Include="Representation\Builders\PositionTestBuilder.cs" />
-    <Compile Include="Representation\CompositeMoveGeneratorTest.cs" />
-    <Compile Include="Representation\Fakes\BoardProxy.cs" />
-    <Compile Include="Representation\Fakes\SimpleBoard.cs" />
-    <Compile Include="Representation\Notation\AlgebraicCoordinateParserTest.cs" />
-    <Compile Include="Representation\Notation\ColouredPieceFormatExtensionsTest.cs" />
-    <Compile Include="Representation\PositionTest.cs" />
-    <Compile Include="Utils\Reflection\ConstructorInvokerTest.cs" />
-    <Compile Include="Utils\Reflection\Fakes\MultiConstructorFake.cs" />
-    <Compile Include="Utils\Reflection\Fakes\SingleConstructorFake.cs" />
-    <Compile Include="Utils\Reflection\Fakes\SingleConstructorMultiArgumentsFake.cs" />
-    <Compile Include="Utils\Reflection\Fakes\SingleConstructorWithArgumentFake.cs" />
-    <Compile Include="Utils\Reflection\SingleConstructorRetrieverTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{6d4b2ce5-a69e-45e7-9774-6d41c0ba84f1}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gladiator\Gladiator.csproj">
       <Project>{c1009b9a-666d-40cb-bfc0-157af802fecc}</Project>
       <Name>Gladiator</Name>

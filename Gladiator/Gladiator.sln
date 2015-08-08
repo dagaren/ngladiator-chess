@@ -25,6 +25,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communication.XBoard.Tests"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Representation.Bitboard.Tests", "Representation.Bitboard.Tests\Representation.Bitboard.Tests.csproj", "{B674636F-5AC0-4FDC-8E61-49574842C5B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{D7877873-EBC8-4831-B69F-3504F87907C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils.Tests", "Utils.Tests\Utils.Tests.csproj", "{0951D98F-C8C1-4E59-A434-EA5005AD7564}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +75,14 @@ Global
 		{B674636F-5AC0-4FDC-8E61-49574842C5B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B674636F-5AC0-4FDC-8E61-49574842C5B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B674636F-5AC0-4FDC-8E61-49574842C5B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7877873-EBC8-4831-B69F-3504F87907C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7877873-EBC8-4831-B69F-3504F87907C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7877873-EBC8-4831-B69F-3504F87907C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7877873-EBC8-4831-B69F-3504F87907C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0951D98F-C8C1-4E59-A434-EA5005AD7564}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0951D98F-C8C1-4E59-A434-EA5005AD7564}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0951D98F-C8C1-4E59-A434-EA5005AD7564}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0951D98F-C8C1-4E59-A434-EA5005AD7564}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,5 +93,6 @@ Global
 		{8827A966-218E-4B4A-8A44-1F4A24D76B76} = {F82FB9C1-B4BE-4B99-8189-2EDE0A3CD02C}
 		{3F9CFE61-E1B2-4385-8AD8-F59634918758} = {F82FB9C1-B4BE-4B99-8189-2EDE0A3CD02C}
 		{B674636F-5AC0-4FDC-8E61-49574842C5B2} = {F82FB9C1-B4BE-4B99-8189-2EDE0A3CD02C}
+		{0951D98F-C8C1-4E59-A434-EA5005AD7564} = {F82FB9C1-B4BE-4B99-8189-2EDE0A3CD02C}
 	EndGlobalSection
 EndGlobal

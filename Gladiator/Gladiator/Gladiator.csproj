@@ -45,105 +45,40 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Communication\CommandFactory.cs" />
-    <Compile Include="Communication\CommandMatcher.cs" />
-    <Compile Include="Communication\CommmandParameterAttribute.cs" />
-    <Compile Include="Communication\ICommand.cs" />
-    <Compile Include="Communication\ICommandFactory.cs" />
-    <Compile Include="Communication\ICommandMatcher.cs" />
-    <Compile Include="Communication\LoggedCommandReader.cs" />
-    <Compile Include="Communication\LoggedCommandWriter.cs" />
-    <Compile Include="Communication\Protocols\IProtocol.cs" />
-    <Compile Include="Communication\Protocols\XBoard\MoveCommand.cs" />
-    <Compile Include="Communication\Protocols\XBoard\MoveCommandMatcher.cs" />
-    <Compile Include="Communication\Protocols\XBoard\Output\ErrorCommand.cs" />
-    <Compile Include="Communication\Protocols\XBoard\Output\FeatureCommand.cs" />
-    <Compile Include="Communication\Protocols\XBoard\Output\FeatureContainer.cs" />
-    <Compile Include="Communication\Protocols\XBoard\Output\FeatureNames.cs" />
-    <Compile Include="Communication\Protocols\XBoard\Output\IllegalMoveCommand.cs" />
-    <Compile Include="Communication\Protocols\XBoard\Output\OutputCommand.cs" />
-    <Compile Include="Communication\Protocols\XBoard\ProtoverCommand.cs" />
-    <Compile Include="Communication\Protocols\XBoard\ProtoverCommandMatcher.cs" />
-    <Compile Include="Communication\Protocols\XBoard\QuitCommand.cs" />
-    <Compile Include="Communication\Protocols\XBoard\QuitCommandMatcher.cs" />
-    <Compile Include="Communication\Protocols\XBoard\UnknownCommandCommand.cs" />
-    <Compile Include="Communication\Protocols\XBoard\UnknownCommandCommandMatcher.cs" />
-    <Compile Include="Communication\Protocols\XBoard\XBoardCommand.cs" />
-    <Compile Include="Communication\Protocols\XBoard\XBoardCommandMatcher.cs" />
-    <Compile Include="Communication\Protocols\XBoard\XBoardProtocol.cs" />
-    <Compile Include="Communication\ConsoleCommandReader.cs" />
-    <Compile Include="Communication\ConsoleCommandWriter.cs" />
     <Compile Include="Controller.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Communication\ICommandReader.cs" />
-    <Compile Include="Communication\ICommandWriter.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Representation\Bitboard\BitboardBishopMoveGenerator.cs" />
-    <Compile Include="Representation\Bitboard\BitboardKingMoveGenerator.cs" />
-    <Compile Include="Representation\Bitboard\BitboardBoard.cs" />
-    <Compile Include="Representation\Bitboard\BitboardExtensions.cs" />
-    <Compile Include="Representation\Bitboard\BitboardFormatExtensions.cs" />
-    <Compile Include="Representation\Bitboard\BitboardKnightMoveGenerator.cs" />
-    <Compile Include="Representation\Bitboard\BitboardMoveGenerator.cs" />
-    <Compile Include="Representation\Bitboard\BitboardPawnMoveGenerator.cs" />
-    <Compile Include="Representation\Bitboard\BitboardQueenMoveGenerator.cs" />
-    <Compile Include="Representation\Bitboard\BitboardRookMoveGenerator.cs" />
-    <Compile Include="Representation\Bitboard\DirectionBitboards.cs" />
-    <Compile Include="Representation\Bitboard\FileExtensions.cs" />
-    <Compile Include="Representation\Bitboard\KingBitboards.cs" />
-    <Compile Include="Representation\Bitboard\KnightBitboards.cs" />
-    <Compile Include="Representation\Bitboard\PawnBitboards.cs" />
-    <Compile Include="Representation\Bitboard\RankExtensions.cs" />
-    <Compile Include="Representation\Bitboard\RotationBitboardExtensions.cs" />
-    <Compile Include="Representation\Bitboard\RotationSquareExtensions.cs" />
-    <Compile Include="Representation\Bitboard\SlidingBitboards.cs" />
-    <Compile Include="Representation\Bitboard\SquareExtensions.cs" />
-    <Compile Include="Representation\BoardExtensions.cs" />
-    <Compile Include="Representation\Colour.cs" />
-    <Compile Include="Representation\ColouredPiece.cs" />
-    <Compile Include="Representation\ColourExtensions.cs" />
-    <Compile Include="Representation\CompositeMoveGenerator.cs" />
-    <Compile Include="Representation\File.cs" />
-    <Compile Include="Representation\FileExtensions.cs" />
-    <Compile Include="Representation\IMoveGenerator.cs" />
-    <Compile Include="Representation\IBoard.cs" />
-    <Compile Include="Representation\IPosition.cs" />
-    <Compile Include="Representation\Move.cs" />
-    <Compile Include="Representation\MoveExtensions.cs" />
-    <Compile Include="Representation\Notation\AlgebraicCoordinateParser.cs" />
-    <Compile Include="Representation\Notation\ColouredPieceFormatExtensions.cs" />
-    <Compile Include="Representation\Notation\IMoveParser.cs" />
-    <Compile Include="Representation\Piece.cs" />
-    <Compile Include="Representation\PieceExtensions.cs" />
-    <Compile Include="Representation\Position.cs" />
-    <Compile Include="Representation\Rank.cs" />
-    <Compile Include="Representation\RankExtensions.cs" />
-    <Compile Include="Representation\Square.cs" />
-    <Compile Include="Representation\SquareExtensions.cs" />
-    <Compile Include="Utils\Check.cs" />
-    <Compile Include="Utils\ConsoleExtensions.cs" />
-    <Compile Include="Utils\DictionaryExtensions.cs" />
-    <Compile Include="Utils\EnumExtensions.cs" />
-    <Compile Include="Utils\IFormatter.cs" />
-    <Compile Include="Utils\IParser.cs" />
-    <Compile Include="Utils\Reflection\ConfigurableParameterFactory.cs" />
-    <Compile Include="Utils\Reflection\ConstructorInvoker.cs" />
-    <Compile Include="Utils\Reflection\IConstructorInvoker.cs" />
-    <Compile Include="Utils\Reflection\IConstructorRetriever.cs" />
-    <Compile Include="Utils\Reflection\IParameterFactory.cs" />
-    <Compile Include="Utils\Reflection\SingleConstructorRetriever.cs" />
-    <Compile Include="Utils\StringEnumExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Communication.XBoard\Communication.XBoard.csproj">
+      <Project>{82d93730-021c-4533-adca-56e795aa42be}</Project>
+      <Name>Communication.XBoard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{6d4b2ce5-a69e-45e7-9774-6d41c0ba84f1}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Representation.Bitboard\Representation.Bitboard.csproj">
+      <Project>{6b338a18-2ed6-47d8-9e4c-048f3641508c}</Project>
+      <Name>Representation.Bitboard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Representation\Representation.csproj">
+      <Project>{4de8eda6-ef80-47ae-8f68-b62c5d22f26f}</Project>
+      <Name>Representation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{d7877873-ebc8-4831-b69f-3504f87907c1}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

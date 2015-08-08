@@ -1,6 +1,5 @@
 ﻿using Gladiator.Communication;
-using Gladiator.Communication.Protocols;
-using Gladiator.Communication.Protocols.XBoard;
+using Gladiator.Communication.XBoard;
 using Gladiator.Representation;
 using Gladiator.Representation.Bitboard;
 using System;
@@ -8,7 +7,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Gladiator.Utils.Reflection;
-using Gladiator.Communication.Protocols.XBoard.Output;
+using Gladiator.Communication.XBoard.Output;
 
 namespace Gladiator
 {

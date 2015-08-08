@@ -6,8 +6,8 @@
     <ProjectGuid>{DA57EE3B-FA17-469A-BA47-47F5C3B96942}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Representation.Tests</RootNamespace>
-    <AssemblyName>Representation.Tests</AssemblyName>
+    <RootNamespace>Gladiator.Representation.Tests</RootNamespace>
+    <AssemblyName>Gladiator.Representation.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NSubstitute">
+      <HintPath>..\packages\NSubstitute.1.8.2.0\lib\net45\NSubstitute.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -50,7 +53,29 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Builders\MoveListBuilder.cs" />
+    <Compile Include="Builders\PositionBuilder.cs" />
+    <Compile Include="Builders\PositionTestBuilder.cs" />
+    <Compile Include="CompositeMoveGeneratorTest.cs" />
+    <Compile Include="Fakes\BoardProxy.cs" />
+    <Compile Include="Fakes\SimpleBoard.cs" />
+    <Compile Include="Notation\AlgebraicCoordinateParserTest.cs" />
+    <Compile Include="Notation\ColouredPieceFormatExtensionsTest.cs" />
+    <Compile Include="PositionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Representation\Representation.csproj">
+      <Project>{4de8eda6-ef80-47ae-8f68-b62c5d22f26f}</Project>
+      <Name>Representation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{d7877873-ebc8-4831-b69f-3504f87907c1}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

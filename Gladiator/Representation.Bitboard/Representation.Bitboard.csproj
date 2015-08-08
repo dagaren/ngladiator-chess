@@ -34,7 +34,37 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BitboardBishopMoveGenerator.cs" />
+    <Compile Include="BitboardBoard.cs" />
+    <Compile Include="BitboardExtensions.cs" />
+    <Compile Include="BitboardFormatExtensions.cs" />
+    <Compile Include="BitboardKingMoveGenerator.cs" />
+    <Compile Include="BitboardKnightMoveGenerator.cs" />
+    <Compile Include="BitboardMoveGenerator.cs" />
+    <Compile Include="BitboardPawnMoveGenerator.cs" />
+    <Compile Include="BitboardQueenMoveGenerator.cs" />
+    <Compile Include="BitboardRookMoveGenerator.cs" />
+    <Compile Include="DirectionBitboards.cs" />
+    <Compile Include="FileExtensions.cs" />
+    <Compile Include="KingBitboards.cs" />
+    <Compile Include="KnightBitboards.cs" />
+    <Compile Include="PawnBitboards.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RankExtensions.cs" />
+    <Compile Include="RotationBitboardExtensions.cs" />
+    <Compile Include="RotationSquareExtensions.cs" />
+    <Compile Include="SlidingBitboards.cs" />
+    <Compile Include="SquareExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Representation\Representation.csproj">
+      <Project>{4de8eda6-ef80-47ae-8f68-b62c5d22f26f}</Project>
+      <Name>Representation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{d7877873-ebc8-4831-b69f-3504f87907c1}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
