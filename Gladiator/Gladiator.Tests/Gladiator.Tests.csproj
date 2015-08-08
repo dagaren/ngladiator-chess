@@ -72,6 +72,8 @@
     <Compile Include="Communication\Protocols\XBoard\ProtoverCommandTest.cs" />
     <Compile Include="Communication\Protocols\XBoard\QuitCommandMatcherTest.cs" />
     <Compile Include="Communication\Protocols\XBoard\QuitCommandTest.cs" />
+    <Compile Include="Communication\Protocols\XBoard\UnknownCommandCommandMatcherTest.cs" />
+    <Compile Include="Communication\Protocols\XBoard\UnknownCommandCommandTest.cs" />
     <Compile Include="Communication\Protocols\XBoard\XBoardCommandMatcherTest.cs" />
     <Compile Include="Communication\Protocols\XBoard\XBoardCommandTest.cs" />
     <Compile Include="Communication\Protocols\XBoard\XBoardProtocolTest.cs" />

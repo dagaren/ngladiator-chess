@@ -34,6 +34,7 @@ namespace Gladiator
             commandMatchers.Add(new QuitCommandMatcher(commandFactory));
             commandMatchers.Add(new MoveCommandMatcher(commandFactory));
             commandMatchers.Add(new ProtoverCommandMatcher(commandFactory));
+            commandMatchers.Add(new UnknownCommandCommandMatcher(commandFactory));
             ICommandReader commandReader = new ConsoleCommandReader();
             ICommandWriter commandWriter = new ConsoleCommandWriter();
             IProtocol protocol = new XBoardProtocol(commandMatchers);
@@ -90,12 +91,14 @@ namespace Gladiator
 
             var illegalMoveCommand = new IllegalMoveCommand(commandWriter);
             var featureCommand  = new FeatureCommand(commandWriter);
+            var errorCommand = new ErrorCommand(commandWriter);
 
             container["illegalMoveAction"] = new Action<Move, string>(illegalMoveCommand.Execute);
             container["quitAction"] = new Action(controller.Finish);
             container["position"] = position;
             container["commandWriter"] = commandWriter;
             container["featureCommandAction"] = new Action(featureCommand.Execute);
+            container["errorAction"] = new Action<string, string>(errorCommand.Execute);
 
             position.Board.WriteConsolePretty();
 
