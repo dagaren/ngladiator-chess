@@ -64,6 +64,26 @@ namespace Gladiator.Representation
             return FromRankAndFile(square.GetRank().Previous(), square.GetFile().Next());
         }
 
+        public static Square Next(this Square square)
+        {
+            if(square == Square.h8)
+            {
+                return Square.None;
+            }
+
+            return square + 1;
+        }
+
+        public static Square Previous(this Square square)
+        {
+            if (square == Square.a1)
+            {
+                return Square.None;
+            }
+
+            return square - 1;
+        }
+
         public static int GetValue(this Square square)
         {
             return (int)square;

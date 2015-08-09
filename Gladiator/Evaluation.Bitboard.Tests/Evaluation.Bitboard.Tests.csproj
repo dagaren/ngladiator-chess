@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NSubstitute">
+      <HintPath>..\packages\NSubstitute.1.8.2.0\lib\net45\NSubstitute.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -50,7 +53,37 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="MaterialEvaluatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Evaluation.Bitboard\Evaluation.Bitboard.csproj">
+      <Project>{a6b68c10-354d-45bd-b4e8-a49dd03d5ce6}</Project>
+      <Name>Evaluation.Bitboard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Evaluation\Evaluation.csproj">
+      <Project>{36a3c5cc-ccd3-4649-b3f4-55df821fd33c}</Project>
+      <Name>Evaluation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Representation.Bitboard.Tests\Representation.Bitboard.Tests.csproj">
+      <Project>{b674636f-5ac0-4fdc-8e61-49574842c5b2}</Project>
+      <Name>Representation.Bitboard.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Representation.Bitboard\Representation.Bitboard.csproj">
+      <Project>{6b338a18-2ed6-47d8-9e4c-048f3641508c}</Project>
+      <Name>Representation.Bitboard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Representation.Tests\Representation.Tests.csproj">
+      <Project>{da57ee3b-fa17-469a-ba47-47f5c3b96942}</Project>
+      <Name>Representation.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Representation\Representation.csproj">
+      <Project>{4de8eda6-ef80-47ae-8f68-b62c5d22f26f}</Project>
+      <Name>Representation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

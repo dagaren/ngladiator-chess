@@ -6,13 +6,13 @@ namespace Gladiator.Representation.Bitboard
 {
     public class BitboardBoard : IBoard
     {
-        internal ColouredPiece[] piecesInSquare;
+        public ColouredPiece[] piecesInSquare;
 
-        internal ulong occupation;
+        public ulong occupation;
 
-        internal readonly ulong[] pieceOccupation;
+        public readonly ulong[] pieceOccupation;
 
-        internal readonly ulong[] colourOccupation;
+        public readonly ulong[] colourOccupation;
 
         public BitboardBoard()
         {
