@@ -106,6 +106,17 @@ namespace Gladiator.Representation.Bitboard
             return (Square)LastBitScan(bitboard);
         }
 
+        public static IEnumerable<Square> Squares(this ulong bitboard)
+        {
+            while(bitboard != Empty)
+            {
+                Square square = FirstSquareScan(bitboard);
+                bitboard = bitboard.Unset(square.GetBitboard());
+
+                yield return square;
+            }
+        }
+
         public static ulong RankBitboard(this ulong bitboard, Rank rank)
         {
             return bitboard.And(rank.GetBitboard());

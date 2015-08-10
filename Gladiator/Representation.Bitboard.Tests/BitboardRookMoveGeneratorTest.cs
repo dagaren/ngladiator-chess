@@ -107,7 +107,7 @@ namespace Gladiator.Representation.Bitboard.Tests
             Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
                                                 .SetTurn(colour)
                                                 .PutPiece(Piece.Rook.GetColoured(colour), Square.a1)
-                                                .PutPiece(Piece.Queen.GetColoured(colour.GetOpponent()), Square.a5)
+                                                .PutPiece(Piece.Queen.GetColoured(colour.Opponent()), Square.a5)
                                                 .PutPiece(Piece.Bishop.GetColoured(colour), Square.e1)
                                                 .Build();
 

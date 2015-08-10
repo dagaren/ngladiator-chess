@@ -106,7 +106,7 @@ namespace Gladiator.Representation.Bitboard.Tests
                                                 .SetTurn(colour)
                                                 .PutPiece(Piece.Knight.GetColoured(colour), Square.d4)
                                                 .PutPiece(Piece.King.GetColoured(colour), Square.b5)
-                                                .PutPiece(Piece.Bishop.GetColoured(colour.GetOpponent()), Square.b3)
+                                                .PutPiece(Piece.Bishop.GetColoured(colour.Opponent()), Square.b3)
                                                 .Build();
 
             TestMoveGenerator(moveGenerator, expectedMoves, position);

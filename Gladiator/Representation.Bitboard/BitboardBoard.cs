@@ -33,7 +33,7 @@ namespace Gladiator.Representation.Bitboard
 
             this.occupation = this.occupation.Or(square.GetBitboard());
             this.pieceOccupation[piece.GetValue()] = this.pieceOccupation[piece.GetValue()].Or(square.GetBitboard());
-            this.colourOccupation[piece.GetColour().GetValue()] = this.colourOccupation[piece.GetColour().GetValue()].Or(square.GetBitboard());
+            this.colourOccupation[piece.GetColour().Value()] = this.colourOccupation[piece.GetColour().Value()].Or(square.GetBitboard());
         }
 
         public void RemovePiece(Square square)
@@ -48,7 +48,7 @@ namespace Gladiator.Representation.Bitboard
 
             this.occupation = this.occupation.Xor(square.GetBitboard());
             this.pieceOccupation[piece.GetValue()] = this.pieceOccupation[piece.GetValue()].Xor(square.GetBitboard());
-            this.colourOccupation[piece.GetColour().GetValue()] = this.colourOccupation[piece.GetColour().GetValue()].Xor(square.GetBitboard());
+            this.colourOccupation[piece.GetColour().Value()] = this.colourOccupation[piece.GetColour().Value()].Xor(square.GetBitboard());
         }
 
         public ColouredPiece GetPiece(Square square)

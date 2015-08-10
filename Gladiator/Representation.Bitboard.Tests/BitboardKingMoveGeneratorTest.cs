@@ -63,6 +63,42 @@ namespace Gladiator.Representation.Bitboard.Tests
             TestMoveGenerator(moveGenerator, expectedMoves, position);
         }
 
+        [TestMethod]
+        public void GetMoves_WhiteWithCastlingRights_CastlingMovesGenerated()
+        {
+            TestKingCastling(Colour.White);
+        }
+
+        [TestMethod]
+        public void GetMoves_BlackWithCastlingRights_CastlingMovesGenerated()
+        {
+            TestKingCastling(Colour.Black);
+        }
+
+        [TestMethod]
+        public void GetMoves_WhiteWithCastlingRightsInterceptingPieces_NoCastlingMovesGenerated()
+        {
+            TestKingCastlingWithInterceptingPieces(Colour.White);
+        }
+
+        [TestMethod]
+        public void GetMoves_BlackWithCastlingRightsInterceptingPieces_NoCastlingMovesGenerated()
+        {
+            TestKingCastlingWithInterceptingPieces(Colour.Black);
+        }
+
+        [TestMethod]
+        public void GetMoves_WhiteWithoutCastlingRights_NoCastlingMovesGenerated()
+        {
+            TestKingCastlingWithoutCastlingRights(Colour.White);
+        }
+
+        [TestMethod]
+        public void GetMoves_BlackWithoutCastlingRights_NoCastlingMovesGenerated()
+        {
+            TestKingCastlingWithoutCastlingRights(Colour.Black);
+        }
+
         private static void TestKingInCorner(Colour colour)
         {
             List<Move> expectedMoves = new MoveListBuilder()
@@ -118,7 +154,85 @@ namespace Gladiator.Representation.Bitboard.Tests
                                                 .SetTurn(colour)
                                                 .PutPiece(Piece.King.GetColoured(colour), Square.d4)
                                                 .PutPiece(Piece.Knight.GetColoured(colour), Square.c4)
-                                                .PutPiece(Piece.Bishop.GetColoured(colour.GetOpponent()), Square.c3)
+                                                .PutPiece(Piece.Bishop.GetColoured(colour.Opponent()), Square.c3)
+                                                .Build();
+
+            TestMoveGenerator(moveGenerator, expectedMoves, position);
+        }
+
+        private static void TestKingCastling(Colour colour)
+        {
+            Square kingSquare = CastlingTypeExtensions.KingSourceSquare(CastlingType.Short, colour);
+
+            List<Move> expectedMoves = new MoveListBuilder()
+                                                .AddMove(MoveExtensions.GenerateCastling(CastlingType.Long, colour))
+                                                .AddMove(MoveExtensions.GenerateCastling(CastlingType.Short, colour))
+                                                .AddMoves(kingSquare, KingBitboards.AttackBitboards[kingSquare.GetValue()].Squares())
+                                                .Build();
+
+            var moveGenerator = new BitboardKingMoveGenerator<Position<BitboardBoard>>();
+            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
+                                                .SetTurn(colour)
+                                                .PutPiece(Piece.Rook.GetColoured(colour), 
+                                                          CastlingTypeExtensions.RookSourceSquare(CastlingType.Long, colour))
+                                                .PutPiece(Piece.Rook.GetColoured(colour),
+                                                          CastlingTypeExtensions.RookSourceSquare(CastlingType.Short, colour))
+                                                .PutPiece(Piece.King.GetColoured(colour), 
+                                                          kingSquare)
+                                                .SetCastlingRight(CastlingType.Short, colour, true)
+                                                .SetCastlingRight(CastlingType.Long, colour, true)
+                                                .Build();
+
+            TestMoveGenerator(moveGenerator, expectedMoves, position);
+        }
+
+        private static void TestKingCastlingWithoutCastlingRights(Colour colour)
+        {
+            Square kingSquare = CastlingTypeExtensions.KingSourceSquare(CastlingType.Short, colour);
+
+            List<Move> expectedMoves = new MoveListBuilder()
+                                                .AddMoves(kingSquare, KingBitboards.AttackBitboards[kingSquare.GetValue()].Squares())
+                                                .Build();
+
+            var moveGenerator = new BitboardKingMoveGenerator<Position<BitboardBoard>>();
+            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
+                                                .SetTurn(colour)
+                                                .PutPiece(Piece.Rook.GetColoured(colour),
+                                                          CastlingTypeExtensions.RookSourceSquare(CastlingType.Long, colour))
+                                                .PutPiece(Piece.Rook.GetColoured(colour),
+                                                          CastlingTypeExtensions.RookSourceSquare(CastlingType.Short, colour))
+                                                .PutPiece(Piece.King.GetColoured(colour),
+                                                          kingSquare)
+                                                .SetCastlingRight(CastlingType.Short, colour, false)
+                                                .SetCastlingRight(CastlingType.Long, colour, false)
+                                                .Build();
+
+            TestMoveGenerator(moveGenerator, expectedMoves, position);
+        }
+
+        private static void TestKingCastlingWithInterceptingPieces(Colour colour)
+        {
+            Square kingSquare = CastlingTypeExtensions.KingSourceSquare(CastlingType.Short, colour);
+
+            List<Move> expectedMoves = new MoveListBuilder()
+                                                .AddMoves(kingSquare, KingBitboards.AttackBitboards[kingSquare.GetValue()].Squares())
+                                                .Build();
+
+            var moveGenerator = new BitboardKingMoveGenerator<Position<BitboardBoard>>();
+            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
+                                                .SetTurn(colour)
+                                                .PutPiece(Piece.Rook.GetColoured(colour),
+                                                          CastlingTypeExtensions.RookSourceSquare(CastlingType.Long, colour))
+                                                .PutPiece(Piece.Rook.GetColoured(colour),
+                                                          CastlingTypeExtensions.RookSourceSquare(CastlingType.Short, colour))
+                                                .PutPiece(Piece.King.GetColoured(colour),
+                                                          kingSquare)
+                                                .PutPiece(Piece.Knight.GetColoured(colour),
+                                                          CastlingTypeExtensions.RookSourceSquare(CastlingType.Long, colour).NextInRank())
+                                                .PutPiece(Piece.Knight.GetColoured(colour),
+                                                          CastlingTypeExtensions.RookSourceSquare(CastlingType.Short, colour).PreviousInRank())
+                                                .SetCastlingRight(CastlingType.Short, colour, true)
+                                                .SetCastlingRight(CastlingType.Long, colour, true)
                                                 .Build();
 
             TestMoveGenerator(moveGenerator, expectedMoves, position);

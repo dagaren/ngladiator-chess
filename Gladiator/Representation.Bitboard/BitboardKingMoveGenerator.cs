@@ -14,5 +14,24 @@ namespace Gladiator.Representation.Bitboard
         {
             return KingBitboards.AttackBitboards[source.GetValue()];
         }
+
+        protected override void AddAditionalMoves(TPosition position, IList<Move> movesList)
+        {
+            if (position.GetCastlingRight(CastlingType.Short, position.Turn))
+            {
+                if(position.Board.occupation.And(KingBitboards.CastlingSquares[CastlingType.Short.Value(), position.Turn.Value()]) == BitboardExtensions.Empty)
+                {
+                    movesList.Add(MoveExtensions.GenerateCastling(CastlingType.Short, position.Turn));
+                }
+            }
+
+            if (position.GetCastlingRight(CastlingType.Long, position.Turn))
+            {
+                if (position.Board.occupation.And(KingBitboards.CastlingSquares[CastlingType.Long.Value(), position.Turn.Value()]) == BitboardExtensions.Empty)
+                {
+                    movesList.Add(MoveExtensions.GenerateCastling(CastlingType.Long, position.Turn));
+                }
+            }
+        }
     }
 }

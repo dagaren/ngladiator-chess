@@ -12,23 +12,23 @@ namespace Gladiator.Representation
 
         static ColourExtensions()
         {
-            opponents[Colour.White.GetValue()] = Colour.Black;
-            opponents[Colour.Black.GetValue()] = Colour.White;
+            opponents[Colour.White.Value()] = Colour.Black;
+            opponents[Colour.Black.Value()] = Colour.White;
         }
 
-        public static int GetValue(this Colour colour)
+        public static int Value(this Colour colour)
         {
             return (int)colour;
         }
 
-        public static Colour GetOpponent(this Colour colour)
+        public static Colour Opponent(this Colour colour)
         {
             if(colour == Colour.None)
             {
                 return Colour.None;
             }
 
-            return opponents[colour.GetValue()];
+            return opponents[colour.Value()];
         }
     }
 }

@@ -35,6 +35,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoardExtensions.cs" />
+    <Compile Include="CastlingType.cs" />
+    <Compile Include="CastlingTypeExtensions.cs" />
     <Compile Include="Colour.cs" />
     <Compile Include="ColouredPiece.cs" />
     <Compile Include="ColourExtensions.cs" />

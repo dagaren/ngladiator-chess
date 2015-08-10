@@ -59,7 +59,7 @@ namespace Gladiator.Representation.Bitboard.Tests
             board.RemovePiece(Square.d1);
 
             Assert.AreEqual(ColouredPiece.None, board.piecesInSquare[Square.d1.GetValue()]);
-            Assert.AreEqual(BitboardExtensions.Empty, board.colourOccupation[piece.GetColour().GetValue()]);
+            Assert.AreEqual(BitboardExtensions.Empty, board.colourOccupation[piece.GetColour().Value()]);
             Assert.AreEqual(BitboardExtensions.Empty, board.occupation);
             Assert.AreEqual(BitboardExtensions.Empty, board.pieceOccupation[piece.GetValue()]);
         }
@@ -71,7 +71,7 @@ namespace Gladiator.Representation.Bitboard.Tests
             board.PutPiece(piece, Square.d1);
 
             Assert.AreEqual(piece, board.piecesInSquare[Square.d1.GetValue()]);
-            Assert.AreEqual(Square.d1.GetBitboard(), board.colourOccupation[piece.GetColour().GetValue()]);
+            Assert.AreEqual(Square.d1.GetBitboard(), board.colourOccupation[piece.GetColour().Value()]);
             Assert.AreEqual(Square.d1.GetBitboard(), board.occupation);
             Assert.AreEqual(Square.d1.GetBitboard(), board.pieceOccupation[piece.GetValue()]);
         }

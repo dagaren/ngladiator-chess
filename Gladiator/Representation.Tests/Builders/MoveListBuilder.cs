@@ -20,9 +20,26 @@ namespace Gladiator.Representation.Tests.Builders
             return this;
         }
 
+        public MoveListBuilder AddMove(Move move)
+        {
+            this.moveList.Add(move);
+
+            return this;
+        }
+
         public MoveListBuilder AddMoves(IEnumerable<Move> moves)
         {
             this.moveList.AddRange(moves);
+
+            return this;
+        }
+
+        public MoveListBuilder AddMoves(Square source, IEnumerable<Square> destinations)
+        {
+            foreach(Square destination in destinations)
+            {
+                AddMove(source, destination);
+            }
 
             return this;
         }

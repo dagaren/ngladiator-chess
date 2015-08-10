@@ -84,7 +84,7 @@ namespace Gladiator.Representation
 
         public static ColouredPiece GetColoured(this Piece piece, Colour colour)
         {
-           return colouredPieces[colour.GetValue(), piece.GetValue()];
+           return colouredPieces[colour.Value(), piece.GetValue()];
         }
 
         public static int GetValue(this Piece piece)
@@ -104,7 +104,7 @@ namespace Gladiator.Representation
 
         private static void SetColouredPieceEquivalent(Piece piece, Colour colour, ColouredPiece colouredPiece)
         {
-            colouredPieces[colour.GetValue(), piece.GetValue()] = colouredPiece;
+            colouredPieces[colour.Value(), piece.GetValue()] = colouredPiece;
         }
     }
 }

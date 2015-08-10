@@ -19,7 +19,7 @@ namespace Gladiator.Representation.Bitboard
 
                 ulong attackedBitboard = GetAttackedFrom(source, position);
 
-                attackedBitboard = attackedBitboard.Unset(position.Board.colourOccupation[position.Turn.GetValue()]);
+                attackedBitboard = attackedBitboard.Unset(position.Board.colourOccupation[position.Turn.Value()]);
 
                 while (attackedBitboard != BitboardExtensions.Empty)
                 {
@@ -32,6 +32,8 @@ namespace Gladiator.Representation.Bitboard
 
                 pieceBitboard = pieceBitboard.Xor(source.GetBitboard());
             }
+
+            AddAditionalMoves(position, movesList);
 
             return movesList;
         }
@@ -48,6 +50,11 @@ namespace Gladiator.Representation.Bitboard
                             Destination = destination
                         };
             movesList.Add(move);
+        }
+
+        protected virtual void AddAditionalMoves(TPosition position, IList<Move> movesList)
+        {
+            return;
         }
     }
 }

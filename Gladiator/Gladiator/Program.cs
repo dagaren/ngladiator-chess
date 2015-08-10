@@ -87,6 +87,10 @@ namespace Gladiator
             position.Board.PutPiece(ColouredPiece.BlackPawn, Square.f7);
             position.Board.PutPiece(ColouredPiece.BlackPawn, Square.g7);
             position.Board.PutPiece(ColouredPiece.BlackPawn, Square.h7);
+            position.SetCastlingRight(CastlingType.Long, Colour.White, true);
+            position.SetCastlingRight(CastlingType.Long, Colour.White, true);
+            position.SetCastlingRight(CastlingType.Short, Colour.White, true);
+            position.SetCastlingRight(CastlingType.Short, Colour.Black, true);
 
             var illegalMoveCommand = new IllegalMoveCommand(commandWriter);
             var featureCommand  = new FeatureCommand(commandWriter);

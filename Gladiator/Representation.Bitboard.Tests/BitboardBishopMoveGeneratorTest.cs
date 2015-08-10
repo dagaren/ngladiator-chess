@@ -80,9 +80,9 @@ namespace Gladiator.Representation.Bitboard.Tests
                                                 .SetTurn(colour)
                                                 .PutPiece(Piece.Bishop.GetColoured(colour), Square.d4)
                                                 .PutPiece(Piece.King.GetColoured(colour), Square.f6)
-                                                .PutPiece(Piece.Bishop.GetColoured(colour.GetOpponent()), Square.f2)
+                                                .PutPiece(Piece.Bishop.GetColoured(colour.Opponent()), Square.f2)
                                                 .PutPiece(Piece.Rook.GetColoured(colour), Square.a7)
-                                                .PutPiece(Piece.Bishop.GetColoured(colour.GetOpponent()), Square.b2)
+                                                .PutPiece(Piece.Bishop.GetColoured(colour.Opponent()), Square.b2)
                                                 .Build();
 
             TestMoveGenerator(moveGenerator, expectedMoves, position);

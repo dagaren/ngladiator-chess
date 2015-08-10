@@ -23,6 +23,13 @@ namespace Gladiator.Representation.Tests.Builders
             return this;
         }
 
+        public PositionBuilder<TBoard> SetCastlingRight(CastlingType type, Colour colour, bool enabled)
+        {
+            this.position.SetCastlingRight(type, colour, enabled);
+
+            return this;
+        }
+
         public PositionBuilder<TBoard> PutPiece(ColouredPiece colouredPiece, Square square)
         {
             this.position.Board.PutPiece(colouredPiece, square);

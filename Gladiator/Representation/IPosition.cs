@@ -8,6 +8,10 @@ namespace Gladiator.Representation
 
         Colour Turn { get; set; }
 
+        void SetCastlingRight(CastlingType type, Colour color, bool enabled);
+
+        bool GetCastlingRight(CastlingType type, Colour color);
+
         void DoMove(Move move);
     }
 }

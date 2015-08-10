@@ -70,14 +70,14 @@ namespace Gladiator.Representation.Bitboard.Tests
             Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
                                                 .SetTurn(colour)
                                                 .PutPiece(Piece.Queen.GetColoured(colour), Square.d4)
-                                                .PutPiece(Piece.Bishop.GetColoured(colour.GetOpponent()), Square.d7)
-                                                .PutPiece(Piece.Knight.GetColoured(colour.GetOpponent()), Square.d2)
-                                                .PutPiece(Piece.Rook.GetColoured(colour.GetOpponent()), Square.b4)
+                                                .PutPiece(Piece.Bishop.GetColoured(colour.Opponent()), Square.d7)
+                                                .PutPiece(Piece.Knight.GetColoured(colour.Opponent()), Square.d2)
+                                                .PutPiece(Piece.Rook.GetColoured(colour.Opponent()), Square.b4)
                                                 .PutPiece(Piece.Rook.GetColoured(colour), Square.f4)
                                                 .PutPiece(Piece.King.GetColoured(colour), Square.b2)
                                                 .PutPiece(Piece.Pawn.GetColoured(colour), Square.e3)
-                                                .PutPiece(Piece.Pawn.GetColoured(colour.GetOpponent()), Square.f6)
-                                                .PutPiece(Piece.Pawn.GetColoured(colour.GetOpponent()), Square.c5)
+                                                .PutPiece(Piece.Pawn.GetColoured(colour.Opponent()), Square.f6)
+                                                .PutPiece(Piece.Pawn.GetColoured(colour.Opponent()), Square.c5)
                                                 .Build();
 
             TestMoveGenerator(moveGenerator, expectedMoves, position);
