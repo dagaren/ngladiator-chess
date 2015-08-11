@@ -64,6 +64,7 @@
     <Compile Include="BitboardRookMoveGeneratorTest.cs" />
     <Compile Include="Builders\BitboardPositionBuilder.cs" />
     <Compile Include="DirectionBitboardTest.cs" />
+    <Compile Include="InCheckPositionValidatorTest.cs" />
     <Compile Include="KingBitboardsTest.cs" />
     <Compile Include="KnightBitboardsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

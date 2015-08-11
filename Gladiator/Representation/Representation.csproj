@@ -46,6 +46,7 @@
     <Compile Include="IBoard.cs" />
     <Compile Include="IMoveGenerator.cs" />
     <Compile Include="IPosition.cs" />
+    <Compile Include="IPositionValidator.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="MoveExtensions.cs" />
     <Compile Include="Notation\AlgebraicCoordinateParser.cs" />

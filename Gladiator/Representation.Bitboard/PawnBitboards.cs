@@ -5,13 +5,9 @@ namespace Gladiator.Representation.Bitboard
 {
     public class PawnBitboards
     {
-        public readonly static ulong[] WhiteAttackBitboards = new ulong[64];
+        public readonly static ulong[,] AttackBitboards = new ulong[2, 64];
 
-        public readonly static ulong[] BlackAttackBitboards = new ulong[64];
-
-        public readonly static ulong[] WhiteReachBitboards = new ulong[64];
-
-        public readonly static ulong[] BlackReachBitboards = new ulong[64];
+        public readonly static ulong[,] ReachBitboards = new ulong[2, 64];
 
         static PawnBitboards()
         {
@@ -24,34 +20,34 @@ namespace Gladiator.Representation.Bitboard
 
                 if (square.GetRank() == Rank._1)
                 {
-                    WhiteAttackBitboards[square.GetValue()] = BitboardExtensions.Empty;
-                    WhiteReachBitboards[square.GetValue()] = BitboardExtensions.Empty;
+                    AttackBitboards[Colour.White.Value(), square.GetValue()] = BitboardExtensions.Empty;
+                    ReachBitboards[Colour.White.Value(), square.GetValue()] = BitboardExtensions.Empty;
                 }
                 else
                 {
-                    WhiteAttackBitboards[square.GetValue()] = BitboardExtensions.FromSquares(square.NextInDiagonal(), square.NextInAntiDiagonal());
-                    WhiteReachBitboards[square.GetValue()] = square.NextInFile().GetBitboard();
+                    AttackBitboards[Colour.White.Value(), square.GetValue()] = BitboardExtensions.FromSquares(square.NextInDiagonal(), square.NextInAntiDiagonal());
+                    ReachBitboards[Colour.White.Value(), square.GetValue()] = square.NextInFile().GetBitboard();
                 }
 
                 if(square.GetRank() == Rank._2)
                 {
-                    WhiteReachBitboards[square.GetValue()] |= square.NextInFile().NextInFile().GetBitboard();
+                    ReachBitboards[Colour.White.Value(), square.GetValue()] |= square.NextInFile().NextInFile().GetBitboard();
                 }
 
                 if(square.GetRank() == Rank._8)
                 {
-                    BlackAttackBitboards[square.GetValue()] = BitboardExtensions.Empty;
-                    BlackReachBitboards[square.GetValue()] = BitboardExtensions.Empty;
+                    AttackBitboards[Colour.Black.Value(), square.GetValue()] = BitboardExtensions.Empty;
+                    ReachBitboards[Colour.Black.Value(), square.GetValue()] = BitboardExtensions.Empty;
                 }
                 else
                 {
-                    BlackAttackBitboards[square.GetValue()] = BitboardExtensions.FromSquares(square.PreviousInDiagonal(), square.PreviousInAntiDiagonal());
-                    BlackReachBitboards[square.GetValue()] = square.PreviousInFile().GetBitboard();
+                    AttackBitboards[Colour.Black.Value(), square.GetValue()] = BitboardExtensions.FromSquares(square.PreviousInDiagonal(), square.PreviousInAntiDiagonal());
+                    ReachBitboards[Colour.Black.Value(), square.GetValue()] = square.PreviousInFile().GetBitboard();
                 }
 
                 if(square.GetRank() == Rank._7)
                 {
-                    BlackReachBitboards[square.GetValue()] |= square.PreviousInFile().PreviousInFile().GetBitboard();
+                    ReachBitboards[Colour.Black.Value(),square.GetValue()] |= square.PreviousInFile().PreviousInFile().GetBitboard();
                 }
             }
         }

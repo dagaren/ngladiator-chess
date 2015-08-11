@@ -7,8 +7,8 @@
     <ProjectGuid>{6B338A18-2ED6-47D8-9E4C-048F3641508C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Representation.Bitboard</RootNamespace>
-    <AssemblyName>Representation.Bitboard</AssemblyName>
+    <RootNamespace>Gladiator.Representation.Bitboard</RootNamespace>
+    <AssemblyName>Gladiator.Representation.Bitboard</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -46,6 +46,7 @@
     <Compile Include="BitboardRookMoveGenerator.cs" />
     <Compile Include="DirectionBitboards.cs" />
     <Compile Include="FileExtensions.cs" />
+    <Compile Include="InCheckPositionValidator.cs" />
     <Compile Include="KingBitboards.cs" />
     <Compile Include="KnightBitboards.cs" />
     <Compile Include="PawnBitboards.cs" />
