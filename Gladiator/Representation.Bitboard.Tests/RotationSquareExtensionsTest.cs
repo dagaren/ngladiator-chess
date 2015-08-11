@@ -114,9 +114,6 @@ namespace Gladiator.Tests.Representation.Bitboard
 
             ulong mask = square.DiagonalRotatedMask();
 
-            Console.WriteLine(expected.Format());
-            Console.WriteLine(mask.Format());
-
             Assert.AreEqual(expected, mask);
         }
 
@@ -137,9 +134,6 @@ namespace Gladiator.Tests.Representation.Bitboard
                              );
 
             ulong mask = square.AntidiagonalRotatedMask();
-
-            Console.WriteLine(expected.Format());
-            Console.WriteLine(mask.Format());
 
             Assert.AreEqual(expected, mask);
         }

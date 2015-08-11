@@ -36,6 +36,7 @@ namespace Gladiator.Communication.XBoard
 
                 Console.WriteLine("Making move " + move.Format());
                 ConsoleExtensions.WriteLineColoured("Position turn: " + this.position.Turn.ToString(), ConsoleColor.Green);
+                ConsoleExtensions.WriteLineColoured("En passant square " + this.position.EnPassantSquare, ConsoleColor.Yellow);
                 this.position.Board.WriteConsolePretty();
             }
             catch(Exception)

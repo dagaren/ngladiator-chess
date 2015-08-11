@@ -8,6 +8,8 @@ namespace Gladiator.Representation
 
         Colour Turn { get; set; }
 
+        Square EnPassantSquare { get; set; }
+
         void SetCastlingRight(CastlingType type, Colour color, bool enabled);
 
         bool GetCastlingRight(CastlingType type, Colour color);

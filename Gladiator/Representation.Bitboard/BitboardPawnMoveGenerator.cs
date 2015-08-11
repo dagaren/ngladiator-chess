@@ -32,6 +32,8 @@ namespace Gladiator.Representation.Bitboard
                                                       .ShiftLeft(8).And(Rank._5.GetBitboard())); 
             }
 
+            attackedBitboard |= position.EnPassantSquare.GetBitboard();
+
             return attackedBitboard;
         }
 

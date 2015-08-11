@@ -268,5 +268,83 @@ namespace Gladiator.Representation.Bitboard.Tests
 
             TestMoveGenerator(moveGenerator, expectedMoves, position);
         }
+
+        [TestMethod]
+        public void GetMoves_WhitePawnWithEnPassantSquare_EnPassantCaptureReturned()
+        {
+            Square square = Square.e5;
+            List<Move> expectedMoves = new MoveListBuilder()
+                                                .AddMove(square, Square.e6)
+                                                .AddMove(square, Square.d6)
+                                                .Build();
+
+            var moveGenerator = new BitboardPawnMoveGenerator<Position<BitboardBoard>>();
+            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
+                                                .SetTurn(Colour.White)
+                                                .PutPiece(ColouredPiece.WhitePawn, square)
+                                                .PutPiece(ColouredPiece.BlackPawn, Square.d5)
+                                                .SetEnPassantSquare(Square.d6)
+                                                .Build();
+
+            TestMoveGenerator(moveGenerator, expectedMoves, position);
+        }
+
+        [TestMethod]
+        public void GetMoves_BlackPawnWithEnPassantSquare_EnPassantCaptureReturned()
+        {
+            Square square = Square.e4;
+            List<Move> expectedMoves = new MoveListBuilder()
+                                                .AddMove(square, Square.e3)
+                                                .AddMove(square, Square.d3)
+                                                .Build();
+
+            var moveGenerator = new BitboardPawnMoveGenerator<Position<BitboardBoard>>();
+            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
+                                                .SetTurn(Colour.Black)
+                                                .PutPiece(ColouredPiece.BlackPawn, square)
+                                                .PutPiece(ColouredPiece.WhitePawn, Square.d4)
+                                                .SetEnPassantSquare(Square.d3)
+                                                .Build();
+
+            TestMoveGenerator(moveGenerator, expectedMoves, position);
+        }
+
+        [TestMethod]
+        public void GetMoves_WhitePawnNoEnPassantSquare_EnPassantCaptureNotReturned()
+        {
+            Square square = Square.e5;
+            List<Move> expectedMoves = new MoveListBuilder()
+                                                .AddMove(square, Square.e6)
+                                                .Build();
+
+            var moveGenerator = new BitboardPawnMoveGenerator<Position<BitboardBoard>>();
+            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
+                                                .SetTurn(Colour.White)
+                                                .PutPiece(ColouredPiece.WhitePawn, square)
+                                                .PutPiece(ColouredPiece.BlackPawn, Square.d5)
+                                                .SetEnPassantSquare(Square.None)
+                                                .Build();
+
+            TestMoveGenerator(moveGenerator, expectedMoves, position);
+        }
+
+        [TestMethod]
+        public void GetMoves_BlackPawnNoEnPassantSquare_EnPassantCaptureNotReturned()
+        {
+            Square square = Square.e4;
+            List<Move> expectedMoves = new MoveListBuilder()
+                                                .AddMove(square, Square.e3)
+                                                .Build();
+
+            var moveGenerator = new BitboardPawnMoveGenerator<Position<BitboardBoard>>();
+            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
+                                                .SetTurn(Colour.Black)
+                                                .PutPiece(ColouredPiece.BlackPawn, square)
+                                                .PutPiece(ColouredPiece.WhitePawn, Square.d4)
+                                                .SetEnPassantSquare(Square.None)
+                                                .Build();
+
+            TestMoveGenerator(moveGenerator, expectedMoves, position);
+        }
     }
 }

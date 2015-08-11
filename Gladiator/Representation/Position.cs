@@ -10,6 +10,8 @@ namespace Gladiator.Representation
 
         public Colour Turn { get; set; }
 
+        public Square EnPassantSquare { get; set; }
+
         private IMoveGenerator<Position<TBoard>, TBoard> moveGenerator;
 
         private readonly bool[,] castlingRights = new bool[2,2];
@@ -22,6 +24,7 @@ namespace Gladiator.Representation
             this.Board = board;
             this.moveGenerator = moveGenerator;
             this.Turn = Colour.White;
+            this.EnPassantSquare = Square.None;
             SetCastlingRight(CastlingType.Long, Colour.Black, false);
             SetCastlingRight(CastlingType.Long, Colour.White, false);
             SetCastlingRight(CastlingType.Short, Colour.Black, false);
@@ -70,10 +73,29 @@ namespace Gladiator.Representation
                 this.Board.PutPiece(move.Promotion.GetColoured(this.Turn), move.Destination);
             }
 
-            if(sourcePiece.GetPiece() == Piece.King)
+            HandleCastling(move, sourcePiece, destinationPiece);
+
+            HandleEnPassant(move, sourcePiece);
+
+            this.Turn = this.Turn.Opponent();
+        }
+
+        private void HandleEnPassant(Move move, ColouredPiece sourcePiece)
+        {
+            if (sourcePiece.GetPiece() == Piece.Pawn && move.Destination == EnPassantSquare)
+            {
+                this.Board.RemovePiece(PawnExtensions.EnPassantCapturedPawnSquare[move.Destination.GetValue()]);
+            }
+
+            this.EnPassantSquare = move.EnPassantSquareGenerated(sourcePiece);
+        }
+
+        private void HandleCastling(Move move, ColouredPiece sourcePiece, ColouredPiece destinationPiece)
+        {
+            if (sourcePiece.GetPiece() == Piece.King)
             {
                 CastlingType castlingType = move.Castling(sourcePiece);
-                if(castlingType != CastlingType.None)
+                if (castlingType != CastlingType.None)
                 {
                     this.Board.RemovePiece(CastlingTypeExtensions.RookSourceSquare(castlingType, sourcePiece.GetColour()));
                     this.Board.PutPiece(
@@ -84,21 +106,21 @@ namespace Gladiator.Representation
                 this.SetCastlingRight(CastlingType.Long, sourcePiece.GetColour(), false);
                 this.SetCastlingRight(CastlingType.Short, sourcePiece.GetColour(), false);
             }
-            else if(sourcePiece.GetPiece() == Piece.Rook)
+            else if (sourcePiece.GetPiece() == Piece.Rook)
             {
-                if(move.Source == CastlingType.Short.RookSourceSquare(sourcePiece.GetColour()))
+                if (move.Source == CastlingType.Short.RookSourceSquare(sourcePiece.GetColour()))
                 {
                     this.SetCastlingRight(CastlingType.Short, sourcePiece.GetColour(), false);
                 }
-                else if(move.Source == CastlingType.Long.RookSourceSquare(sourcePiece.GetColour()))
+                else if (move.Source == CastlingType.Long.RookSourceSquare(sourcePiece.GetColour()))
                 {
                     this.SetCastlingRight(CastlingType.Long, sourcePiece.GetColour(), false);
                 }
             }
 
-            if(destinationPiece.GetPiece() == Piece.Rook)
+            if (destinationPiece.GetPiece() == Piece.Rook)
             {
-                if(move.Destination == CastlingType.Short.RookSourceSquare(sourcePiece.GetColour().Opponent()))
+                if (move.Destination == CastlingType.Short.RookSourceSquare(sourcePiece.GetColour().Opponent()))
                 {
                     this.SetCastlingRight(CastlingType.Short, sourcePiece.GetColour().Opponent(), false);
                 }
@@ -107,8 +129,6 @@ namespace Gladiator.Representation
                     this.SetCastlingRight(CastlingType.Long, sourcePiece.GetColour().Opponent(), false);
                 }
             }
-
-            this.Turn = this.Turn.Opponent();
         }
 
         private void ValidateMove(Move move)

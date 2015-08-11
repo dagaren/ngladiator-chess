@@ -28,6 +28,25 @@ namespace Gladiator.Representation
             return CastlingType.None;
         }
 
+        public static Square EnPassantSquareGenerated(this Move move, ColouredPiece sourcePiece)
+        {
+            if(sourcePiece.GetPiece() == Piece.Pawn &&
+                PawnExtensions.EnPassantSourceRanks[sourcePiece.GetColour().Value()] == move.Source.GetRank() &&
+                PawnExtensions.EnPassantDestinationRanks[sourcePiece.GetColour().Value()] == move.Destination.GetRank())
+            {
+                if(sourcePiece.GetColour() == Colour.White)
+                {
+                    return move.Destination.PreviousInFile();
+                }
+                else
+                {
+                    return move.Destination.NextInFile();
+                }
+            }
+
+            return Square.None;
+        }
+
         public static Move GenerateCastling(CastlingType type, Colour colour)
         {
             return new Move()

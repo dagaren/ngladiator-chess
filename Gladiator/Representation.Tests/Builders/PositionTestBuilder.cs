@@ -42,6 +42,13 @@ namespace Gladiator.Representation.Tests.Builders
             return this;
         }
 
+        public PositionTestBuilder WithEnPassantSquare(Square square)
+        {
+            this.position.EnPassantSquare = square;
+
+            return this;
+        }
+
         public PositionTestBuilder WithCastlingRight(CastlingType type, Colour colour, bool enabled)
         {
             this.position.SetCastlingRight(type, colour, enabled);

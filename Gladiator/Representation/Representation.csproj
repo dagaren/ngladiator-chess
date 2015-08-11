@@ -51,6 +51,7 @@
     <Compile Include="Notation\AlgebraicCoordinateParser.cs" />
     <Compile Include="Notation\ColouredPieceFormatExtensions.cs" />
     <Compile Include="Notation\IMoveParser.cs" />
+    <Compile Include="PawnExtensions.cs" />
     <Compile Include="Piece.cs" />
     <Compile Include="PieceExtensions.cs" />
     <Compile Include="Position.cs" />

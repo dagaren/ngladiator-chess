@@ -43,8 +43,7 @@ namespace Gladiator.Tests.Representation.Bitboard
                              );
 
             ulong result = bitboard.Rotate90DegreesRight();
-            Console.WriteLine(expected.Format());
-            Console.WriteLine(result.Format());
+            
             Assert.AreEqual(expected, result);
         }
 

@@ -87,9 +87,6 @@ namespace Gladiator.Tests.Representation.Bitboard
 
             ulong resultBitboard = square.TopLeftBitboard();
 
-            Console.WriteLine(expectedBitboard.Format());
-            Console.WriteLine(resultBitboard.Format());
-
             Assert.AreEqual(expectedBitboard, resultBitboard);
         }
 

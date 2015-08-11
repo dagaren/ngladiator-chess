@@ -71,6 +71,48 @@ namespace Gladiator.Representation.Tests
         }
 
         [TestMethod]
+        public void DoMove_EnPassantCaptureMove_Ok()
+        {
+            Move validMove = new Move(Square.e5, Square.d6);
+            Position<SimpleBoard> position = new PositionTestBuilder()
+                .WithPieceInSquare(ColouredPiece.WhitePawn, Square.e5)
+                .WithPieceInSquare(ColouredPiece.BlackPawn, Square.d5)
+                .WithTurn(Colour.White)
+                .WithValidMoves(validMove)
+                .WithEnPassantSquare(Square.d6)
+                .Build();
+
+            bool exceptionThrown = TryDoMove(position, validMove);
+
+            Assert.AreEqual(ColouredPiece.WhitePawn, position.Board.GetPiece(validMove.Destination));
+            Assert.AreEqual(ColouredPiece.None, position.Board.GetPiece(Square.e5));
+            Assert.AreEqual(ColouredPiece.None, position.Board.GetPiece(validMove.Source));
+            Assert.AreEqual(Square.None, position.EnPassantSquare);
+            Assert.IsFalse(exceptionThrown);
+            Assert.AreEqual(Colour.Black, position.Turn);
+        }
+
+        [TestMethod]
+        public void DoMove_PawnTwoSquaresAdvance_EnPassantSquareUpdated()
+        {
+            Move validMove = new Move(Square.d2, Square.d4);
+            Position<SimpleBoard> position = new PositionTestBuilder()
+                .WithPieceInSquare(ColouredPiece.WhitePawn, Square.d2)
+                .WithTurn(Colour.White)
+                .WithValidMoves(validMove)
+                .WithEnPassantSquare(Square.None)
+                .Build();
+
+            bool exceptionThrown = TryDoMove(position, validMove);
+
+            Assert.AreEqual(ColouredPiece.WhitePawn, position.Board.GetPiece(validMove.Destination));
+            Assert.AreEqual(ColouredPiece.None, position.Board.GetPiece(validMove.Source));
+            Assert.AreEqual(Square.d3, position.EnPassantSquare);
+            Assert.IsFalse(exceptionThrown);
+            Assert.AreEqual(Colour.Black, position.Turn);
+        }
+
+        [TestMethod]
         public void DoMove_InvalidMove_ArgumentExceptionExpected()
         {
             Move invalidMove = new Move(Square.d1, Square.e1);
