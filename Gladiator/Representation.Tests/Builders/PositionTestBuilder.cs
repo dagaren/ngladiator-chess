@@ -12,13 +12,16 @@ namespace Gladiator.Representation.Tests.Builders
 
         private IMoveGenerator<IPosition<SimpleBoard>, SimpleBoard> moveGenerator;
 
+        private IPositionValidator<IPosition<SimpleBoard>, SimpleBoard> positionValidator;
+
         private Position<SimpleBoard> position;
 
         public PositionTestBuilder()
         {
             this.board = new SimpleBoard();
             this.moveGenerator = Substitute.For<IMoveGenerator<IPosition<SimpleBoard>, SimpleBoard>>();
-            this.position = new Position<SimpleBoard>(board, moveGenerator);
+            this.positionValidator = Substitute.For<IPositionValidator<IPosition<SimpleBoard>, SimpleBoard>>();
+            this.position = new Position<SimpleBoard>(this.board, this.moveGenerator, this.positionValidator);
         }
 
         public PositionTestBuilder WithPieceInSquare(ColouredPiece piece, Square square)

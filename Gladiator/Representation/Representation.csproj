@@ -43,12 +43,15 @@
     <Compile Include="CompositeMoveGenerator.cs" />
     <Compile Include="File.cs" />
     <Compile Include="FileExtensions.cs" />
+    <Compile Include="FullMove.cs" />
     <Compile Include="IBoard.cs" />
+    <Compile Include="IBoardExtensions.cs" />
     <Compile Include="IMoveGenerator.cs" />
     <Compile Include="IPosition.cs" />
     <Compile Include="IPositionValidator.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="MoveExtensions.cs" />
+    <Compile Include="MoveSearchType.cs" />
     <Compile Include="Notation\AlgebraicCoordinateParser.cs" />
     <Compile Include="Notation\ColouredPieceFormatExtensions.cs" />
     <Compile Include="Notation\IMoveParser.cs" />

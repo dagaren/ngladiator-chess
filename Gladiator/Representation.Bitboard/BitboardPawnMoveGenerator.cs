@@ -22,6 +22,11 @@ namespace Gladiator.Representation.Bitboard
                 attackedBitboard = attackedBitboard.Unset(position.Board.occupation
                                                       .Unset(position.Board.pieceOccupation[piece.GetColour().Value()])
                                                       .ShiftRight(8).And(Rank._4.GetBitboard())); 
+
+                if(source == position.EnPassantSquare.PreviousInDiagonal() || source == position.EnPassantSquare.PreviousInAntiDiagonal())
+                {
+                    attackedBitboard |= position.EnPassantSquare.GetBitboard();
+                }
             }
             else if(piece == ColouredPiece.BlackPawn)
             {
@@ -29,11 +34,14 @@ namespace Gladiator.Representation.Bitboard
                 attackedBitboard |= PawnBitboards.ReachBitboards[Colour.Black.Value(), source.GetValue()].And(position.Board.occupation.Inverse());
                 attackedBitboard = attackedBitboard.Unset(position.Board.occupation
                                                       .Unset(position.Board.pieceOccupation[piece.GetColour().Value()])
-                                                      .ShiftLeft(8).And(Rank._5.GetBitboard())); 
+                                                      .ShiftLeft(8).And(Rank._5.GetBitboard()));
+
+                if (source == position.EnPassantSquare.NextInDiagonal() || source == position.EnPassantSquare.NextInAntiDiagonal())
+                {
+                    attackedBitboard |= position.EnPassantSquare.GetBitboard();
+                }
             }
-
-            attackedBitboard |= position.EnPassantSquare.GetBitboard();
-
+            
             return attackedBitboard;
         }
 

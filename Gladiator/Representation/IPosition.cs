@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Gladiator.Representation
 {
@@ -14,6 +15,10 @@ namespace Gladiator.Representation
 
         bool GetCastlingRight(CastlingType type, Colour color);
 
-        void DoMove(Move move);
+        FullMove DoMove(Move move);
+
+        void UndoMove(FullMove move);
+
+        IEnumerable<Move> GetMoves(MoveSearchType searchType);
     }
 }

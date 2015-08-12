@@ -17,10 +17,10 @@ namespace Gladiator.Representation.Bitboard
             Square kingSquare = position.Board.pieceOccupation[Piece.King.GetColoured(opponent).GetValue()]
                                     .FirstSquareScan();
 
-            ulong diagonalAttack = SlidingBitboards.GetDiagonalAttack(kingSquare, position.Board.colourOccupation[turn.Value()] | kingSquare.GetBitboard()) |
-                                   SlidingBitboards.GetAntidiagonalAttack(kingSquare, position.Board.colourOccupation[turn.Value()] | kingSquare.GetBitboard());
-            ulong linearAttack = SlidingBitboards.GetFileAttack(kingSquare, position.Board.colourOccupation[turn.Value()] | kingSquare.GetBitboard()) |
-                                 SlidingBitboards.GetRankAttack(kingSquare, position.Board.colourOccupation[turn.Value()] | kingSquare.GetBitboard());
+            ulong diagonalAttack = SlidingBitboards.GetDiagonalAttack(kingSquare, position.Board.occupation) |
+                                   SlidingBitboards.GetAntidiagonalAttack(kingSquare, position.Board.occupation);
+            ulong linearAttack = SlidingBitboards.GetFileAttack(kingSquare, position.Board.occupation) |
+                                 SlidingBitboards.GetRankAttack(kingSquare, position.Board.occupation);
 
             if(diagonalAttack != BitboardExtensions.Empty)
             {

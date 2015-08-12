@@ -2,6 +2,8 @@
 using Gladiator.Representation.Notation;
 using Gladiator.Utils;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Gladiator.Communication.XBoard
 {
@@ -30,7 +32,9 @@ namespace Gladiator.Communication.XBoard
 
         public void Execute()
         {
-            try
+            IEnumerable<Move> legalMoves = this.position.GetMoves(MoveSearchType.LegalMoves);
+
+            if(legalMoves.Contains(this.move))
             {
                 this.position.DoMove(this.move);
 
@@ -39,7 +43,7 @@ namespace Gladiator.Communication.XBoard
                 ConsoleExtensions.WriteLineColoured("En passant square " + this.position.EnPassantSquare, ConsoleColor.Yellow);
                 this.position.Board.WriteConsolePretty();
             }
-            catch(Exception)
+            else
             {
                 this.illegalMoveAction(this.move, string.Empty);
             }

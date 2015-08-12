@@ -8,12 +8,15 @@ namespace Gladiator.Representation.Tests.Builders
     {
         private Position<TBoard> position;
 
-        public PositionBuilder(TBoard board, IMoveGenerator<Position<TBoard>, TBoard> moveGenerator)
+        public PositionBuilder(TBoard board, 
+                               IMoveGenerator<Position<TBoard>, TBoard> moveGenerator,
+                               IPositionValidator<Position<TBoard>, TBoard> positionValidator)
         {
             Check.ArgumentNotNull(board, "board");
             Check.ArgumentNotNull(moveGenerator, "moveGenerator");
+            Check.ArgumentNotNull(positionValidator, "positionValidator");
 
-            this.position = new Position<TBoard>(board, moveGenerator);
+            this.position = new Position<TBoard>(board, moveGenerator, positionValidator);
         }
 
         public PositionBuilder<TBoard> SetTurn(Colour turn)

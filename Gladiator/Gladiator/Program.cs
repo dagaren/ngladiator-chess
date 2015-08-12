@@ -52,9 +52,10 @@ namespace Gladiator
                 queenMoveGenerator,
                 pawnMoveGenerator
             };
+            IPositionValidator<Position<BitboardBoard>, BitboardBoard> positionValidator = new InCheckPositionValidator<Position<BitboardBoard>>();
             var compositeMoveGenerator = new CompositeMoveGenerator<Position<BitboardBoard>, BitboardBoard>(moveGenerators);
             BitboardBoard board = new BitboardBoard();
-            var position = new Position<BitboardBoard>(board, compositeMoveGenerator);
+            var position = new Position<BitboardBoard>(board, compositeMoveGenerator, positionValidator);
             position.Board.PutPiece(ColouredPiece.WhiteKing, Square.e1);
             position.Board.PutPiece(ColouredPiece.BlackKing, Square.e8);
             position.Board.PutPiece(ColouredPiece.WhiteKnight, Square.b1);
@@ -91,6 +92,7 @@ namespace Gladiator
             position.SetCastlingRight(CastlingType.Long, Colour.White, true);
             position.SetCastlingRight(CastlingType.Short, Colour.White, true);
             position.SetCastlingRight(CastlingType.Short, Colour.Black, true);
+            position.EnPassantSquare = Square.None;
 
             var illegalMoveCommand = new IllegalMoveCommand(commandWriter);
             var featureCommand  = new FeatureCommand(commandWriter);
