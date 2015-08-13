@@ -38,10 +38,10 @@ namespace Gladiator.Communication.XBoard
             {
                 this.position.DoMove(this.move);
 
-                Console.WriteLine("Making move " + move.Format());
-                ConsoleExtensions.WriteLineColoured("Position turn: " + this.position.Turn.ToString(), ConsoleColor.Green);
-                ConsoleExtensions.WriteLineColoured("En passant square " + this.position.EnPassantSquare, ConsoleColor.Yellow);
-                this.position.Board.WriteConsolePretty();
+                //Console.WriteLine("Making move " + move.Format());
+                //ConsoleExtensions.WriteLineColoured("Position turn: " + this.position.Turn.ToString(), ConsoleColor.Green);
+                //ConsoleExtensions.WriteLineColoured("En passant square " + this.position.EnPassantSquare, ConsoleColor.Yellow);
+                //this.position.Board.WriteConsolePretty();
             }
             else
             {

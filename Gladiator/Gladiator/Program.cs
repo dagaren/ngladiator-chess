@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Gladiator.Utils.Reflection;
 using Gladiator.Communication.XBoard.Output;
+using Gladiator.Utils;
+using System.IO;
 
 namespace Gladiator
 {
@@ -18,12 +20,14 @@ namespace Gladiator
             Initialize();
 
             IController controller = GetController();
-
+            
             controller.Run();
         }
 
         private static IController GetController()
         {
+            string commandLogPath = Path.Combine(EnvironmentExtensions.GetExecutablePath(), "CommandLog.txt");
+
             IDictionary<string, object> container = new Dictionary<string, object>();
             IConstructorRetriever constructorRetriever = new SingleConstructorRetriever();
             IConstructorInvoker constructorInvoker = new ConstructorInvoker();
@@ -32,10 +36,21 @@ namespace Gladiator
             commandMatchers.Add(new XBoardCommandMatcher(commandFactory));
             commandMatchers.Add(new QuitCommandMatcher(commandFactory));
             commandMatchers.Add(new MoveCommandMatcher(commandFactory));
+            commandMatchers.Add(new LevelCommandMatcher(commandFactory));
+            commandMatchers.Add(new MoveNowCommandMatcher(commandFactory));
+            commandMatchers.Add(new ForceCommandMatcher(commandFactory));
+            commandMatchers.Add(new PostCommandMatcher(commandFactory));
+            commandMatchers.Add(new NoPostCommandMatcher(commandFactory));
+            commandMatchers.Add(new EasyCommandMatcher(commandFactory));
+            commandMatchers.Add(new HardCommandMatcher(commandFactory));
             commandMatchers.Add(new ProtoverCommandMatcher(commandFactory));
+            commandMatchers.Add(new AcceptedCommandMatcher(commandFactory));
+            commandMatchers.Add(new RejectedCommandMatcher(commandFactory));
+            commandMatchers.Add(new NewCommandMatcher(commandFactory));
+            commandMatchers.Add(new RandomCommandMatcher(commandFactory));
             commandMatchers.Add(new UnknownCommandCommandMatcher(commandFactory));
-            ICommandReader commandReader = new ConsoleCommandReader();
-            ICommandWriter commandWriter = new ConsoleCommandWriter();
+            ICommandReader commandReader = new LoggedCommandReader(commandLogPath, new ConsoleCommandReader());
+            ICommandWriter commandWriter = new LoggedCommandWriter(commandLogPath, new  ConsoleCommandWriter());
             IProtocol protocol = new XBoardProtocol(commandMatchers);
             var controller = new Controller(commandReader, commandWriter, protocol);
             var kingMoveGenerator = new BitboardKingMoveGenerator<Position<BitboardBoard>>();
@@ -104,8 +119,6 @@ namespace Gladiator
             container["commandWriter"] = commandWriter;
             container["featureCommandAction"] = new Action(featureCommand.Execute);
             container["errorAction"] = new Action<string, string>(errorCommand.Execute);
-
-            position.Board.WriteConsolePretty();
 
             return controller;
         }
