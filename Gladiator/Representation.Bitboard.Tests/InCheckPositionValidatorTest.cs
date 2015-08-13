@@ -151,6 +151,30 @@ namespace Gladiator.Representation.Bitboard.Tests
             TestKingAttackedByPawn(Colour.Black, Colour.Black, true);
         }
 
+        [TestMethod]
+        public void IsValid_WhiteKingWithPawnInterceptingRookAttack_ValidExpected()
+        {
+            TestkKingXRayLinearAttack(Colour.White);
+        }
+
+        [TestMethod]
+        public void IsValid_WhiteKingWithPawnInterceptingBishopAttack_ValidExpected()
+        {
+            TestkKingXRayDiagonalAttack(Colour.White);
+        }
+
+        [TestMethod]
+        public void IsValid_BlackKingWithPawnInterceptingRookAttack_ValidExpected()
+        {
+            TestkKingXRayLinearAttack(Colour.Black);
+        }
+
+        [TestMethod]
+        public void IsValid_BlackKingWithPawnInterceptingBishopAttack_ValidExpected()
+        {
+            TestkKingXRayDiagonalAttack(Colour.Black);
+        }
+
         private void TestKingAttackedByQueen(Colour colour, Colour turn, bool isValidExpected)
         {
             TestKingAttackedByPiece(colour, turn, Piece.Queen, Square.e8, isValidExpected);
@@ -231,6 +255,40 @@ namespace Gladiator.Representation.Bitboard.Tests
             bool isValid = validator.IsValid(position);
 
             Assert.AreEqual(isValidExpected, isValid);
+        }
+
+        private void TestkKingXRayLinearAttack(Colour colour)
+        {
+            var validator = new InCheckPositionValidator<Position<BitboardBoard>>();
+
+            Position<BitboardBoard> position = new BitboardPositionBuilder()
+                                                .SetTurn(colour)
+                                                .PutPiece(Piece.King.GetColoured(colour), Square.e2)
+                                                .PutPiece(Piece.King.GetColoured(colour.Opponent()), Square.a1)
+                                                .PutPiece(Piece.Rook.GetColoured(colour.Opponent()), Square.e8)
+                                                .PutPiece(Piece.Pawn.GetColoured(colour), Square.e4)
+                                                .Build();
+
+            bool isValid = validator.IsValid(position);
+
+            Assert.IsTrue(isValid);
+        }
+
+        private void TestkKingXRayDiagonalAttack(Colour colour)
+        {
+            var validator = new InCheckPositionValidator<Position<BitboardBoard>>();
+
+            Position<BitboardBoard> position = new BitboardPositionBuilder()
+                                                .SetTurn(colour)
+                                                .PutPiece(Piece.King.GetColoured(colour), Square.c2)
+                                                .PutPiece(Piece.King.GetColoured(colour.Opponent()), Square.a1)
+                                                .PutPiece(Piece.Bishop.GetColoured(colour.Opponent()), Square.h7)
+                                                .PutPiece(Piece.Pawn.GetColoured(colour), Square.e4)
+                                                .Build();
+
+            bool isValid = validator.IsValid(position);
+
+            Assert.IsTrue(isValid);
         }
     }
 }
