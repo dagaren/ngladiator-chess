@@ -36,16 +36,23 @@
   <ItemGroup>
     <Compile Include="AcceptedCommand.cs" />
     <Compile Include="AcceptedCommandMatcher.cs" />
+    <Compile Include="ComputerCommand.cs" />
+    <Compile Include="ComputerCommandMatcher.cs" />
+    <Compile Include="DrawCommand.cs" />
+    <Compile Include="DrawCommandMatcher.cs" />
     <Compile Include="EasyCommand.cs" />
     <Compile Include="EasyCommandMatcher.cs" />
     <Compile Include="ForceCommand.cs" />
     <Compile Include="ForceCommandMatcher.cs" />
+    <Compile Include="GoCommand.cs" />
+    <Compile Include="GoCommandMatcher.cs" />
     <Compile Include="HardCommand.cs" />
     <Compile Include="HardCommandMatcher.cs" />
     <Compile Include="LevelCommand.cs" />
     <Compile Include="LevelCommandMatcher.cs" />
-    <Compile Include="MoveCommand.cs" />
-    <Compile Include="MoveCommandMatcher.cs" />
+    <Compile Include="Output\MoveCommand.cs" />
+    <Compile Include="UserMoveCommand.cs" />
+    <Compile Include="UserMoveCommandMatcher.cs" />
     <Compile Include="MoveNowCommand.cs" />
     <Compile Include="MoveNowCommandMatcher.cs" />
     <Compile Include="NewCommand.cs" />
@@ -58,6 +65,8 @@
     <Compile Include="Output\FeatureNames.cs" />
     <Compile Include="Output\IllegalMoveCommand.cs" />
     <Compile Include="Output\OutputCommand.cs" />
+    <Compile Include="PlayOtherCommand.cs" />
+    <Compile Include="PlayOtherCommandMatcher.cs" />
     <Compile Include="PostCommand.cs" />
     <Compile Include="PostCommandMatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -69,6 +78,8 @@
     <Compile Include="RandomCommandMatcher.cs" />
     <Compile Include="RejectedCommand.cs" />
     <Compile Include="RejectedCommandMatcher.cs" />
+    <Compile Include="ResultCommand.cs" />
+    <Compile Include="ResultCommandMatcher.cs" />
     <Compile Include="UnknownCommandCommand.cs" />
     <Compile Include="UnknownCommandCommandMatcher.cs" />
     <Compile Include="XBoardCommand.cs" />
@@ -79,6 +90,10 @@
     <ProjectReference Include="..\Communication\Communication.csproj">
       <Project>{6d4b2ce5-a69e-45e7-9774-6d41c0ba84f1}</Project>
       <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{8ef8134e-2545-499d-a57e-0eb1a8525b00}</Project>
+      <Name>Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Representation\Representation.csproj">
       <Project>{4de8eda6-ef80-47ae-8f68-b62c5d22f26f}</Project>

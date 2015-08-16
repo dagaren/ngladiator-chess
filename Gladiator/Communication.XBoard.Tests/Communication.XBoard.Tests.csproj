@@ -53,8 +53,20 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="MoveCommandMatcherTest.cs" />
-    <Compile Include="MoveCommandTest.cs" />
+    <Compile Include="ComputerCommandMatcherTest.cs" />
+    <Compile Include="DrawCommandMatcherTest.cs" />
+    <Compile Include="ForceCommandMatcherTest.cs" />
+    <Compile Include="ForceCommandTest.cs" />
+    <Compile Include="GoCommandMatcherTest.cs" />
+    <Compile Include="GoCommandTest.cs" />
+    <Compile Include="NewCommandMatcherTest.cs" />
+    <Compile Include="NewCommandTest.cs" />
+    <Compile Include="PlayOtherCommandMatcherTest.cs" />
+    <Compile Include="PlayOtherCommandTest.cs" />
+    <Compile Include="ResultCommandMatcherTest.cs" />
+    <Compile Include="ResultCommandTest.cs" />
+    <Compile Include="UserMoveCommandMatcherTest.cs" />
+    <Compile Include="UserMoveCommandTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProtoverCommandMatcherTest.cs" />
     <Compile Include="ProtoverCommandTest.cs" />
@@ -82,9 +94,17 @@
       <Project>{6d4b2ce5-a69e-45e7-9774-6d41c0ba84f1}</Project>
       <Name>Communication</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{8ef8134e-2545-499d-a57e-0eb1a8525b00}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Representation\Representation.csproj">
       <Project>{4de8eda6-ef80-47ae-8f68-b62c5d22f26f}</Project>
       <Name>Representation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{d7877873-ebc8-4831-b69f-3504f87907c1}</Project>
+      <Name>Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

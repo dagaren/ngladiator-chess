@@ -6,7 +6,7 @@ using System;
 
 namespace Gladiator.Representation.Bitboard.Tests.Builders
 {
-    public class BitboardPositionBuilder : PositionBuilder<BitboardBoard>
+    public class BitboardPositionBuilder : Gladiator.Representation.Tests.Builders.PositionBuilder<BitboardBoard>
     {
         public BitboardPositionBuilder(
             IMoveGenerator<Position<BitboardBoard>, BitboardBoard> moveGenerator,

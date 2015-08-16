@@ -10,7 +10,7 @@ namespace Gladiator.Representation
 {
     public static class BoardExtensions
     {
-        public static string Format(this IBoard originalBoard)
+        public static string Format(this IBoard originalBoard, string prefix = "")
         {
             string[,] board = new string[8, 8];
 
@@ -35,10 +35,10 @@ namespace Gladiator.Representation
             }
 
             StringBuilder formated = new StringBuilder();
-            formated.AppendLine(" --------------------------");
+            formated.AppendLine(prefix + " --------------------------");
             for (int i = 7; i >= 0; i--)
             {
-                formated.Append(i + 1);
+                formated.Append(prefix + (i + 1));
                 formated.Append("|");
 
                 for (int j = 0; j < 8; j++)
@@ -48,8 +48,8 @@ namespace Gladiator.Representation
 
                 formated.AppendLine("|");
             }
-            formated.AppendLine(" --------------------------");
-            formated.AppendLine("   a  b  c  d  e  f  g  h");
+            formated.AppendLine(prefix + " --------------------------");
+            formated.AppendLine(prefix + "   a  b  c  d  e  f  g  h");
 
             return formated.ToString();
         }

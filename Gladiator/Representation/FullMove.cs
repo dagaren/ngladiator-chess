@@ -9,8 +9,10 @@ namespace Gladiator.Representation
             this.SourcePiece = ColouredPiece.None;
             this.DestinationPiece = ColouredPiece.None;
             this.IsInPassantCapture = false;
-            this.CancelsLongCastling = false;
-            this.CancelsShortCastling = false;
+            this.PreviousWhiteLongCastling = false;
+            this.PreviousWhiteLongCastling = false;
+            this.PreviousBlackShortCastling = false;
+            this.PreviousBlackLongCastling = false;
             this.PreviousEnPassantSquare = Square.None;
         }
 
@@ -27,9 +29,13 @@ namespace Gladiator.Representation
 
         public bool IsInPassantCapture { get; set; }
 
-        public bool CancelsLongCastling { get; set; }
+        public bool PreviousWhiteLongCastling { get; set; }
 
-        public bool CancelsShortCastling { get; set; }
+        public bool PreviousBlackLongCastling { get; set; }
+
+        public bool PreviousWhiteShortCastling { get; set; }
+
+        public bool PreviousBlackShortCastling { get; set; }
 
         public Square PreviousEnPassantSquare { get; set; }
     }

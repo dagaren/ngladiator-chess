@@ -37,8 +37,10 @@
     <Compile Include="Check.cs" />
     <Compile Include="ConsoleExtensions.cs" />
     <Compile Include="DictionaryExtensions.cs" />
+    <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="EnvironmentExtensions.cs" />
+    <Compile Include="IBuilder.cs" />
     <Compile Include="IFormatter.cs" />
     <Compile Include="IParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -112,24 +112,6 @@ namespace Gladiator.Representation.Tests
             Assert.AreEqual(Colour.Black, position.Turn);
         }
 
-        [TestMethod]
-        public void DoMove_InvalidMove_ArgumentExceptionExpected()
-        {
-            Move invalidMove = new Move(Square.d1, Square.e1);
-            Position<SimpleBoard> position = new PositionTestBuilder()
-                .WithTurn(Colour.White)
-                .WithPieceInSquare(ColouredPiece.WhiteQueen, invalidMove.Source)
-                .WithValidMoves()
-                .Build();
-
-            bool exceptionThrown = TryDoMove(position, invalidMove);
-            
-            Assert.AreEqual(ColouredPiece.WhiteQueen, position.Board.GetPiece(invalidMove.Source));
-            Assert.AreEqual(ColouredPiece.None, position.Board.GetPiece(invalidMove.Destination));
-            Assert.IsTrue(exceptionThrown);
-            Assert.AreEqual(Colour.White, position.Turn);
-        }
-
         private static bool TryDoMove(Position<SimpleBoard> position, Move move)
         {
             bool exceptionThrown = false;

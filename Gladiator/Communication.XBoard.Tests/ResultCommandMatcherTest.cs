@@ -1,38 +1,37 @@
-﻿using Gladiator.Communication;
-using Gladiator.Communication.Tests;
+﻿using Gladiator.Communication.Tests;
 using Gladiator.Communication.XBoard;
-using Gladiator.Representation;
+using Gladiator.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System;
 using System.Collections.Generic;
 
-namespace Gladiator.Communication.XBoard.Tests
+namespace Communication.XBoard.Tests
 {
     [TestClass]
-    public class MoveCommandMatcherTest
+    public class ResultCommandMatcherTest
     {
-        private CommandMatcherTester<MoveCommandMatcher, MoveCommand> tester;
+        private CommandMatcherTester<ResultCommandMatcher, ResultCommand> tester;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            this.tester = new CommandMatcherTester<MoveCommandMatcher, MoveCommand>(
-                    new MoveCommand(
-                        Substitute.For<IPosition<IBoard>>(),
-                        new Move(),
-                        Substitute.For<Action<Move, string>>()
+            this.tester = new CommandMatcherTester<ResultCommandMatcher, ResultCommand>(
+                    new ResultCommand(
+                        Substitute.For<IEngine>(),
+                        "result",
+                        "comment"
                     ),
-                    x => new MoveCommandMatcher(x));
+                    x => new ResultCommandMatcher(x));
         }
 
         [TestMethod]
         public void TestNotMatchingCommands()
         {
             this.tester.TestNotMatching(new string[]{
-                " e2e4",
-                "e2e9",
-                "e2e4l",
+                "invalid",
+                " result",
+                "result",
                 string.Empty
             });
         }
@@ -42,17 +41,19 @@ namespace Gladiator.Communication.XBoard.Tests
         {
             this.tester.TestMatching(new CommandMatching[] {
                 new CommandMatching { 
-                    CommandString = "e2e4", 
+                    CommandString = "result * ", 
                     CommandParameters = new Dictionary<string, string>() {
-                        { "move", "e2e4" }
+                       { "result", "*" },
+                       { "comment", string.Empty }
                     }
                 },
                 new CommandMatching { 
-                    CommandString = "e2e8n", 
+                    CommandString = "result 1-0 { mate } ", 
                     CommandParameters = new Dictionary<string, string>() {
-                        { "move", "e2e8n" }
+                       { "result", "1-0" },
+                       { "comment", "{ mate }" }
                     }
-                },
+                }
             });
         }
     }

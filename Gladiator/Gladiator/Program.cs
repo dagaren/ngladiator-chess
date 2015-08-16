@@ -10,6 +10,7 @@ using Gladiator.Utils.Reflection;
 using Gladiator.Communication.XBoard.Output;
 using Gladiator.Utils;
 using System.IO;
+using Gladiator.Core;
 
 namespace Gladiator
 {
@@ -32,27 +33,17 @@ namespace Gladiator
             IConstructorRetriever constructorRetriever = new SingleConstructorRetriever();
             IConstructorInvoker constructorInvoker = new ConstructorInvoker();
             ICommandFactory commandFactory = new CommandFactory(container, constructorRetriever, constructorInvoker);
-            List<ICommandMatcher<ICommand>> commandMatchers = new List<ICommandMatcher<ICommand>>();
-            commandMatchers.Add(new XBoardCommandMatcher(commandFactory));
-            commandMatchers.Add(new QuitCommandMatcher(commandFactory));
-            commandMatchers.Add(new MoveCommandMatcher(commandFactory));
-            commandMatchers.Add(new LevelCommandMatcher(commandFactory));
-            commandMatchers.Add(new MoveNowCommandMatcher(commandFactory));
-            commandMatchers.Add(new ForceCommandMatcher(commandFactory));
-            commandMatchers.Add(new PostCommandMatcher(commandFactory));
-            commandMatchers.Add(new NoPostCommandMatcher(commandFactory));
-            commandMatchers.Add(new EasyCommandMatcher(commandFactory));
-            commandMatchers.Add(new HardCommandMatcher(commandFactory));
-            commandMatchers.Add(new ProtoverCommandMatcher(commandFactory));
-            commandMatchers.Add(new AcceptedCommandMatcher(commandFactory));
-            commandMatchers.Add(new RejectedCommandMatcher(commandFactory));
-            commandMatchers.Add(new NewCommandMatcher(commandFactory));
-            commandMatchers.Add(new RandomCommandMatcher(commandFactory));
-            commandMatchers.Add(new UnknownCommandCommandMatcher(commandFactory));
+            
             ICommandReader commandReader = new LoggedCommandReader(commandLogPath, new ConsoleCommandReader());
             ICommandWriter commandWriter = new LoggedCommandWriter(commandLogPath, new  ConsoleCommandWriter());
+            List<ICommandMatcher<ICommand>> commandMatchers = GetCommandMatcheers(commandFactory);
             IProtocol protocol = new XBoardProtocol(commandMatchers);
-            var controller = new Controller(commandReader, commandWriter, protocol);
+            var controller = new Controller(commandReader, protocol);
+            controller.OnException += ex =>
+            {
+                System.IO.File.AppendAllText(commandLogPath, "=== Exception: " + ex.Message +
+                    " " + ex.StackTrace.ToString() + Environment.NewLine);
+            };
             var kingMoveGenerator = new BitboardKingMoveGenerator<Position<BitboardBoard>>();
             var knightMoveGenerator = new BitboardKnightMoveGenerator<Position<BitboardBoard>>();
             var rookMoveGenerator = new BitboardRookMoveGenerator<Position<BitboardBoard>>();
@@ -70,57 +61,52 @@ namespace Gladiator
             IPositionValidator<Position<BitboardBoard>, BitboardBoard> positionValidator = new InCheckPositionValidator<Position<BitboardBoard>>();
             var compositeMoveGenerator = new CompositeMoveGenerator<Position<BitboardBoard>, BitboardBoard>(moveGenerators);
             BitboardBoard board = new BitboardBoard();
-            var position = new Position<BitboardBoard>(board, compositeMoveGenerator, positionValidator);
-            position.Board.PutPiece(ColouredPiece.WhiteKing, Square.e1);
-            position.Board.PutPiece(ColouredPiece.BlackKing, Square.e8);
-            position.Board.PutPiece(ColouredPiece.WhiteKnight, Square.b1);
-            position.Board.PutPiece(ColouredPiece.WhiteKnight, Square.g1);
-            position.Board.PutPiece(ColouredPiece.BlackKnight, Square.b8);
-            position.Board.PutPiece(ColouredPiece.BlackKnight, Square.g8);
-            position.Board.PutPiece(ColouredPiece.WhiteRook, Square.a1);
-            position.Board.PutPiece(ColouredPiece.WhiteRook, Square.h1);
-            position.Board.PutPiece(ColouredPiece.BlackRook, Square.a8);
-            position.Board.PutPiece(ColouredPiece.BlackRook, Square.h8);
-            position.Board.PutPiece(ColouredPiece.WhiteBishop, Square.c1);
-            position.Board.PutPiece(ColouredPiece.WhiteBishop, Square.f1);
-            position.Board.PutPiece(ColouredPiece.BlackBishop, Square.c8);
-            position.Board.PutPiece(ColouredPiece.BlackBishop, Square.f8);
-            position.Board.PutPiece(ColouredPiece.WhiteQueen, Square.d1);
-            position.Board.PutPiece(ColouredPiece.BlackQueen, Square.d8);
-            position.Board.PutPiece(ColouredPiece.WhitePawn, Square.a2);
-            position.Board.PutPiece(ColouredPiece.WhitePawn, Square.b2);
-            position.Board.PutPiece(ColouredPiece.WhitePawn, Square.c2);
-            position.Board.PutPiece(ColouredPiece.WhitePawn, Square.d2);
-            position.Board.PutPiece(ColouredPiece.WhitePawn, Square.e2);
-            position.Board.PutPiece(ColouredPiece.WhitePawn, Square.f2);
-            position.Board.PutPiece(ColouredPiece.WhitePawn, Square.g2);
-            position.Board.PutPiece(ColouredPiece.WhitePawn, Square.h2);
-            position.Board.PutPiece(ColouredPiece.BlackPawn, Square.a7);
-            position.Board.PutPiece(ColouredPiece.BlackPawn, Square.b7);
-            position.Board.PutPiece(ColouredPiece.BlackPawn, Square.c7);
-            position.Board.PutPiece(ColouredPiece.BlackPawn, Square.d7);
-            position.Board.PutPiece(ColouredPiece.BlackPawn, Square.e7);
-            position.Board.PutPiece(ColouredPiece.BlackPawn, Square.f7);
-            position.Board.PutPiece(ColouredPiece.BlackPawn, Square.g7);
-            position.Board.PutPiece(ColouredPiece.BlackPawn, Square.h7);
-            position.SetCastlingRight(CastlingType.Long, Colour.White, true);
-            position.SetCastlingRight(CastlingType.Long, Colour.White, true);
-            position.SetCastlingRight(CastlingType.Short, Colour.White, true);
-            position.SetCastlingRight(CastlingType.Short, Colour.Black, true);
-            position.EnPassantSquare = Square.None;
-
+            var initialPositionBuilder = new InitialChessPositionBuilder<BitboardBoard>(compositeMoveGenerator, positionValidator);
             var illegalMoveCommand = new IllegalMoveCommand(commandWriter);
             var featureCommand  = new FeatureCommand(commandWriter);
             var errorCommand = new ErrorCommand(commandWriter);
+            var moveCommand = new MoveCommand(commandWriter);
+
+            IEngine engine = new Engine();
+            engine.OnMoveDone += moveCommand.Execute;
 
             container["illegalMoveAction"] = new Action<Move, string>(illegalMoveCommand.Execute);
             container["quitAction"] = new Action(controller.Finish);
-            container["position"] = position;
+            container["initialPositionBuilder"] = initialPositionBuilder;
             container["commandWriter"] = commandWriter;
             container["featureCommandAction"] = new Action(featureCommand.Execute);
             container["errorAction"] = new Action<string, string>(errorCommand.Execute);
+            container["engine"] = engine;
 
             return controller;
+        }
+
+        private static List<ICommandMatcher<ICommand>> GetCommandMatcheers(ICommandFactory commandFactory)
+        {
+            List<ICommandMatcher<ICommand>> commandMatchers = new List<ICommandMatcher<ICommand>>();
+            commandMatchers.Add(new XBoardCommandMatcher(commandFactory));
+            commandMatchers.Add(new QuitCommandMatcher(commandFactory));
+            commandMatchers.Add(new UserMoveCommandMatcher(commandFactory));
+            commandMatchers.Add(new LevelCommandMatcher(commandFactory));
+            commandMatchers.Add(new MoveNowCommandMatcher(commandFactory));
+            commandMatchers.Add(new ForceCommandMatcher(commandFactory));
+            commandMatchers.Add(new GoCommandMatcher(commandFactory));
+            commandMatchers.Add(new PlayOtherCommandMatcher(commandFactory));
+            commandMatchers.Add(new DrawCommandMatcher(commandFactory));
+            commandMatchers.Add(new ResultCommandMatcher(commandFactory));
+            commandMatchers.Add(new PostCommandMatcher(commandFactory));
+            commandMatchers.Add(new NoPostCommandMatcher(commandFactory));
+            commandMatchers.Add(new EasyCommandMatcher(commandFactory));
+            commandMatchers.Add(new HardCommandMatcher(commandFactory));
+            commandMatchers.Add(new ProtoverCommandMatcher(commandFactory));
+            commandMatchers.Add(new AcceptedCommandMatcher(commandFactory));
+            commandMatchers.Add(new RejectedCommandMatcher(commandFactory));
+            commandMatchers.Add(new NewCommandMatcher(commandFactory));
+            commandMatchers.Add(new RandomCommandMatcher(commandFactory));
+            commandMatchers.Add(new ComputerCommandMatcher(commandFactory));
+            commandMatchers.Add(new UnknownCommandCommandMatcher(commandFactory));
+
+            return commandMatchers;
         }
 
         private static void Initialize()

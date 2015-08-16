@@ -18,32 +18,16 @@ namespace Gladiator.Representation.Bitboard
                     continue;
                 }
 
-                if (square.GetRank() == Rank._1)
-                {
-                    AttackBitboards[Colour.White.Value(), square.GetValue()] = BitboardExtensions.Empty;
-                    ReachBitboards[Colour.White.Value(), square.GetValue()] = BitboardExtensions.Empty;
-                }
-                else
-                {
-                    AttackBitboards[Colour.White.Value(), square.GetValue()] = BitboardExtensions.FromSquares(square.NextInDiagonal(), square.NextInAntiDiagonal());
-                    ReachBitboards[Colour.White.Value(), square.GetValue()] = square.NextInFile().GetBitboard();
-                }
+                AttackBitboards[Colour.White.Value(), square.GetValue()] = BitboardExtensions.FromSquares(square.NextInDiagonal(), square.NextInAntiDiagonal());
+                ReachBitboards[Colour.White.Value(), square.GetValue()] = square.NextInFile().GetBitboard();
 
                 if(square.GetRank() == Rank._2)
                 {
                     ReachBitboards[Colour.White.Value(), square.GetValue()] |= square.NextInFile().NextInFile().GetBitboard();
                 }
 
-                if(square.GetRank() == Rank._8)
-                {
-                    AttackBitboards[Colour.Black.Value(), square.GetValue()] = BitboardExtensions.Empty;
-                    ReachBitboards[Colour.Black.Value(), square.GetValue()] = BitboardExtensions.Empty;
-                }
-                else
-                {
-                    AttackBitboards[Colour.Black.Value(), square.GetValue()] = BitboardExtensions.FromSquares(square.PreviousInDiagonal(), square.PreviousInAntiDiagonal());
-                    ReachBitboards[Colour.Black.Value(), square.GetValue()] = square.PreviousInFile().GetBitboard();
-                }
+                AttackBitboards[Colour.Black.Value(), square.GetValue()] = BitboardExtensions.FromSquares(square.PreviousInDiagonal(), square.PreviousInAntiDiagonal());
+                ReachBitboards[Colour.Black.Value(), square.GetValue()] = square.PreviousInFile().GetBitboard();
 
                 if(square.GetRank() == Rank._7)
                 {

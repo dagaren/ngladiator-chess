@@ -47,6 +47,7 @@
     <Compile Include="IBoard.cs" />
     <Compile Include="IBoardExtensions.cs" />
     <Compile Include="IMoveGenerator.cs" />
+    <Compile Include="InitialChessPositionBuilder.cs" />
     <Compile Include="IPosition.cs" />
     <Compile Include="IPositionValidator.cs" />
     <Compile Include="Move.cs" />
@@ -55,10 +56,13 @@
     <Compile Include="Notation\AlgebraicCoordinateParser.cs" />
     <Compile Include="Notation\ColouredPieceFormatExtensions.cs" />
     <Compile Include="Notation\IMoveParser.cs" />
+    <Compile Include="Notation\PieceFormatExtensions.cs" />
     <Compile Include="PawnExtensions.cs" />
     <Compile Include="Piece.cs" />
     <Compile Include="PieceExtensions.cs" />
     <Compile Include="Position.cs" />
+    <Compile Include="PositionBuilder.cs" />
+    <Compile Include="PositionExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rank.cs" />
     <Compile Include="RankExtensions.cs" />

@@ -4,9 +4,9 @@ using System.Text.RegularExpressions;
 
 namespace Gladiator.Communication.XBoard
 {
-    public class MoveCommandMatcher : CommandMatcher<MoveCommand>
+    public class UserMoveCommandMatcher : CommandMatcher<UserMoveCommand>
     {
-        public MoveCommandMatcher(ICommandFactory commandFactory)
+        public UserMoveCommandMatcher(ICommandFactory commandFactory)
             : base(
                 new Regex(@"^(usermove )?(?<move>[a-h][1-8][a-h][1-8][qrbn]?)\s*$"),
                 commandFactory)

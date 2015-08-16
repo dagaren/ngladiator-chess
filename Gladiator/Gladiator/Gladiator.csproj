@@ -66,6 +66,10 @@
       <Project>{6d4b2ce5-a69e-45e7-9774-6d41c0ba84f1}</Project>
       <Name>Communication</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{8ef8134e-2545-499d-a57e-0eb1a8525b00}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Representation.Bitboard\Representation.Bitboard.csproj">
       <Project>{6b338a18-2ed6-47d8-9e4c-048f3641508c}</Project>
       <Name>Representation.Bitboard</Name>

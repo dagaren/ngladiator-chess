@@ -1,5 +1,4 @@
 ﻿using Gladiator.Communication;
-using Gladiator.Communication;
 using Gladiator.Utils;
 using System;
 using System.Collections.Generic;
@@ -12,22 +11,22 @@ namespace Gladiator
 {
     internal class Controller : IController
     {
-        private ICommandReader commandReader;
+        public event Action<Exception> OnException;
 
-        private ICommandWriter commandWriter;
+        private ICommandReader commandReader;
 
         private IProtocol protocol;
 
         private bool exit;
 
-        public Controller(ICommandReader commandReader, ICommandWriter commandWriter, IProtocol protocol)
+        public Controller(
+            ICommandReader commandReader,  
+            IProtocol protocol)
         {
             Check.ArgumentNotNull(commandReader, "commandReader");
-            Check.ArgumentNotNull(commandWriter, "commandWriter");
             Check.ArgumentNotNull(protocol, "protocol");
 
             this.commandReader = commandReader;
-            this.commandWriter = commandWriter;
             this.protocol = protocol;
         }
 
@@ -45,7 +44,7 @@ namespace Gladiator
                 }
                 catch(Exception ex)
                 {
-                    ConsoleExtensions.WriteLineColoured(string.Format("==> Exception catched processing command: {0}", ex.Message), ConsoleColor.Red);
+                    OnException(ex);
                 }
             }
         }

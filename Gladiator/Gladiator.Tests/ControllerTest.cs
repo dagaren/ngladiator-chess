@@ -17,11 +17,10 @@ namespace Gladiator.Tests
         public void Run_XboardCommandReceived_CommandRecognized()
         {
             ICommandReader commandReaderMock = Substitute.For<ICommandReader>();
-            ICommandWriter commandWriterMock = Substitute.For<ICommandWriter>();
             IProtocol protocolMock = Substitute.For<IProtocol>();
 
             commandReaderMock.Read().Returns("xboard", "quit");
-            Controller controller = new Controller(commandReaderMock, commandWriterMock, protocolMock);
+            Controller controller = new Controller(commandReaderMock, protocolMock);
             protocolMock.When(x => x.ProcessCommand("quit")).Do(x => controller.Finish());
 
             controller.Run();

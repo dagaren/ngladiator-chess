@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Gladiator.Communication.XBoard
 {
-    public class ForceCommandMatcher : CommandMatcher<XBoardCommand>
+    public class ForceCommandMatcher : CommandMatcher<ForceCommand>
     {
         public ForceCommandMatcher(ICommandFactory commandFactory)
             : base(

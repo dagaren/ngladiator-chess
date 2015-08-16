@@ -21,7 +21,11 @@ namespace Gladiator.Representation.Bitboard
             {
                 if(position.Board.occupation.And(KingBitboards.CastlingSquares[CastlingType.Short.Value(), position.Turn.Value()]) == BitboardExtensions.Empty)
                 {
-                    movesList.Add(MoveExtensions.GenerateCastling(CastlingType.Short, position.Turn));
+                    if(!position.Board.IsAttacked(CastlingType.Short.KingSourceSquare(position.Turn), position.Turn.Opponent()) &&
+                       !position.Board.AreAttacked(CastlingType.Short.KingCrossingSquare(position.Turn), position.Turn.Opponent()))
+                    {
+                        movesList.Add(MoveExtensions.GenerateCastling(CastlingType.Short, position.Turn));
+                    }
                 }
             }
 
@@ -29,7 +33,11 @@ namespace Gladiator.Representation.Bitboard
             {
                 if (position.Board.occupation.And(KingBitboards.CastlingSquares[CastlingType.Long.Value(), position.Turn.Value()]) == BitboardExtensions.Empty)
                 {
-                    movesList.Add(MoveExtensions.GenerateCastling(CastlingType.Long, position.Turn));
+                    if (!position.Board.IsAttacked(CastlingType.Long.KingSourceSquare(position.Turn), position.Turn.Opponent()) &&
+                        !position.Board.AreAttacked(CastlingType.Long.KingCrossingSquare(position.Turn), position.Turn.Opponent()))
+                    {
+                        movesList.Add(MoveExtensions.GenerateCastling(CastlingType.Long, position.Turn));
+                    }
                 }
             }
         }

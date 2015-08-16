@@ -1,4 +1,5 @@
 ﻿using System;
+using Gladiator.Representation.Notation;
 
 namespace Gladiator.Representation
 {
@@ -6,7 +7,7 @@ namespace Gladiator.Representation
     {
         public static string Format(this Move move)
         {
-            return string.Format("{0}{1}", move.Source, move.Destination);
+            return string.Format("{0}{1}{2}", move.Source, move.Destination, move.Promotion.FormatPromotion());
         }
 
         public static CastlingType Castling(this Move move, ColouredPiece sourcePiece)

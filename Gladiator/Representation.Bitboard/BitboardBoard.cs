@@ -55,5 +55,69 @@ namespace Gladiator.Representation.Bitboard
         {
             return this.piecesInSquare[square.GetValue()];
         }
+
+        public bool AreAttacked(IEnumerable<Square> squares, Colour turn)
+        {
+            foreach(Square square in squares)
+            {
+                if (IsAttacked(square, turn))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool IsAttacked(Square square, Colour turn)
+        {
+            Colour opponent = turn.Opponent();
+
+
+            ulong diagonalAttack = SlidingBitboards.GetDiagonalAttack(square, this.occupation) |
+                                   SlidingBitboards.GetAntidiagonalAttack(square, this.occupation);
+            ulong linearAttack = SlidingBitboards.GetFileAttack(square, this.occupation) |
+                                 SlidingBitboards.GetRankAttack(square, this.occupation);
+
+            if (diagonalAttack != BitboardExtensions.Empty)
+            {
+                if ((diagonalAttack &
+                (this.pieceOccupation[Piece.Queen.GetColoured(turn).GetValue()] |
+                this.pieceOccupation[Piece.Bishop.GetColoured(turn).GetValue()])) != BitboardExtensions.Empty)
+                {
+                    return true;
+                }
+            }
+
+            if (linearAttack != BitboardExtensions.Empty)
+            {
+                if ((linearAttack &
+                (this.pieceOccupation[Piece.Queen.GetColoured(turn).GetValue()] |
+                this.pieceOccupation[Piece.Rook.GetColoured(turn).GetValue()])) != BitboardExtensions.Empty)
+                {
+                    return true;
+                }
+            }
+
+            if ((KnightBitboards.AttackBitboards[square.GetValue()] &
+                this.pieceOccupation[Piece.Knight.GetColoured(turn).GetValue()]) != BitboardExtensions.Empty)
+            {
+                return true;
+            }
+
+            if ((KingBitboards.AttackBitboards[square.GetValue()] &
+                this.pieceOccupation[Piece.King.GetColoured(turn).GetValue()]) != BitboardExtensions.Empty)
+            {
+                return true;
+            }
+
+            if ((PawnBitboards.AttackBitboards[opponent.Value(), square.GetValue()] &
+                this.pieceOccupation[Piece.Pawn.GetColoured(turn).GetValue()]) != BitboardExtensions.Empty)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

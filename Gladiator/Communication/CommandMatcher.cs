@@ -45,7 +45,8 @@ namespace Gladiator.Communication
 
             foreach (string groupName in groupNames)
             {
-                if(groupName == "0")
+                int groupNumber;
+                if(int.TryParse(groupName, out groupNumber))
                 {
                     continue;
                 }
