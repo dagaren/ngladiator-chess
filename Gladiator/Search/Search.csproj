@@ -36,8 +36,13 @@
   <ItemGroup>
     <Compile Include="IPrincipalVariation.cs" />
     <Compile Include="IPrincipalVariationManager.cs" />
+    <Compile Include="ISearcher.cs" />
+    <Compile Include="ISearchExecution.cs" />
     <Compile Include="PrincipalVariation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomSearcher.cs" />
+    <Compile Include="SearchExecution.cs" />
+    <Compile Include="SearchOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Evaluation\Evaluation.csproj">

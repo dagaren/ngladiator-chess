@@ -7,7 +7,7 @@ namespace Gladiator.Communication
     {
         public void Write(string command)
         {
-            ConsoleExtensions.WriteLineColoured(command, ConsoleColor.Red);
+            ConsoleExtensions.WriteLineColoured(command, ConsoleColor.Green);
         }
     }
 }

@@ -10,6 +10,8 @@ namespace Gladiator.Core
     {
         public Colour Turn { get { return this.position.Turn; } }
 
+        public IPosition<IBoard> Position { get { return this.position; } }
+
         private IPosition<IBoard> position;
 
         public Game(IPosition<IBoard> initialPosition)

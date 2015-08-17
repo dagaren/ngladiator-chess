@@ -3,13 +3,19 @@ using Gladiator.Utils;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Gladiator.Search;
 
 namespace Gladiator.Core
 {
     public class Engine : IEngine
     {
         private IGame currentGame;
+
         private Colour thinkingTurn;
+        
+        private ISearchExecution currentSearchExecution;
+
+        private readonly ISearcher searcher;
 
         public event Action<Move> OnMoveDone;
 
@@ -24,12 +30,15 @@ namespace Gladiator.Core
             { 
                 this.thinkingTurn = value;
 
-                TryThink();
+                Think();
             }
         }
 
-        public Engine()
+        public Engine(ISearcher searcher)
         {
+            Check.ArgumentNotNull(searcher, "searcher");
+
+            this.searcher = searcher;
         }
 
         public void NewGame(IPosition<Representation.IBoard> initialPosition)
@@ -41,18 +50,29 @@ namespace Gladiator.Core
         {
             this.currentGame.DoMove(move);
 
-            TryThink();
+            this.Think();
         }
 
-        private void TryThink()
+        private void Think()
         {
             if (this.ThinkingTurn == this.CurrentGame.Turn)
             {
-                IEnumerable<Move> moves = this.CurrentGame.GetMoves();
-                Move selectedMove = moves.Random();
-                this.CurrentGame.DoMove(selectedMove);
-                this.OnMoveDone(selectedMove);
+                if(this.currentSearchExecution != null)
+                {
+                    this.currentSearchExecution.Cancel();
+                    this.currentSearchExecution.OnSearchFinished -= this.OnMoveDone;
+                }
+
+                this.currentSearchExecution = this.searcher.InitSearch(this.CurrentGame.Position, new SearchOptions());
+                this.currentSearchExecution.OnSearchFinished += this.MoveFound;
+                this.currentSearchExecution.Init();
             }
+        }
+
+        private void MoveFound(Move move)
+        {
+            this.currentGame.DoMove(move);
+            this.OnMoveDone(move);
         }
     }
 }

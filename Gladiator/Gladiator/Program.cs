@@ -11,6 +11,7 @@ using Gladiator.Communication.XBoard.Output;
 using Gladiator.Utils;
 using System.IO;
 using Gladiator.Core;
+using Gladiator.Search;
 
 namespace Gladiator
 {
@@ -41,6 +42,7 @@ namespace Gladiator
             var controller = new Controller(commandReader, protocol);
             controller.OnException += ex =>
             {
+                ConsoleExtensions.WriteLineColoured("Exception catched: " + ex.Message, ConsoleColor.Red);
                 System.IO.File.AppendAllText(commandLogPath, "=== Exception: " + ex.Message +
                     " " + ex.StackTrace.ToString() + Environment.NewLine);
             };
@@ -67,7 +69,8 @@ namespace Gladiator
             var errorCommand = new ErrorCommand(commandWriter);
             var moveCommand = new MoveCommand(commandWriter);
 
-            IEngine engine = new Engine();
+            ISearcher searcher = new RandomSearcher();
+            IEngine engine = new Engine(searcher);
             engine.OnMoveDone += moveCommand.Execute;
 
             container["illegalMoveAction"] = new Action<Move, string>(illegalMoveCommand.Execute);
