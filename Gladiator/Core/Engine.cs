@@ -55,17 +55,23 @@ namespace Gladiator.Core
 
         private void Think()
         {
+            this.CancelThink();
+
             if (this.ThinkingTurn == this.CurrentGame.Turn)
             {
-                if(this.currentSearchExecution != null)
-                {
-                    this.currentSearchExecution.Cancel();
-                    this.currentSearchExecution.OnSearchFinished -= this.OnMoveDone;
-                }
-
                 this.currentSearchExecution = this.searcher.InitSearch(this.CurrentGame.Position, new SearchOptions());
                 this.currentSearchExecution.OnSearchFinished += this.MoveFound;
                 this.currentSearchExecution.Init();
+            }
+        }
+
+        private void CancelThink()
+        {
+            if (this.currentSearchExecution != null)
+            {
+                this.currentSearchExecution.Cancel();
+                this.currentSearchExecution.OnSearchFinished -= this.OnMoveDone;
+                this.currentSearchExecution = null;
             }
         }
 
