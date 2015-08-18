@@ -139,6 +139,18 @@ namespace Gladiator.Representation
             return pseudoLegalMoves;
         }
 
+        public bool IsInCheck(Colour turn)
+        {
+            Square kingSquare = this.Board.GetSquaresWithPiece(Piece.King.GetColoured(turn)).First();
+
+            return this.Board.IsAttacked(kingSquare, turn.Opponent());
+        }
+
+        public bool IsValid()
+        {
+            return this.positionValidator.IsValid(this);
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null)

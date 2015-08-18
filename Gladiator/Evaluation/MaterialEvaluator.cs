@@ -1,11 +1,10 @@
 ﻿using Gladiator.Representation;
-using Gladiator.Representation.Bitboard;
 using Gladiator.Utils;
-using System.Collections.Generic;
+using System;
 
-namespace Gladiator.Evaluation.Bitboard
+namespace Gladiator.Evaluation
 {
-    public class MaterialEvaluator<TPosition> : BitboardPositionEvaluator<TPosition> where TPosition : IPosition<BitboardBoard>
+    public class MaterialEvaluator : IEvaluator
     {
         public const int PAWN_SCORE = 100;
         public const int KNIGHT_SCORE = 300;
@@ -35,18 +34,18 @@ namespace Gladiator.Evaluation.Bitboard
             pieceValues[ColouredPiece.BlackKing.GetValue()] = -KING_SCORE;
         }
 
-        public override int Evaluate(TPosition position)
+        public int Evaluate(IPosition<IBoard> position)
         {
             int score = 0;
 
-            foreach(ColouredPiece piece in EnumExtensions.GetValues<ColouredPiece>())
+            foreach (ColouredPiece piece in EnumExtensions.GetValues<ColouredPiece>())
             {
-                if(piece == ColouredPiece.None)
+                if (piece == ColouredPiece.None)
                 {
                     continue;
                 }
 
-                score += pieceValues[piece.GetValue()] * position.Board.pieceOccupation[piece.GetValue()].BitCount();
+                score += pieceValues[piece.GetValue()] * position.Board.GetNumPieces(piece);
             }
 
             return score;

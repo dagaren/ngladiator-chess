@@ -9,16 +9,17 @@ namespace Gladiator.Search
     {
         private readonly Move[][] movesMatrix;
         private readonly int[] numMovesInDepth;
-        private const int size = 60;
+        private const int size = 30;
 
         public PrincipalVariation()
         {
             this.movesMatrix = new Move[size + 1][];
+            this.numMovesInDepth = new int[size + 1];
             for (int i = 0; i < size + 1; i++ )
             {
                 this.movesMatrix[i] = new Move[size + 1];
+                this.numMovesInDepth[i] = 0;
             }
-            this.numMovesInDepth = new int[size + 1];
         }
 
         public void InitPly(int ply)
@@ -38,6 +39,12 @@ namespace Gladiator.Search
 
             this.numMovesInDepth[ply] = this.numMovesInDepth[ply + 1] + 1;
             this.movesMatrix[ply][ply] = move;
+
+            if(ply == 0)
+            {
+                Console.WriteLine("### num moves: " + this.numMovesInDepth[0]);
+                Console.WriteLine("### Principal variation: " + string.Join(" ", this.GetMoves().Select(m => m == null ? "nul" : m.Format())));
+            }
         }
 
         public IEnumerable<Move> GetMoves()

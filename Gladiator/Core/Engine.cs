@@ -78,6 +78,7 @@ namespace Gladiator.Core
         private void MoveFound(Move move)
         {
             this.currentGame.DoMove(move);
+            //this.currentGame.Position.Board.WriteConsolePretty();
             this.OnMoveDone(move);
         }
     }

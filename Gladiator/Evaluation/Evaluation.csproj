@@ -35,12 +35,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IEvaluator.cs" />
+    <Compile Include="MaterialEvaluator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Representation\Representation.csproj">
       <Project>{4de8eda6-ef80-47ae-8f68-b62c5d22f26f}</Project>
       <Name>Representation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{d7877873-ebc8-4831-b69f-3504f87907c1}</Project>
+      <Name>Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

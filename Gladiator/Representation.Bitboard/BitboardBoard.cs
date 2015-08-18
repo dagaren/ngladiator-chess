@@ -69,6 +69,26 @@ namespace Gladiator.Representation.Bitboard
             return false;
         }
 
+        public IEnumerable<Square> GetSquaresWithPiece(ColouredPiece piece)
+        {
+            if(piece == ColouredPiece.None)
+            {
+                return Enumerable.Empty<Square>();
+            }
+
+            return this.pieceOccupation[piece.GetValue()].Squares();
+        }
+
+        public int GetNumPieces(ColouredPiece piece)
+        {
+            if(piece == ColouredPiece.None)
+            {
+                return -1;
+            }
+
+            return this.pieceOccupation[piece.GetValue()].BitCount();
+        }
+
         public bool IsAttacked(Square square, Colour turn)
         {
             Colour opponent = turn.Opponent();

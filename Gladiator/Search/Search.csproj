@@ -34,6 +34,18 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlphaBetaSearcher.cs" />
+    <Compile Include="AlphaBeta\AlphaBetaCancellation.cs" />
+    <Compile Include="AlphaBeta\AlphaBetaCounterStrategy.cs" />
+    <Compile Include="AlphaBeta\AlphaBetaMainStrategy.cs" />
+    <Compile Include="AlphaBeta\AlphaBetaPositionValidatedStrategy.cs" />
+    <Compile Include="AlphaBeta\AlphaBetaScore.cs" />
+    <Compile Include="AlphaBeta\AlphaBetaScoreExtensions.cs" />
+    <Compile Include="AlphaBeta\AlphaBetaStaticEvaluationStrategy.cs" />
+    <Compile Include="AlphaBeta\IAlphaBetaStrategy.cs" />
+    <Compile Include="AlphaBeta\PrincipalVariationAlphaBetaStrategy.cs" />
+    <Compile Include="AlphaBeta\SearchStatus.cs" />
+    <Compile Include="BaseSearcher.cs" />
     <Compile Include="IPrincipalVariation.cs" />
     <Compile Include="IPrincipalVariationManager.cs" />
     <Compile Include="ISearcher.cs" />

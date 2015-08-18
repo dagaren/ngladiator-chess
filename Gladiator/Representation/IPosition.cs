@@ -20,5 +20,9 @@ namespace Gladiator.Representation
         void UndoMove(FullMove move);
 
         IEnumerable<Move> GetMoves(MoveSearchType searchType);
+
+        bool IsInCheck(Colour turn);
+
+        bool IsValid();
     }
 }

@@ -69,7 +69,8 @@ namespace Gladiator
             var errorCommand = new ErrorCommand(commandWriter);
             var moveCommand = new MoveCommand(commandWriter);
 
-            ISearcher searcher = new RandomSearcher();
+            //ISearcher searcher = new RandomSearcher();
+            ISearcher searcher = new AlphaBetaSearcher(commandWriter.Write);
             IEngine engine = new Engine(searcher);
             engine.OnMoveDone += moveCommand.Execute;
 

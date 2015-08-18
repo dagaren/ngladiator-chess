@@ -1,11 +1,11 @@
 ﻿using Gladiator.Representation;
-using Gladiator.Representation.Bitboard;
-using Gladiator.Representation.Bitboard.Tests.Builders;
+using Gladiator.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System;
+using System.Linq;
 
-namespace Gladiator.Evaluation.Bitboard.Tests
+namespace Gladiator.Evaluation.Tests
 {
     [TestClass]
     public class MaterialEvaluatorTest
@@ -118,20 +118,22 @@ namespace Gladiator.Evaluation.Bitboard.Tests
 
         private static void TestMaterial(int expectedScore, params ColouredPiece[] pieces)
         {
-            var moveGenerator = Substitute.For<IMoveGenerator<Position<BitboardBoard>, BitboardBoard>>();
-            var positionBuilder = new BitboardPositionBuilder(moveGenerator).SetTurn(Colour.White);
+            var position = Substitute.For<IPosition<IBoard>>();
+            var board = Substitute.For<IBoard>();
+            position.Board.Returns(board);
 
-            Square square = Square.a1;
-            foreach(ColouredPiece piece in pieces)
+            foreach(ColouredPiece piece in EnumExtensions.GetValues<ColouredPiece>())
             {
-                positionBuilder.PutPiece(piece, square);
+                if(piece == ColouredPiece.None)
+                {
+                    continue;
+                }
 
-                square = square.Next();
+                int numPieces = pieces.Where(p => p == piece).Count();
+                board.GetNumPieces(piece).Returns(numPieces);
             }
-                                                
-            Position<BitboardBoard> position = positionBuilder.Build();
 
-            var materialEvaluator = new MaterialEvaluator<Position<BitboardBoard>>();
+            var materialEvaluator = new MaterialEvaluator();
 
             int materialScore = materialEvaluator.Evaluate(position);
 
