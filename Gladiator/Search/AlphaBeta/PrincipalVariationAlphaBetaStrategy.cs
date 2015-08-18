@@ -24,17 +24,22 @@ namespace Gladiator.Search.AlphaBeta
         public int AlphaBeta(SearchStatus searchStatus)
         {
             this.principalVariationManager.InitPly(searchStatus.CurrentPly + 1);
-            
-            int initialAlpha = searchStatus.Alpha;
 
-            int score = this.nextStrategy.AlphaBeta(searchStatus);
+            searchStatus.BestMoveChanged += this.BestMoveChanged;
 
-            if(searchStatus.BestMove != null && searchStatus.Alpha > initialAlpha)
+            try
             {
-                this.principalVariationManager.SaveMoveInPly(searchStatus.BestMove, searchStatus.CurrentPly);
+                return this.nextStrategy.AlphaBeta(searchStatus);   
             }
+            finally
+            {
+                searchStatus.BestMoveChanged -= this.BestMoveChanged;
+            }
+        }
 
-            return score;
+        private void BestMoveChanged(Move move, int ply)
+        {
+            this.principalVariationManager.SaveMoveInPly(move, ply);
         }
     }
 }
