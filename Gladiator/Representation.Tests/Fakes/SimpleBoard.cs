@@ -1,6 +1,7 @@
 ﻿using Gladiator.Representation;
 using Gladiator.Utils;
 using System;
+using System.Collections.Generic;
 
 namespace Gladiator.Representation.Tests.Fakes
 {
@@ -34,6 +35,21 @@ namespace Gladiator.Representation.Tests.Fakes
         public ColouredPiece GetPiece(Square square)
         {
             return this.pieces[square.GetValue()];
+        }
+
+        public bool IsAttacked(Square square, Colour turn)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Square> GetSquaresWithPiece(ColouredPiece piece)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetNumPieces(ColouredPiece piece)
+        {
+            throw new NotImplementedException();
         }
     }
 }
