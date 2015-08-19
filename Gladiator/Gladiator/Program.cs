@@ -12,6 +12,7 @@ using Gladiator.Utils;
 using System.IO;
 using Gladiator.Core;
 using Gladiator.Search;
+using Gladiator.Evaluation;
 
 namespace Gladiator
 {
@@ -69,8 +70,10 @@ namespace Gladiator
             var errorCommand = new ErrorCommand(commandWriter);
             var moveCommand = new MoveCommand(commandWriter);
 
-            //ISearcher searcher = new RandomSearcher();
-            ISearcher searcher = new AlphaBetaSearcher(commandWriter.Write);
+            IEvaluator materialEvaluator = new MaterialEvaluator();
+            IEvaluator positionEvaluator = new PositionEvaluator();
+            IEvaluator staticEvaluator = new CompositeEvaluator(materialEvaluator, positionEvaluator);
+            ISearcher searcher = new AlphaBetaSearcher(staticEvaluator, commandWriter.Write);
             IEngine engine = new Engine(searcher);
             engine.OnMoveDone += moveCommand.Execute;
 
@@ -94,6 +97,7 @@ namespace Gladiator
             commandMatchers.Add(new LevelCommandMatcher(commandFactory));
             commandMatchers.Add(new MoveNowCommandMatcher(commandFactory));
             commandMatchers.Add(new ForceCommandMatcher(commandFactory));
+            commandMatchers.Add(new PingCommandMatcher(commandFactory));
             commandMatchers.Add(new GoCommandMatcher(commandFactory));
             commandMatchers.Add(new PlayOtherCommandMatcher(commandFactory));
             commandMatchers.Add(new DrawCommandMatcher(commandFactory));

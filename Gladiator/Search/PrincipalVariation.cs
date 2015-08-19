@@ -43,7 +43,6 @@ namespace Gladiator.Search
             if(ply == 0)
             {
                 //TODO: Launch event
-                //Console.WriteLine("# Best move found for ply 0: " + move.Format());
             }
         }
 

@@ -56,7 +56,6 @@
     <Compile Include="AlphaBeta\AlphaBetaCancellation.cs" />
     <Compile Include="AlphaBeta\AlphaBetaCounterStrategy.cs" />
     <Compile Include="AlphaBeta\AlphaBetaMainStrategy.cs" />
-    <Compile Include="AlphaBeta\AlphaBetaPositionValidatedStrategy.cs" />
     <Compile Include="AlphaBeta\AlphaBetaScore.cs" />
     <Compile Include="AlphaBeta\AlphaBetaScoreExtensions.cs" />
     <Compile Include="AlphaBeta\AlphaBetaStaticEvaluationStrategy.cs" />

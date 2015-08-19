@@ -90,6 +90,10 @@
       <Project>{8ef8134e-2545-499d-a57e-0eb1a8525b00}</Project>
       <Name>Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Evaluation\Evaluation.csproj">
+      <Project>{36a3c5cc-ccd3-4649-b3f4-55df821fd33c}</Project>
+      <Name>Evaluation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Representation.Bitboard\Representation.Bitboard.csproj">
       <Project>{6b338a18-2ed6-47d8-9e4c-048f3641508c}</Project>
       <Name>Representation.Bitboard</Name>
