@@ -53,6 +53,16 @@ namespace Gladiator.Core
             this.Think();
         }
 
+        public void CancelThink()
+        {
+            if (this.currentSearchExecution != null)
+            {
+                this.currentSearchExecution.Cancel();
+                this.currentSearchExecution.OnSearchFinished -= this.OnMoveDone;
+                this.currentSearchExecution = null;
+            }
+        }
+
         private void Think()
         {
             this.CancelThink();
@@ -65,21 +75,14 @@ namespace Gladiator.Core
             }
         }
 
-        private void CancelThink()
-        {
-            if (this.currentSearchExecution != null)
-            {
-                this.currentSearchExecution.Cancel();
-                this.currentSearchExecution.OnSearchFinished -= this.OnMoveDone;
-                this.currentSearchExecution = null;
-            }
-        }
-
         private void MoveFound(Move move)
         {
-            this.currentGame.DoMove(move);
+            if(this.ThinkingTurn == this.currentGame.Turn)
+            {
+                this.currentGame.DoMove(move);
+                this.OnMoveDone(move);
+            }
             //this.currentGame.Position.Board.WriteConsolePretty();
-            this.OnMoveDone(move);
         }
     }
 }

@@ -38,13 +38,8 @@ namespace Gladiator.Evaluation
         {
             int score = 0;
 
-            foreach (ColouredPiece piece in EnumExtensions.GetValues<ColouredPiece>())
+            foreach (ColouredPiece piece in ColouredPieceExtensions.AllPieces())
             {
-                if (piece == ColouredPiece.None)
-                {
-                    continue;
-                }
-
                 score += pieceValues[piece.GetValue()] * position.Board.GetNumPieces(piece);
             }
 

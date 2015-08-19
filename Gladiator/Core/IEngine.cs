@@ -14,5 +14,7 @@ namespace Gladiator.Core
         void NewGame(IPosition<IBoard> initialPosition);
 
         void DoMove(Move move);
+
+        void CancelThink();
     }
 }

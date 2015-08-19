@@ -23,7 +23,6 @@ namespace Gladiator.Search.AlphaBeta
         {
             if(this.cancellationToken.IsCancellationRequested)
             {
-                Console.WriteLine("# Search cancelled");
                 this.cancellationToken.ThrowIfCancellationRequested();
             }
             

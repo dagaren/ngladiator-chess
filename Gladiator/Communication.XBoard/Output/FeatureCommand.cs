@@ -14,7 +14,7 @@ namespace Gladiator.Communication.XBoard.Output
         public void Execute()
         {
             var featuresContainer = new FeatureContainer()
-                                        .Add(FeatureNames.Ping, false)
+                                        .Add(FeatureNames.Ping, true)
                                         .Add(FeatureNames.Setboard, true)
                                         .Add(FeatureNames.Playother, true)
                                         .Add(FeatureNames.San, false)
@@ -23,7 +23,7 @@ namespace Gladiator.Communication.XBoard.Output
                                         .Add(FeatureNames.Draw, true)
                                         .Add(FeatureNames.Sigint, false)
                                         .Add(FeatureNames.Sigterm, false)
-                                        .Add(FeatureNames.Reuse, true)
+                                        .Add(FeatureNames.Reuse, false)
                                         .Add(FeatureNames.Analyze, false)
                                         .Add(FeatureNames.Myname, "Gladiator")
                                         .Add(FeatureNames.Variants, "normal")

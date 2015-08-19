@@ -89,6 +89,11 @@ namespace Gladiator.Representation
             return (int)square;
         }
 
+        public static Square Mirror(this Square square)
+        {
+            return (Square)((square.GetValue() + 56) - ((square.GetValue() >> 3) << 4));
+        }
+
         public static Square FromRankAndFile(Rank rank, File file)
         {
             if(file == File.None || rank == Rank.None)

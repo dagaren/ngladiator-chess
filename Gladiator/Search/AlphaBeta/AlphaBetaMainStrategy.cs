@@ -48,7 +48,17 @@ namespace Gladiator.Search.AlphaBeta
                     nextSearchStatus.RemainingPlies = searchStatus.RemainingPlies - 1;
                     nextSearchStatus.BestMove = null;
 
-                    int score = - this.recursiveStrategy.AlphaBeta(nextSearchStatus);
+                    int score;
+
+                    try
+                    {
+                        score = -this.recursiveStrategy.AlphaBeta(nextSearchStatus);
+                    }
+                    catch(Exception)
+                    {
+                        searchStatus.Position.UndoMove(fullMove);
+                        throw;
+                    }
 
                     if (score >= searchStatus.Beta)
                     {

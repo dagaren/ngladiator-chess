@@ -42,8 +42,8 @@ namespace Gladiator.Search
 
             if(ply == 0)
             {
-                Console.WriteLine("### num moves: " + this.numMovesInDepth[0]);
-                Console.WriteLine("### Principal variation: " + string.Join(" ", this.GetMoves().Select(m => m == null ? "nul" : m.Format())));
+                //TODO: Launch event
+                //Console.WriteLine("# Best move found for ply 0: " + move.Format());
             }
         }
 

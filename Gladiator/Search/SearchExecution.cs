@@ -31,6 +31,7 @@ namespace Gladiator.Search
         public void Cancel()
         {
             this.cancellationTokenSource.Cancel();
+            this.task.Wait();
         }
 
         private void InitSearch()
@@ -48,9 +49,7 @@ namespace Gladiator.Search
                            {
                            }
                        },
-                       this.cancellationTokenSource.Token,
-                       TaskCreationOptions.LongRunning,
-                       TaskScheduler.Default);
+                       TaskCreationOptions.LongRunning);
         }
     }
 }
