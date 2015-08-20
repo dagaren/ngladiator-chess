@@ -42,7 +42,7 @@ namespace Gladiator.Search
                 Alpha = AlphaBetaScore.InitialAlpha.Value(),
                 Beta = AlphaBetaScore.InitialBeta.Value(),
                 CurrentPly = 0,
-                RemainingPlies = 6
+                RemainingPlies = 7
             };
 
             var stopwatch = Stopwatch.StartNew();

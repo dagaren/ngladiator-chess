@@ -86,6 +86,7 @@
     <Compile Include="Rank.cs" />
     <Compile Include="RankExtensions.cs" />
     <Compile Include="Square.cs" />
+    <Compile Include="SquareDistanceExtensions.cs" />
     <Compile Include="SquareExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -43,6 +43,7 @@ namespace Gladiator.Search
             if(ply == 0)
             {
                 //TODO: Launch event
+                //Console.WriteLine(string.Join(", ", this.GetMoves().Select(m=> m.Format())));
             }
         }
 

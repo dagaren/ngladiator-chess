@@ -27,8 +27,9 @@ namespace Gladiator.Search.AlphaBeta
 
         public int AlphaBeta(SearchStatus searchStatus)
         {
-            IEnumerable<Move> moves = searchStatus.Position.GetMoves(MoveSearchType.PseudoLegalMoves);
-
+            IEnumerable<Move> moves = searchStatus.Position.GetMoves(MoveSearchType.PseudoLegalMoves)
+                .OrderBy(m => m.Destination.ManhattanDistanceToCenter());
+            
             int numValidMoves = 0;
 
             SearchStatus nextSearchStatus = new SearchStatus();
