@@ -13,25 +13,25 @@ namespace Gladiator.Evaluation
         public const int QUEEN_SCORE = 900;
         public const int KING_SCORE = 0;
 
-        private readonly static int[] pieceValues;
+        public readonly static int[] PieceValues;
 
         static MaterialEvaluator()
         {
-            pieceValues = new int[12];
+            PieceValues = new int[12];
 
-            pieceValues[ColouredPiece.WhitePawn.GetValue()] = PAWN_SCORE;
-            pieceValues[ColouredPiece.WhiteRook.GetValue()] = ROOK_SCORE;
-            pieceValues[ColouredPiece.WhiteKnight.GetValue()] = KNIGHT_SCORE;
-            pieceValues[ColouredPiece.WhiteBishop.GetValue()] = BISHOP_SCORE;
-            pieceValues[ColouredPiece.WhiteQueen.GetValue()] = QUEEN_SCORE;
-            pieceValues[ColouredPiece.WhiteKing.GetValue()] = KING_SCORE;
+            PieceValues[ColouredPiece.WhitePawn.GetValue()] = PAWN_SCORE;
+            PieceValues[ColouredPiece.WhiteRook.GetValue()] = ROOK_SCORE;
+            PieceValues[ColouredPiece.WhiteKnight.GetValue()] = KNIGHT_SCORE;
+            PieceValues[ColouredPiece.WhiteBishop.GetValue()] = BISHOP_SCORE;
+            PieceValues[ColouredPiece.WhiteQueen.GetValue()] = QUEEN_SCORE;
+            PieceValues[ColouredPiece.WhiteKing.GetValue()] = KING_SCORE;
 
-            pieceValues[ColouredPiece.BlackPawn.GetValue()] = -PAWN_SCORE;
-            pieceValues[ColouredPiece.BlackRook.GetValue()] = -ROOK_SCORE;
-            pieceValues[ColouredPiece.BlackKnight.GetValue()] = -KNIGHT_SCORE;
-            pieceValues[ColouredPiece.BlackBishop.GetValue()] = -BISHOP_SCORE;
-            pieceValues[ColouredPiece.BlackQueen.GetValue()] = -QUEEN_SCORE;
-            pieceValues[ColouredPiece.BlackKing.GetValue()] = -KING_SCORE;
+            PieceValues[ColouredPiece.BlackPawn.GetValue()] = -PAWN_SCORE;
+            PieceValues[ColouredPiece.BlackRook.GetValue()] = -ROOK_SCORE;
+            PieceValues[ColouredPiece.BlackKnight.GetValue()] = -KNIGHT_SCORE;
+            PieceValues[ColouredPiece.BlackBishop.GetValue()] = -BISHOP_SCORE;
+            PieceValues[ColouredPiece.BlackQueen.GetValue()] = -QUEEN_SCORE;
+            PieceValues[ColouredPiece.BlackKing.GetValue()] = -KING_SCORE;
         }
 
         public int Evaluate(IPosition<IBoard> position)
@@ -40,7 +40,7 @@ namespace Gladiator.Evaluation
 
             foreach (ColouredPiece piece in ColouredPieceExtensions.AllPieces())
             {
-                score += pieceValues[piece.GetValue()] * position.Board.GetNumPieces(piece);
+                score += PieceValues[piece.GetValue()] * position.Board.GetNumPieces(piece);
             }
 
             return score;

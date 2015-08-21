@@ -62,6 +62,7 @@
     <Compile Include="AlphaBeta\BasicMoveSorter.cs" />
     <Compile Include="AlphaBeta\IAlphaBetaStrategy.cs" />
     <Compile Include="AlphaBeta\IMoveSorter.cs" />
+    <Compile Include="AlphaBeta\MvvLvaMoveSorter.cs" />
     <Compile Include="AlphaBeta\PrincipalVariationAlphaBetaStrategy.cs" />
     <Compile Include="AlphaBeta\SearchStatus.cs" />
     <Compile Include="BaseSearcher.cs" />
