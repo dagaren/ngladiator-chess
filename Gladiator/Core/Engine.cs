@@ -17,6 +17,8 @@ namespace Gladiator.Core
 
         private readonly ISearcher searcher;
 
+        private int maxSearchDepth;
+
         public event Action<Move> OnMoveDone;
 
         public IGame CurrentGame
@@ -34,11 +36,24 @@ namespace Gladiator.Core
             }
         }
 
+        public int MaxSearchDepth {
+            get { return this.maxSearchDepth; }
+            set 
+            { 
+                if(value < 1)
+                {
+                    throw new ArgumentException();
+                }
+                this.maxSearchDepth = value; 
+            }
+        }
+
         public Engine(ISearcher searcher)
         {
             Check.ArgumentNotNull(searcher, "searcher");
 
             this.searcher = searcher;
+            this.MaxSearchDepth = 4;
         }
 
         public void NewGame(IPosition<Representation.IBoard> initialPosition)
@@ -69,7 +84,9 @@ namespace Gladiator.Core
 
             if (this.ThinkingTurn == this.CurrentGame.Turn)
             {
-                this.currentSearchExecution = this.searcher.InitSearch(this.CurrentGame.Position, new SearchOptions());
+                this.currentSearchExecution = this.searcher.InitSearch(this.CurrentGame.Position, new SearchOptions() { 
+                    SearchDepth = this.MaxSearchDepth
+                });
                 this.currentSearchExecution.OnSearchFinished += this.MoveFound;
                 this.currentSearchExecution.Init();
             }

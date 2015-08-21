@@ -71,6 +71,8 @@
     <Compile Include="Output\MoveCommand.cs" />
     <Compile Include="PingCommand.cs" />
     <Compile Include="PingCommandMatcher.cs" />
+    <Compile Include="SdCommand.cs" />
+    <Compile Include="SdCommandMatcher.cs" />
     <Compile Include="UserMoveCommand.cs" />
     <Compile Include="UserMoveCommandMatcher.cs" />
     <Compile Include="MoveNowCommand.cs" />

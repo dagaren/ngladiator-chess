@@ -5,11 +5,13 @@ namespace Gladiator.Core
 {
     public interface IEngine
     {
-        event Action<Move> OnMoveDone;
-
         IGame CurrentGame { get; }
 
         Colour ThinkingTurn { get; set; }
+
+        int MaxSearchDepth { get; set; }
+
+        event Action<Move> OnMoveDone;
 
         void NewGame(IPosition<IBoard> initialPosition);
 

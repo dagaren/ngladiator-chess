@@ -102,6 +102,7 @@ namespace Gladiator
             commandMatchers.Add(new PlayOtherCommandMatcher(commandFactory));
             commandMatchers.Add(new DrawCommandMatcher(commandFactory));
             commandMatchers.Add(new ResultCommandMatcher(commandFactory));
+            commandMatchers.Add(new SdCommandMatcher(commandFactory));
             commandMatchers.Add(new PingCommandMatcher(commandFactory));
             commandMatchers.Add(new PostCommandMatcher(commandFactory));
             commandMatchers.Add(new NoPostCommandMatcher(commandFactory));
