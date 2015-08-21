@@ -9,7 +9,7 @@ namespace Gladiator.Search.AlphaBeta
     {
         public IEnumerable<Move> Sort(IEnumerable<Move> moves, IPosition<IBoard> position)
         {
-            return moves.OrderByDescending(m => GetMoveValue(m, position));
+            return moves.OrderBy(m => GetMoveValue(m, position));
         }
 
         private static int GetMoveValue(Move move, IPosition<IBoard> position)

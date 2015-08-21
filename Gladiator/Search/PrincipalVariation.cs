@@ -9,7 +9,7 @@ namespace Gladiator.Search
     {
         private readonly Move[][] movesMatrix;
         private readonly int[] numMovesInDepth;
-        private const int size = 30;
+        private const int size = 60;
 
         public PrincipalVariation()
         {
