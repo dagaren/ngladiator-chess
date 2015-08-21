@@ -16,19 +16,23 @@ namespace Gladiator.Search.AlphaBeta
 
         private IAlphaBetaStrategy recursiveStrategy;
 
-        private Action<string> commentWrite;
+        private readonly IMoveSorter moveSorter;
 
-        public AlphaBetaMainStrategy(Action<string> commentWrite)
+        private readonly Action<string> commentWrite;
+
+        public AlphaBetaMainStrategy(IMoveSorter moveSorter, Action<string> commentWrite)
         {
+            Check.ArgumentNotNull(moveSorter, "moveSorter");
             Check.ArgumentNotNull(commentWrite, "commentWrite");
 
+            this.moveSorter = moveSorter;
             this.commentWrite = commentWrite;
         }
 
         public int AlphaBeta(SearchStatus searchStatus)
         {
-            IEnumerable<Move> moves = searchStatus.Position.GetMoves(MoveSearchType.PseudoLegalMoves)
-                .OrderBy(m => m.Destination.ManhattanDistanceToCenter());
+            IEnumerable<Move> moves = searchStatus.Position.GetMoves(MoveSearchType.PseudoLegalMoves);
+            moves = this.moveSorter.Sort(moves, searchStatus.Position);
             
             int numValidMoves = 0;
 

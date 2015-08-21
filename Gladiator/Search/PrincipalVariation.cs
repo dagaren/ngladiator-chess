@@ -38,6 +38,7 @@ namespace Gladiator.Search
             }
 
             this.numMovesInDepth[ply] = this.numMovesInDepth[ply + 1] + 1;
+            this.numMovesInDepth[ply + 1] = 0;
             this.movesMatrix[ply][ply] = move;
 
             if(ply == 0)
