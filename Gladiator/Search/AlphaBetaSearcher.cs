@@ -49,7 +49,7 @@ namespace Gladiator.Search
             mainStrategy.RecursiveStrategy = finalPlyStrategy;
 
             var iterativeDeepeningStrategy = new AlphaBetaIterativeDeepeningStrategy(finalPlyStrategy);
-            var entryStrategy = new AlphaBetaEntryStrategy(finalPlyStrategy, principalVariationManager, nodeCounter, principalVariationChangeAction);
+            var entryStrategy = new AlphaBetaEntryStrategy(iterativeDeepeningStrategy, principalVariationManager, nodeCounter, principalVariationChangeAction);
 
             SearchStatus initialStatus = new SearchStatus()
             {
@@ -73,9 +73,8 @@ namespace Gladiator.Search
                 }
             }
 
-            Console.WriteLine("# " + nodeCounter.GetValue());
-            Console.WriteLine("# " + (nodeCounter.GetValue() / (stopwatch.Elapsed.TotalSeconds)));
-
+            //Console.WriteLine("# " + nodeCounter.GetValue());
+            
             return initialStatus.BestMove;
         }
     }

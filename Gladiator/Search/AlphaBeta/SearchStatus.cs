@@ -15,6 +15,7 @@ namespace Gladiator.Search.AlphaBeta
         public int Score { get; set; }
         public int CurrentPly { get; set; }
         public int RemainingPlies { get; set; }
+        public Move SuggestedMove { get; set; }
         public Move BestMove {
             get { return this.move; }
             set 

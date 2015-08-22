@@ -28,6 +28,8 @@ namespace Gladiator.Search.AlphaBeta
                 searchStatus.Beta = initialBeta;
                 
                 score = this.nextStrategy.AlphaBeta(searchStatus);
+
+                searchStatus.SuggestedMove = searchStatus.BestMove;
             }
 
             return score;

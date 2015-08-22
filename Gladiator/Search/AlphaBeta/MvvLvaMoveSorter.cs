@@ -8,9 +8,9 @@ namespace Gladiator.Search.AlphaBeta
 {
     public class MvvLvaMoveSorter : IMoveSorter
     {
-        public IEnumerable<Move> Sort(IEnumerable<Move> moves, IPosition<IBoard> position)
+        public IEnumerable<Move> Sort(IEnumerable<Move> moves, SearchStatus searchStatus)
         {
-            return moves.OrderByDescending(m => GetMvvLvaValue(m, position));
+            return moves.OrderByDescending(m => GetMvvLvaValue(m, searchStatus.Position));
         }
 
         private int GetMvvLvaValue(Move move, IPosition<IBoard> position)

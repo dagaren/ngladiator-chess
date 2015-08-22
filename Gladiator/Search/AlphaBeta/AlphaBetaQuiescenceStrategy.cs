@@ -58,7 +58,7 @@ namespace Gladiator.Search.AlphaBeta
             IEnumerable<Move> moves = searchStatus.Position.GetMoves(MoveSearchType.PseudoLegalMoves)
                 .Where(m => searchStatus.Position.Board.GetPiece(m.Destination) != ColouredPiece.None);
 
-            moves = this.moveSorter.Sort(moves, searchStatus.Position);
+            moves = this.moveSorter.Sort(moves, searchStatus);
 
             SearchStatus nextSearchStatus = new SearchStatus();
 

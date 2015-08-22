@@ -6,6 +6,6 @@ namespace Gladiator.Search.AlphaBeta
 {
     public interface IMoveSorter
     {
-        IEnumerable<Move> Sort(IEnumerable<Move> moves, IPosition<IBoard> position);
+        IEnumerable<Move> Sort(IEnumerable<Move> moves, SearchStatus searchStatus);
     }
 }

@@ -43,7 +43,9 @@ namespace Gladiator.Search.AlphaBeta
 
             try
             {
-                return this.nextStrategy.AlphaBeta(searchStatus);
+                int score =  this.nextStrategy.AlphaBeta(searchStatus);
+
+                return score;
             }
             finally
             {

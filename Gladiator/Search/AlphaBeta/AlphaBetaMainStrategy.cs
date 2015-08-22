@@ -32,7 +32,7 @@ namespace Gladiator.Search.AlphaBeta
         public int AlphaBeta(SearchStatus searchStatus)
         {
             IEnumerable<Move> moves = searchStatus.Position.GetMoves(MoveSearchType.PseudoLegalMoves);
-            moves = this.moveSorter.Sort(moves, searchStatus.Position);
+            moves = this.moveSorter.Sort(moves, searchStatus);
             
             int numValidMoves = 0;
 

@@ -15,6 +15,7 @@ namespace Gladiator.Search.Tests
         [TestMethod]
         public void Sort_Ok()
         {
+            SearchStatus searchStatus = new SearchStatus();
             IPosition<IBoard> position = Substitute.For<IPosition<IBoard>>();
             IBoard board = Substitute.For<IBoard>();
             position.Board.Returns(board);
@@ -24,7 +25,7 @@ namespace Gladiator.Search.Tests
             board.GetPiece(Square.h8).Returns(ColouredPiece.BlackQueen);
             board.GetPiece(Square.a4).Returns(ColouredPiece.WhiteQueen);
             board.GetPiece(Square.h4).Returns(ColouredPiece.WhitePawn);
-            
+            searchStatus.Position = position;
             
             IEnumerable<Move> moves = new MoveListBuilder()
                                         .AddMove(Square.a8, Square.h8)
@@ -34,7 +35,7 @@ namespace Gladiator.Search.Tests
 
             var moveSorter = new MvvLvaMoveSorter();
 
-            IEnumerable<Move> sortedMoves = moveSorter.Sort(moves, position);
+            IEnumerable<Move> sortedMoves = moveSorter.Sort(moves, searchStatus);
 
 
             IEnumerable<Move> expectedMoves = new MoveListBuilder()
