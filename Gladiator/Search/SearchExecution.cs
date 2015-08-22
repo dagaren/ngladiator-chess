@@ -10,13 +10,15 @@ namespace Gladiator.Search
     {
         public event Action<Move> OnSearchFinished;
 
-        private Func<CancellationToken, Move> searchFunction;
+        public event Action<PrincipalVariationChange> OnPrincipalVariationChanged;
+
+        private Func<CancellationToken, Action<PrincipalVariationChange>, Move> searchFunction;
 
         private CancellationTokenSource cancellationTokenSource;
 
         private Task task;
 
-        public SearchExecution(Func<CancellationToken, Move> searchFunction)
+        public SearchExecution(Func<CancellationToken, Action<PrincipalVariationChange>, Move> searchFunction)
         {
             Check.ArgumentNotNull(searchFunction, "searchFunction");
 
@@ -42,7 +44,7 @@ namespace Gladiator.Search
                        {
                            try
                            {
-                               Move move = this.searchFunction(cancellationTokenSource.Token);
+                               Move move = this.searchFunction(cancellationTokenSource.Token, this.PrincipalVariationChange);
                                OnSearchFinished(move);
                            }
                            catch (OperationCanceledException ex)
@@ -50,6 +52,11 @@ namespace Gladiator.Search
                            }
                        },
                        TaskCreationOptions.LongRunning);
+        }
+
+        private void PrincipalVariationChange(PrincipalVariationChange change)
+        {
+            this.OnPrincipalVariationChanged(change);
         }
     }
 }

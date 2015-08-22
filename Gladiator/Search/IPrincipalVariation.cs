@@ -6,6 +6,8 @@ namespace Gladiator.Search
 {
     public interface IPrincipalVariation
     {
-        IEnumerable<Move> GetMoves();
+        event Action OnChanged;
+
+        IEnumerable<Move> Moves { get; }
     }
 }

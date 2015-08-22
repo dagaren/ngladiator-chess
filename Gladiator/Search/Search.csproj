@@ -55,6 +55,7 @@
     <Compile Include="AlphaBetaSearcher.cs" />
     <Compile Include="AlphaBeta\AlphaBetaCancellation.cs" />
     <Compile Include="AlphaBeta\AlphaBetaCounterStrategy.cs" />
+    <Compile Include="AlphaBeta\AlphaBetaEntryStrategy.cs" />
     <Compile Include="AlphaBeta\AlphaBetaFinalPlyStrategy.cs" />
     <Compile Include="AlphaBeta\AlphaBetaMainStrategy.cs" />
     <Compile Include="AlphaBeta\AlphaBetaQuiescenceStrategy.cs" />
@@ -64,7 +65,9 @@
     <Compile Include="AlphaBeta\BasicMoveSorter.cs" />
     <Compile Include="AlphaBeta\IAlphaBetaStrategy.cs" />
     <Compile Include="AlphaBeta\IMoveSorter.cs" />
+    <Compile Include="AlphaBeta\INodeCounter.cs" />
     <Compile Include="AlphaBeta\MvvLvaMoveSorter.cs" />
+    <Compile Include="AlphaBeta\NodeCounter.cs" />
     <Compile Include="AlphaBeta\PrincipalVariationAlphaBetaStrategy.cs" />
     <Compile Include="AlphaBeta\SearchStatus.cs" />
     <Compile Include="BaseSearcher.cs" />
@@ -73,6 +76,7 @@
     <Compile Include="ISearcher.cs" />
     <Compile Include="ISearchExecution.cs" />
     <Compile Include="PrincipalVariation.cs" />
+    <Compile Include="PrincipalVariationChange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomSearcher.cs" />
     <Compile Include="SearchExecution.cs" />

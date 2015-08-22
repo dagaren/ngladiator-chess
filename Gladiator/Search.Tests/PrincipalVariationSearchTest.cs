@@ -15,7 +15,7 @@ namespace Gladiator.Search.Tests
         {
             var principalVariation = new PrincipalVariation();
 
-            IEnumerable<Move> moves = principalVariation.GetMoves();
+            IEnumerable<Move> moves = principalVariation.Moves;
 
             Assert.AreEqual(0, moves.Count());
         }
@@ -30,7 +30,7 @@ namespace Gladiator.Search.Tests
 
             principalVariation.SaveMoveInPly(move, 0);
 
-            IEnumerable<Move> moves = principalVariation.GetMoves();
+            IEnumerable<Move> moves = principalVariation.Moves;
 
             Assert.AreEqual(1, moves.Count());
             expectedMoves.ForEach(expectedMove => CollectionAssert.Contains(moves.ToArray(), expectedMove));
@@ -47,7 +47,7 @@ namespace Gladiator.Search.Tests
             principalVariation.SaveMoveInPly(move, 0);
             principalVariation.InitPly(0);
 
-            IEnumerable<Move> moves = principalVariation.GetMoves();
+            IEnumerable<Move> moves = principalVariation.Moves;
 
             Assert.AreEqual(0, moves.Count());
         }
@@ -74,7 +74,7 @@ namespace Gladiator.Search.Tests
             principalVariation.SaveMoveInPly(move2, 1);
             principalVariation.SaveMoveInPly(move1, 0);
 
-            IEnumerable<Move> moves = principalVariation.GetMoves();
+            IEnumerable<Move> moves = principalVariation.Moves;
 
             Assert.AreEqual(3, moves.Count());
             Enumerable.SequenceEqual(expectedMoves, moves);

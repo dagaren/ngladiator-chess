@@ -69,6 +69,7 @@ namespace Gladiator
             var featureCommand  = new FeatureCommand(commandWriter);
             var errorCommand = new ErrorCommand(commandWriter);
             var moveCommand = new MoveCommand(commandWriter);
+            var principalVariationCommand = new PrincipalVariationChangeCommand(commandWriter);
 
             IEvaluator materialEvaluator = new MaterialEvaluator();
             IEvaluator positionEvaluator = new PositionEvaluator();
@@ -76,6 +77,7 @@ namespace Gladiator
             ISearcher searcher = new AlphaBetaSearcher(staticEvaluator, commandWriter.Write);
             IEngine engine = new Engine(searcher);
             engine.OnMoveDone += moveCommand.Execute;
+            engine.OnPrincipalVariationChange += principalVariationCommand.Execute;
 
             container["illegalMoveAction"] = new Action<Move, string>(illegalMoveCommand.Execute);
             container["quitAction"] = new Action(controller.Finish);

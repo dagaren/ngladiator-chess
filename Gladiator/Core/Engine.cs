@@ -21,6 +21,8 @@ namespace Gladiator.Core
 
         public event Action<Move> OnMoveDone;
 
+        public event Action<PrincipalVariationChange> OnPrincipalVariationChange;
+
         public IGame CurrentGame
         {
             get { return this.currentGame; }
@@ -48,12 +50,15 @@ namespace Gladiator.Core
             }
         }
 
+        public bool PrincipalVariationEnabled { get; set; }
+
         public Engine(ISearcher searcher)
         {
             Check.ArgumentNotNull(searcher, "searcher");
 
             this.searcher = searcher;
             this.MaxSearchDepth = 4;
+            this.PrincipalVariationEnabled = false;
         }
 
         public void NewGame(IPosition<Representation.IBoard> initialPosition)
@@ -74,6 +79,7 @@ namespace Gladiator.Core
             {
                 this.currentSearchExecution.Cancel();
                 this.currentSearchExecution.OnSearchFinished -= this.OnMoveDone;
+                this.currentSearchExecution.OnPrincipalVariationChanged -= this.SearchFoundPrincipalVariationChange;
                 this.currentSearchExecution = null;
             }
         }
@@ -88,6 +94,7 @@ namespace Gladiator.Core
                     SearchDepth = this.MaxSearchDepth
                 });
                 this.currentSearchExecution.OnSearchFinished += this.MoveFound;
+                this.currentSearchExecution.OnPrincipalVariationChanged += this.SearchFoundPrincipalVariationChange;
                 this.currentSearchExecution.Init();
             }
         }
@@ -99,7 +106,21 @@ namespace Gladiator.Core
                 this.currentGame.DoMove(move);
                 this.OnMoveDone(move);
             }
-            //this.currentGame.Position.Board.WriteConsolePretty();
+        }
+
+        private void SearchFoundPrincipalVariationChange(Search.PrincipalVariationChange principalVariationChange)
+        {
+            var change = new PrincipalVariationChange(
+                                principalVariationChange.Ply, 
+                                principalVariationChange.Score, 
+                                principalVariationChange.SearchTime, 
+                                principalVariationChange.Nodes, 
+                                principalVariationChange.Moves);
+
+            if(this.PrincipalVariationEnabled)
+            {
+                this.OnPrincipalVariationChange(change);
+            }
         }
     }
 }

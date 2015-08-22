@@ -11,6 +11,26 @@ namespace Gladiator.Search
         private readonly int[] numMovesInDepth;
         private const int size = 60;
 
+        public event Action OnChanged;
+
+        public IEnumerable<Move> Moves { 
+            get 
+            {
+                if (this.numMovesInDepth[0] > 0)
+                {
+                    return this.movesMatrix[0].Take(this.numMovesInDepth[0]);
+                }
+                else
+                {
+                    return Enumerable.Empty<Move>();
+                }  
+            } 
+        }
+
+        public int Ply { get { return 0; } }
+
+        public int Score { get { return 0; } }
+
         public PrincipalVariation()
         {
             this.movesMatrix = new Move[size + 1][];
@@ -28,7 +48,7 @@ namespace Gladiator.Search
             this.numMovesInDepth[ply + 1] = 0;
         }
 
-        public void SaveMoveInPly(Representation.Move move, int ply)
+        public void SaveMoveInPly(Move move, int ply)
         {
             if(this.numMovesInDepth[ply + 1] > 0)
             {
@@ -43,20 +63,7 @@ namespace Gladiator.Search
 
             if(ply == 0)
             {
-                //TODO: Launch event
-                //Console.WriteLine(string.Join(", ", this.GetMoves().Select(m=> m.Format())));
-            }
-        }
-
-        public IEnumerable<Move> GetMoves()
-        {
-            if(this.numMovesInDepth[0] > 0)
-            {
-                return this.movesMatrix[0].Take(this.numMovesInDepth[0]);
-            }
-            else
-            {
-                return Enumerable.Empty<Move>();
+                this.OnChanged();
             }
         }
     }

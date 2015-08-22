@@ -57,6 +57,7 @@
     <Compile Include="IEngine.cs" />
     <Compile Include="IGame.cs" />
     <Compile Include="IllegalMoveException.cs" />
+    <Compile Include="PrincipalVariationChange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

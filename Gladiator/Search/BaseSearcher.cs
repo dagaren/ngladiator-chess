@@ -12,9 +12,12 @@ namespace Gladiator.Search
             Check.ArgumentNotNull(position, "position");
             Check.ArgumentNotNull(searchOptions, "searchOptions");
 
-            return new SearchExecution((token) => this.SearchAction(position, searchOptions, token));
+            return new SearchExecution((token, principalVariationAction) => this.SearchAction(position, searchOptions, principalVariationAction, token));
         }
 
-        protected abstract Move SearchAction(IPosition<IBoard> position, SearchOptions searchOptions, CancellationToken cancellationToken);
+        protected abstract Move SearchAction(IPosition<IBoard> position, 
+                                             SearchOptions searchOptions,
+                                             Action<PrincipalVariationChange> principalVariationChangeAction,
+                                             CancellationToken cancellationToken);
     }
 }

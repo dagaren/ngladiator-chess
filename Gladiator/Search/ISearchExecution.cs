@@ -7,6 +7,8 @@ namespace Gladiator.Search
     {
         event Action<Move> OnSearchFinished;
 
+        event Action<PrincipalVariationChange> OnPrincipalVariationChanged;
+
         void Init();
 
         void Cancel();

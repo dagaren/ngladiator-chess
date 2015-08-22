@@ -11,7 +11,11 @@ namespace Gladiator.Core
 
         int MaxSearchDepth { get; set; }
 
+        bool PrincipalVariationEnabled { get; set; }
+
         event Action<Move> OnMoveDone;
+
+        event Action<PrincipalVariationChange> OnPrincipalVariationChange;
 
         void NewGame(IPosition<IBoard> initialPosition);
 

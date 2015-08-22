@@ -3,6 +3,7 @@ using Gladiator.Representation;
 using Gladiator.Search.AlphaBeta;
 using Gladiator.Utils;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -24,9 +25,11 @@ namespace Gladiator.Search
             this.commentWrite = commentWrite;
         }
 
-        protected override Move SearchAction(IPosition<IBoard> position, SearchOptions searchOptions, CancellationToken cancellationToken)
+        protected override Move SearchAction(IPosition<IBoard> position, SearchOptions searchOptions, Action<PrincipalVariationChange> principalVariationChangeAction, CancellationToken cancellationToken)
         {
             IPrincipalVariationManager principalVariationManager = new PrincipalVariation();
+            INodeCounter nodeCounter = new NodeCounter();
+            
             IMoveSorter moveSorter = new BasicMoveSorter();
             IMoveSorter mvvLvaSorter = new MvvLvaMoveSorter();
 
@@ -34,16 +37,18 @@ namespace Gladiator.Search
             var quiescenceStrategy = new AlphaBetaQuiescenceStrategy(staticEvaluationStrategy, mvvLvaSorter, this.commentWrite);
             var qprincipalVariationStrategy = new PrincipalVariationAlphaBetaStrategy(principalVariationManager, quiescenceStrategy);
             var qcancellationStrategy = new AlphaBetaCancellation(cancellationToken, qprincipalVariationStrategy);
-            var qCounterStrategy = new AlphaBetaCounterStrategy(qcancellationStrategy);
+            var qCounterStrategy = new AlphaBetaCounterStrategy(qcancellationStrategy, nodeCounter);
 
             quiescenceStrategy.RecursiveStrategy = qCounterStrategy;
 
             var mainStrategy = new AlphaBetaMainStrategy(moveSorter, this.commentWrite);
             var principalVariationStrategy = new PrincipalVariationAlphaBetaStrategy(principalVariationManager, mainStrategy);
             var cancellationStrategy = new AlphaBetaCancellation(cancellationToken, principalVariationStrategy);
-            var counterStrategy = new AlphaBetaCounterStrategy(cancellationStrategy);
+            var counterStrategy = new AlphaBetaCounterStrategy(cancellationStrategy, nodeCounter);
             var finalPlyStrategy = new AlphaBetaFinalPlyStrategy(qCounterStrategy, counterStrategy);
             mainStrategy.RecursiveStrategy = finalPlyStrategy;
+
+            var entryStrategy = new AlphaBetaEntryStrategy(finalPlyStrategy, principalVariationManager, nodeCounter, principalVariationChangeAction);
 
             SearchStatus initialStatus = new SearchStatus()
             {
@@ -57,20 +62,11 @@ namespace Gladiator.Search
             var stopwatch = Stopwatch.StartNew();
             try
             {
-                int score = counterStrategy.AlphaBeta(initialStatus);
-                int nodesPerSecond = (int)(counterStrategy.PositionsVisited + qCounterStrategy.PositionsVisited / stopwatch.Elapsed.TotalSeconds);
-
-                commentWrite(string.Format("# Search time: {0:0.##} seconds", stopwatch.Elapsed.TotalSeconds));
-                commentWrite(string.Format("# Nodes per second: {0}", nodesPerSecond));
-                commentWrite(string.Format("# Result Score: {0}", score));
-                commentWrite(string.Format("# Normal Nodes visited: {0}", counterStrategy.PositionsVisited));
-                commentWrite(string.Format("# Quiescence nodes visited: {0}", qCounterStrategy.PositionsVisited));
-                commentWrite(string.Format("# Total nodes visited: {0}", counterStrategy.PositionsVisited + qCounterStrategy.PositionsVisited));
-                commentWrite(string.Format("# QSearch %: {0:0.##} ", 100 * qCounterStrategy.PositionsVisited / (qCounterStrategy.PositionsVisited + counterStrategy.PositionsVisited)));
+                int score = entryStrategy.AlphaBeta(initialStatus);
             }
             catch (OperationCanceledException)
             {
-                Move move = principalVariationManager.GetMoves().FirstOrDefault();
+                Move move = principalVariationManager.Moves.FirstOrDefault();
                 if (move == null)
                 {
                     move = position.GetMoves(MoveSearchType.LegalMoves).Random();

@@ -69,6 +69,7 @@
     <Compile Include="LevelCommand.cs" />
     <Compile Include="LevelCommandMatcher.cs" />
     <Compile Include="Output\MoveCommand.cs" />
+    <Compile Include="Output\PrincipalVariationChangeCommand.cs" />
     <Compile Include="PingCommand.cs" />
     <Compile Include="PingCommandMatcher.cs" />
     <Compile Include="SdCommand.cs" />
