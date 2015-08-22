@@ -57,6 +57,7 @@
     <Compile Include="AlphaBeta\AlphaBetaCounterStrategy.cs" />
     <Compile Include="AlphaBeta\AlphaBetaEntryStrategy.cs" />
     <Compile Include="AlphaBeta\AlphaBetaFinalPlyStrategy.cs" />
+    <Compile Include="AlphaBeta\AlphaBetaIterativeDeepeningStrategy.cs" />
     <Compile Include="AlphaBeta\AlphaBetaMainStrategy.cs" />
     <Compile Include="AlphaBeta\AlphaBetaQuiescenceStrategy.cs" />
     <Compile Include="AlphaBeta\AlphaBetaScore.cs" />

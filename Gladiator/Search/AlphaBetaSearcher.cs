@@ -48,6 +48,7 @@ namespace Gladiator.Search
             var finalPlyStrategy = new AlphaBetaFinalPlyStrategy(qCounterStrategy, counterStrategy);
             mainStrategy.RecursiveStrategy = finalPlyStrategy;
 
+            var iterativeDeepeningStrategy = new AlphaBetaIterativeDeepeningStrategy(finalPlyStrategy);
             var entryStrategy = new AlphaBetaEntryStrategy(finalPlyStrategy, principalVariationManager, nodeCounter, principalVariationChangeAction);
 
             SearchStatus initialStatus = new SearchStatus()
@@ -66,18 +67,14 @@ namespace Gladiator.Search
             }
             catch (OperationCanceledException)
             {
-                Move move = principalVariationManager.Moves.FirstOrDefault();
-                if (move == null)
+                if(initialStatus.BestMove == null)
                 {
-                    move = position.GetMoves(MoveSearchType.LegalMoves).Random();
+                    initialStatus.BestMove = position.GetMoves(MoveSearchType.LegalMoves).Random();
                 }
+            }
 
-                return move;
-            }
-            finally
-            {
-                stopwatch.Stop();
-            }
+            Console.WriteLine("# " + nodeCounter.GetValue());
+            Console.WriteLine("# " + (nodeCounter.GetValue() / (stopwatch.Elapsed.TotalSeconds)));
 
             return initialStatus.BestMove;
         }
