@@ -20,6 +20,7 @@ namespace Gladiator.Search.AlphaBeta
             int initialAlpha = searchStatus.Alpha;
             int initialBeta = searchStatus.Beta;
             int score = 0;
+            searchStatus.Score = 0;
 
             for(int i = 1; i <= maxDepth; i++)
             {
@@ -30,6 +31,7 @@ namespace Gladiator.Search.AlphaBeta
                 score = this.nextStrategy.AlphaBeta(searchStatus);
 
                 searchStatus.SuggestedMove = searchStatus.BestMove;
+                searchStatus.Score = score;
             }
 
             return score;

@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlphaBetaSearcher.cs" />
+    <Compile Include="AlphaBeta\AlphaBetaAspirationWindowStrategy.cs" />
     <Compile Include="AlphaBeta\AlphaBetaCancellation.cs" />
     <Compile Include="AlphaBeta\AlphaBetaCounterStrategy.cs" />
     <Compile Include="AlphaBeta\AlphaBetaEntryStrategy.cs" />

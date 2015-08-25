@@ -57,7 +57,7 @@ namespace Gladiator.Core
             Check.ArgumentNotNull(searcher, "searcher");
 
             this.searcher = searcher;
-            this.MaxSearchDepth = 4;
+            this.MaxSearchDepth = 5;
             this.PrincipalVariationEnabled = false;
         }
 
