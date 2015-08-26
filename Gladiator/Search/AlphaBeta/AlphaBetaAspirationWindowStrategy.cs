@@ -1,5 +1,6 @@
 ﻿using Gladiator.Utils;
 using System;
+using System.Collections.Generic;
 
 namespace Gladiator.Search.AlphaBeta
 {
@@ -7,71 +8,88 @@ namespace Gladiator.Search.AlphaBeta
     {
         private IAlphaBetaStrategy nextStrategy;
 
-        private const int WindowSize = 35;
+        private const int WindowSize = 76;
 
-        private static int visits = 0;
-
-        private static int fails = 0;
-
-        private static int instabilityFails = 0;
+        private IEnumerable<Func<int, SearchWindow, SearchWindow>> SearchWindowRetrievers;
 
         public AlphaBetaAspirationWindowStrategy(IAlphaBetaStrategy nextStrategy)
         {
             Check.ArgumentNotNull(nextStrategy, "nextStrategy");
 
             this.nextStrategy = nextStrategy;
+
+            this.SearchWindowRetrievers = new Func<int, SearchWindow, SearchWindow>[] 
+            {
+                this.GetFirstSearchWindow,
+                this.GetSecondSearchWindow,
+                this.GetThirdSearchWindow,
+                this.GetFinalWindow
+            };
         }
 
         public int AlphaBeta(SearchStatus searchStatus)
         {
-            int initialAlpha = searchStatus.Alpha;
-            int initialBeta = searchStatus.Beta;
+            int score = searchStatus.Score;
+            SearchWindow searchWindow = null;
 
-            int windowAlpha = searchStatus.Score - WindowSize;
-            int windowBeta = searchStatus.Score + WindowSize;
-
-            searchStatus.Alpha = windowAlpha;
-            searchStatus.Beta = windowBeta;
-
-            visits++;
-
-            //Console.WriteLine("# Aspiration window. Alpha {0}, Beta {1}, score: {2}", searchStatus.Alpha, searchStatus.Beta, searchStatus.Score);
-            int score = this.nextStrategy.AlphaBeta(searchStatus);
-            //Console.WriteLine("# Score with aspiration: {0}", score);
-            if(score <= windowAlpha || score >= windowBeta)
+            foreach(var windowRetrieverDelegate in this.SearchWindowRetrievers)
             {
-                fails++;
-                searchStatus.Alpha = initialAlpha;
-                searchStatus.Beta = initialBeta;
+                searchWindow = windowRetrieverDelegate(score, searchWindow);
 
-                if(score <= windowAlpha)
-                {
-                    windowAlpha = score - WindowSize;
-                    windowBeta = score;
-                }
-                else if(score >= windowBeta)
-                {
-                    windowAlpha = score;
-                    windowBeta = score + WindowSize;
-                }
-                searchStatus.Alpha = windowAlpha;
-                searchStatus.Beta = windowBeta;
+                searchStatus.Alpha = searchWindow.Alpha;
+                searchStatus.Beta = searchWindow.Beta;
+
                 score = this.nextStrategy.AlphaBeta(searchStatus);
-                //Console.WriteLine("# Score second try with aspiration: {0}", score);
-                if(score <= windowAlpha || score >= windowBeta)
-                {
-                    instabilityFails++;
 
-                    searchStatus.Alpha = initialAlpha;
-                    searchStatus.Beta = initialBeta;
-                    score = this.nextStrategy.AlphaBeta(searchStatus);
-                    //Console.WriteLine("# Score with full window: {0}", score);
+                if(!searchWindow.IsFail(score))
+                {
+                    break;
                 }
             }
-            //Console.WriteLine("# Final score: {0}", score);
-            //Console.WriteLine("# Aspiration window: {0} times called, {1} fails, instability fails {2}", visits, fails, instabilityFails);
-
+            
             return score;
+        }
+
+        private SearchWindow GetFirstSearchWindow(int previousScore, SearchWindow previousSearchWindow)
+        {
+            return new SearchWindow(previousScore - WindowSize / 2, previousScore + WindowSize / 2);
+        }
+
+        private SearchWindow GetSecondSearchWindow(int previousScore, SearchWindow previousSearchWindow)
+        {
+            if(previousSearchWindow.IsFailLow(previousScore))
+            {
+                return new SearchWindow(previousScore - WindowSize, previousScore);
+            }
+            else if(previousSearchWindow.IsFailHigh(previousScore))
+            {
+                return new SearchWindow(previousScore, previousScore + WindowSize);
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+        }
+
+        private SearchWindow GetThirdSearchWindow(int previousScore, SearchWindow previousSearchWindow)
+        {
+            if (previousSearchWindow.IsFailLow(previousScore))
+            {
+                return new SearchWindow(AlphaBetaScore.InitialAlpha.Value(), previousScore);
+            }
+            else if (previousSearchWindow.IsFailHigh(previousScore))
+            {
+                return new SearchWindow(previousScore, AlphaBetaScore.InitialBeta.Value());
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+        }
+
+        private SearchWindow GetFinalWindow(int previousScore, SearchWindow previousSearchWindow)
+        {
+            return new SearchWindow(AlphaBetaScore.InitialAlpha.Value(), AlphaBetaScore.InitialBeta.Value());
         }
     }
 }

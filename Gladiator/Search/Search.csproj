@@ -72,6 +72,7 @@
     <Compile Include="AlphaBeta\NodeCounter.cs" />
     <Compile Include="AlphaBeta\PrincipalVariationAlphaBetaStrategy.cs" />
     <Compile Include="AlphaBeta\SearchStatus.cs" />
+    <Compile Include="AlphaBeta\SearchWindow.cs" />
     <Compile Include="BaseSearcher.cs" />
     <Compile Include="IPrincipalVariation.cs" />
     <Compile Include="IPrincipalVariationManager.cs" />

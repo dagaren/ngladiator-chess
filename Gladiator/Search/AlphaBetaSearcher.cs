@@ -74,7 +74,7 @@ namespace Gladiator.Search
                 }
             }
 
-            Console.WriteLine("# " + nodeCounter.GetValue());
+            Console.WriteLine("# Nodes searched: " + nodeCounter.GetValue());
             
             return initialStatus.BestMove;
         }
