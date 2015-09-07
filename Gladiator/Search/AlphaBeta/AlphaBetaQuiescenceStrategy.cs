@@ -38,21 +38,25 @@ namespace Gladiator.Search.AlphaBeta
 
         public int AlphaBeta(SearchStatus searchStatus)
         {
+            searchStatus.Score = searchStatus.Alpha;
+
             int staticScore = this.staticEvaluationStrategy.AlphaBeta(searchStatus);
             int score = staticScore;
             if (score >= searchStatus.Beta)
             {
-                return searchStatus.Beta;
+                searchStatus.Score = searchStatus.Beta;
+                return searchStatus.Score;
             }
 
             if (score < searchStatus.Alpha - 950)
             {
-                return searchStatus.Alpha;
+                searchStatus.Score = searchStatus.Alpha;
+                return searchStatus.Score;
             }
 
-            if (score > searchStatus.Alpha)
+            if (score > searchStatus.Score)
             {
-                searchStatus.Alpha = score;
+                searchStatus.Score = score;
             }
 
             IEnumerable<Move> moves = searchStatus.Position.GetMoves(MoveSearchType.PseudoLegalMoves)
@@ -70,7 +74,7 @@ namespace Gladiator.Search.AlphaBeta
                 {
                     nextSearchStatus.Position = searchStatus.Position;
                     nextSearchStatus.Alpha = -searchStatus.Beta;
-                    nextSearchStatus.Beta = -searchStatus.Alpha;
+                    nextSearchStatus.Beta = -searchStatus.Score;
                     nextSearchStatus.CurrentPly = searchStatus.CurrentPly + 1;
                     nextSearchStatus.RemainingPlies = searchStatus.RemainingPlies - 1;
                     nextSearchStatus.BestMove = null;
@@ -88,11 +92,12 @@ namespace Gladiator.Search.AlphaBeta
                     if (score >= searchStatus.Beta)
                     {
                         searchStatus.Position.UndoMove(fullMove);
-                        return searchStatus.Beta;
+                        searchStatus.Score = searchStatus.Beta;
+                        return searchStatus.Score;
                     }
-                    else if (score > searchStatus.Alpha)
+                    else if (score > searchStatus.Score)
                     {
-                        searchStatus.Alpha = score;
+                        searchStatus.Score = score;
                         searchStatus.BestMove = move;
                     }
                 }
@@ -100,7 +105,7 @@ namespace Gladiator.Search.AlphaBeta
                 searchStatus.Position.UndoMove(fullMove);
             }
 
-            return searchStatus.Alpha;
+            return searchStatus.Score;
         }
     }
 }

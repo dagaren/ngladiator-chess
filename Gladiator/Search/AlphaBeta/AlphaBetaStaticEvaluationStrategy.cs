@@ -12,7 +12,7 @@ namespace Gladiator.Search.AlphaBeta
         public AlphaBetaStaticEvaluationStrategy(IEvaluator staticEvaluator)
         {
             Check.ArgumentNotNull(staticEvaluator, "staticEvaluator");
-            
+
             this.staticEvaluator = staticEvaluator;
         }
 

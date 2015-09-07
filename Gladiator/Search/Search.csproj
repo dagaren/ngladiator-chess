@@ -64,6 +64,7 @@
     <Compile Include="AlphaBeta\AlphaBetaScore.cs" />
     <Compile Include="AlphaBeta\AlphaBetaScoreExtensions.cs" />
     <Compile Include="AlphaBeta\AlphaBetaStaticEvaluationStrategy.cs" />
+    <Compile Include="AlphaBeta\AlphaBetaTranspositionTableStrategy.cs" />
     <Compile Include="AlphaBeta\BasicMoveSorter.cs" />
     <Compile Include="AlphaBeta\IAlphaBetaStrategy.cs" />
     <Compile Include="AlphaBeta\IMoveSorter.cs" />
@@ -84,6 +85,10 @@
     <Compile Include="RandomSearcher.cs" />
     <Compile Include="SearchExecution.cs" />
     <Compile Include="SearchOptions.cs" />
+    <Compile Include="TranspositionEntry.cs" />
+    <Compile Include="TranspositionEntryType.cs" />
+    <Compile Include="TranspositionTable.cs" />
+    <Compile Include="ZobristKeyGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Evaluation\Evaluation.csproj">

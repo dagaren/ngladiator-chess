@@ -5,11 +5,12 @@ namespace Gladiator.Representation
 {
     public static class CastlingTypeExtensions
     {
-        private static Square[,] RookSourceSquares = new Square[2, 2];
-        private static Square[,] RookDestinationSquares = new Square[2, 2];
-        private static Square[,] KingSourceSquares = new Square[2, 2];
-        private static Square[,] KingDestinationSquares = new Square[2, 2];
-        private static IEnumerable<Square>[,] KingCrossingSquares = new IEnumerable<Square>[2, 2];
+        private static readonly Square[,] RookSourceSquares = new Square[2, 2];
+        private static readonly Square[,] RookDestinationSquares = new Square[2, 2];
+        private static readonly Square[,] KingSourceSquares = new Square[2, 2];
+        private static readonly Square[,] KingDestinationSquares = new Square[2, 2];
+        private static readonly IEnumerable<Square>[,] KingCrossingSquares = new IEnumerable<Square>[2, 2];
+        private static readonly IEnumerable<CastlingType> allCastlingTypes = new CastlingType[] { CastlingType.Long, CastlingType.Short };
 
         static CastlingTypeExtensions()
         {
@@ -92,6 +93,11 @@ namespace Gladiator.Representation
             }
 
             return KingCrossingSquares[type.Value(), colour.Value()];
+        }
+
+        public static IEnumerable<CastlingType> AllTypes()
+        {
+            return allCastlingTypes;
         }
     }
 }

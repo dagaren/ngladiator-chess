@@ -10,6 +10,8 @@ namespace Gladiator.Representation
     {
         private static Colour[] opponents = new Colour[3];
 
+        private static readonly IEnumerable<Colour> allColours = new Colour[] { Colour.White, Colour.Black };
+
         static ColourExtensions()
         {
             opponents[Colour.White.Value()] = Colour.Black;
@@ -29,6 +31,11 @@ namespace Gladiator.Representation
             }
 
             return opponents[colour.Value()];
+        }
+
+        public static IEnumerable<Colour> AllColours()
+        {
+            return allColours;
         }
     }
 }

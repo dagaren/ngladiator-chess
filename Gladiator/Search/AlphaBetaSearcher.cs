@@ -32,6 +32,7 @@ namespace Gladiator.Search
             
             IMoveSorter moveSorter = new BasicMoveSorter();
             IMoveSorter mvvLvaSorter = new MvvLvaMoveSorter();
+            var transpositionTable = new TranspositionTable(500000);
 
             var staticEvaluationStrategy = new AlphaBetaStaticEvaluationStrategy(this.staticEvaluator);
             var quiescenceStrategy = new AlphaBetaQuiescenceStrategy(staticEvaluationStrategy, mvvLvaSorter, this.commentWrite);
@@ -42,6 +43,8 @@ namespace Gladiator.Search
             quiescenceStrategy.RecursiveStrategy = qCounterStrategy;
 
             var mainStrategy = new AlphaBetaMainStrategy(moveSorter, this.commentWrite);
+            //var transpositionTableStrategy = new AlphaBetaTranspositionTableStrategy(transpositionTable, mainStrategy);
+            //var principalVariationStrategy = new PrincipalVariationAlphaBetaStrategy(principalVariationManager, transpositionTableStrategy);
             var principalVariationStrategy = new PrincipalVariationAlphaBetaStrategy(principalVariationManager, mainStrategy);
             var cancellationStrategy = new AlphaBetaCancellation(cancellationToken, principalVariationStrategy);
             var counterStrategy = new AlphaBetaCounterStrategy(cancellationStrategy, nodeCounter);

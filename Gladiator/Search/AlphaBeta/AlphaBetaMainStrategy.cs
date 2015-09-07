@@ -37,6 +37,8 @@ namespace Gladiator.Search.AlphaBeta
             int numValidMoves = 0;
 
             SearchStatus nextSearchStatus = new SearchStatus();
+
+            searchStatus.Score = searchStatus.Alpha;
             
             foreach (Move move in moves)
             {
@@ -48,7 +50,7 @@ namespace Gladiator.Search.AlphaBeta
                     
                     nextSearchStatus.Position = searchStatus.Position;
                     nextSearchStatus.Alpha = -searchStatus.Beta;
-                    nextSearchStatus.Beta = -searchStatus.Alpha;
+                    nextSearchStatus.Beta = -searchStatus.Score;
                     nextSearchStatus.CurrentPly = searchStatus.CurrentPly + 1;
                     nextSearchStatus.RemainingPlies = searchStatus.RemainingPlies - 1;
                     nextSearchStatus.BestMove = null;
@@ -68,11 +70,13 @@ namespace Gladiator.Search.AlphaBeta
                     if (score >= searchStatus.Beta)
                     {
                         searchStatus.Position.UndoMove(fullMove);
-                        return searchStatus.Beta;
+                        searchStatus.Score = searchStatus.Beta;
+
+                        return searchStatus.Score;
                     }
-                    else if (score > searchStatus.Alpha)
+                    else if (score > searchStatus.Score)
                     {
-                        searchStatus.Alpha = score;
+                        searchStatus.Score = score;
                         searchStatus.BestMove = move;
                     }
                 }
@@ -84,15 +88,15 @@ namespace Gladiator.Search.AlphaBeta
             {
                 if (searchStatus.Position.IsInCheck(searchStatus.Position.Turn))
                 {
-                    return AlphaBetaScore.CheckMateScore.Value();
+                    searchStatus.Score = AlphaBetaScore.CheckMateScore.Value();
                 }
                 else
                 {
-                    return AlphaBetaScore.DrawScore.Value();
+                    searchStatus.Score = AlphaBetaScore.DrawScore.Value();
                 }
             }
 
-            return searchStatus.Alpha;
+            return searchStatus.Score;
         }
     }
 }
