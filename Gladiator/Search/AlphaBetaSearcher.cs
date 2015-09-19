@@ -53,7 +53,7 @@ namespace Gladiator.Search
             var transpositionTableStrategy = new AlphaBetaTranspositionTableStrategy(transpositionTable, mainStrategy);
             var principalVariationStrategy = new PrincipalVariationAlphaBetaStrategy(principalVariationManager, transpositionTableStrategy);
             //var principalVariationStrategy = new PrincipalVariationAlphaBetaStrategy(principalVariationManager, mainStrategy);
-            var cancellationStrategy = new AlphaBetaCancellation(cancellationToken, principalVariationStrategy);
+            var cancellationStrategy = new AlphaBetaCancellation(cancellationTokenSource.Token, principalVariationStrategy);
             var counterStrategy = new AlphaBetaCounterStrategy(cancellationStrategy, nodeCounter);
             var finalPlyStrategy = new AlphaBetaFinalPlyStrategy(qCounterStrategy, counterStrategy);
             mainStrategy.RecursiveStrategy = finalPlyStrategy;

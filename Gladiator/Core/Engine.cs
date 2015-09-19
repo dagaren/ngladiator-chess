@@ -76,7 +76,7 @@ namespace Gladiator.Core
             this.searcher = searcher;
             this.MaxSearchDepth = 100;
             this.PrincipalVariationEnabled = false;
-            this.timeControl = new FixedTimePerMoveTimeControl(TimeSpan.FromSeconds(30));
+            this.TimeControl = new FixedTimePerMoveTimeControl(TimeSpan.FromSeconds(30));
         }
 
         public void NewGame(IPosition<Representation.IBoard> initialPosition)
