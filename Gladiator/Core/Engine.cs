@@ -142,8 +142,6 @@ namespace Gladiator.Core
             long searchTime = (long)((remainingTime / remainingMoves) + (increment * 0.95));
             searchTime = searchTime > 300 ? searchTime - 200 : searchTime;
             Console.WriteLine("# Remaining Time: {0} milliseconds, Remaining moves: {1} Search time: {2} milliseconds", remainingTime, remainingMoves, searchTime);
-            string commandLogPath = System.IO.Path.Combine(EnvironmentExtensions.GetExecutablePath(), "CommandLog.txt");
-            System.IO.File.AppendAllText(commandLogPath, string.Format("# Remaining Time: {0} milliseconds, Remaining moves: {1} Search time: {2} milliseconds", remainingTime, remainingMoves, searchTime) + Environment.NewLine);
             return TimeSpan.FromMilliseconds(searchTime);
         }
 
