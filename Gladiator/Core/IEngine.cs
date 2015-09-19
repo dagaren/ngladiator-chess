@@ -11,6 +11,8 @@ namespace Gladiator.Core
 
         int MaxSearchDepth { get; set; }
 
+        ITimeControl TimeControl { get; set; }
+
         bool PrincipalVariationEnabled { get; set; }
 
         event Action<Move> OnMoveDone;

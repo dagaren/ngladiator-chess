@@ -18,6 +18,6 @@ namespace Gladiator.Search
         protected abstract Move SearchAction(IPosition<IBoard> position, 
                                              SearchOptions searchOptions,
                                              Action<PrincipalVariationChange> principalVariationChangeAction,
-                                             CancellationToken cancellationToken);
+                                             CancellationTokenSource cancellationTokenSource);
     }
 }

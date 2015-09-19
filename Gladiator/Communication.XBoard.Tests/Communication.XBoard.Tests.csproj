@@ -77,12 +77,14 @@
     <Compile Include="ForceCommandTest.cs" />
     <Compile Include="GoCommandMatcherTest.cs" />
     <Compile Include="GoCommandTest.cs" />
+    <Compile Include="LevelCommandMatcherTest.cs" />
     <Compile Include="NewCommandMatcherTest.cs" />
     <Compile Include="NewCommandTest.cs" />
     <Compile Include="PlayOtherCommandMatcherTest.cs" />
     <Compile Include="PlayOtherCommandTest.cs" />
     <Compile Include="ResultCommandMatcherTest.cs" />
     <Compile Include="ResultCommandTest.cs" />
+    <Compile Include="StCommandMatcherTest.cs" />
     <Compile Include="UserMoveCommandMatcherTest.cs" />
     <Compile Include="UserMoveCommandTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

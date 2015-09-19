@@ -16,6 +16,8 @@ namespace Gladiator.Search
 
         private IEvaluator staticEvaluator;
 
+        private Timer timer;
+
         public AlphaBetaSearcher(IEvaluator staticEvaluator, Action<string> commentWrite)
         {
             Check.ArgumentNotNull(staticEvaluator, "staticEvaluator");
@@ -25,8 +27,13 @@ namespace Gladiator.Search
             this.commentWrite = commentWrite;
         }
 
-        protected override Move SearchAction(IPosition<IBoard> position, SearchOptions searchOptions, Action<PrincipalVariationChange> principalVariationChangeAction, CancellationToken cancellationToken)
+        protected override Move SearchAction(IPosition<IBoard> position, SearchOptions searchOptions, Action<PrincipalVariationChange> principalVariationChangeAction, CancellationTokenSource cancellationTokenSource)
         {
+            if(searchOptions.SearchTime.Milliseconds > 0)
+            {
+                this.timer = new Timer((o) => { cancellationTokenSource.Cancel(); }, null, searchOptions.SearchTime, TimeSpan.FromMilliseconds(-1));
+            }
+            
             IPrincipalVariationManager principalVariationManager = new PrincipalVariation();
             INodeCounter nodeCounter = new NodeCounter();
             
@@ -36,14 +43,14 @@ namespace Gladiator.Search
             var staticEvaluationStrategy = new AlphaBetaStaticEvaluationStrategy(this.staticEvaluator);
             var quiescenceStrategy = new AlphaBetaQuiescenceStrategy(staticEvaluationStrategy, mvvLvaSorter, this.commentWrite);
             var qprincipalVariationStrategy = new PrincipalVariationAlphaBetaStrategy(principalVariationManager, quiescenceStrategy);
-            var qcancellationStrategy = new AlphaBetaCancellation(cancellationToken, qprincipalVariationStrategy);
+            var qcancellationStrategy = new AlphaBetaCancellation(cancellationTokenSource.Token, qprincipalVariationStrategy);
             var qCounterStrategy = new AlphaBetaCounterStrategy(qcancellationStrategy, nodeCounter);
 
             quiescenceStrategy.RecursiveStrategy = qCounterStrategy;
 
             var mainStrategy = new AlphaBetaMainStrategy(moveSorter, this.commentWrite);
             var principalVariationStrategy = new PrincipalVariationAlphaBetaStrategy(principalVariationManager, mainStrategy);
-            var cancellationStrategy = new AlphaBetaCancellation(cancellationToken, principalVariationStrategy);
+            var cancellationStrategy = new AlphaBetaCancellation(cancellationTokenSource.Token, principalVariationStrategy);
             var counterStrategy = new AlphaBetaCounterStrategy(cancellationStrategy, nodeCounter);
             var finalPlyStrategy = new AlphaBetaFinalPlyStrategy(qCounterStrategy, counterStrategy);
             mainStrategy.RecursiveStrategy = finalPlyStrategy;

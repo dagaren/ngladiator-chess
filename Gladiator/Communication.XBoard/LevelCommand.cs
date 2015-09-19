@@ -1,25 +1,43 @@
-﻿using System;
+﻿using Gladiator.Core;
+using Gladiator.Utils;
+using System;
 
 namespace Gladiator.Communication.XBoard
 {
     public class LevelCommand : ICommand
     {
+        private IEngine engine;
+
         private int numMoves;
 
-        private string controlBase;
+        private int minutes;
+
+        private int seconds;
 
         private int incrementInSeconds;
 
-        public LevelCommand(int numMoves, string controlBase, int incrementInSeconds)
+        public LevelCommand(
+            IEngine engine,
+            int numMoves, 
+            int minutes, 
+            [CommmandParameter(parserType: typeof(DefaultParser<int>))]int seconds, 
+            int incrementInSeconds)
         {
             this.numMoves = numMoves;
-            this.controlBase = controlBase;
+            this.minutes = minutes;
+            this.seconds = seconds;
             this.incrementInSeconds = incrementInSeconds;
+            this.engine = engine;
         }
 
         public void Execute()
         {
-            //TODO: Set up time control
+            TimeControl timeControl = new TimeControl(
+                this.numMoves, 
+                TimeSpan.FromMinutes(this.minutes).Add(TimeSpan.FromSeconds(this.seconds)), 
+                TimeSpan.FromSeconds(this.incrementInSeconds));
+
+            this.engine.TimeControl = timeControl;
         }
     }
 }
