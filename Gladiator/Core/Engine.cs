@@ -19,6 +19,10 @@ namespace Gladiator.Core
 
         private int maxSearchDepth;
 
+        private ITimeControl timeControl;
+
+        private IClock clock;
+
         public event Action<Move> OnMoveDone;
 
         public event Action<PrincipalVariationChange> OnPrincipalVariationChange;
@@ -28,7 +32,8 @@ namespace Gladiator.Core
             get { return this.currentGame; }
         }
 
-        public Colour ThinkingTurn { 
+        public Colour ThinkingTurn 
+        { 
             get { return this.thinkingTurn; }
             set 
             { 
@@ -38,7 +43,8 @@ namespace Gladiator.Core
             }
         }
 
-        public int MaxSearchDepth {
+        public int MaxSearchDepth 
+        {
             get { return this.maxSearchDepth; }
             set 
             { 
@@ -50,6 +56,17 @@ namespace Gladiator.Core
             }
         }
 
+        public ITimeControl TimeControl
+        {
+            get { return this.timeControl; }
+            set 
+            { 
+                this.timeControl = value;
+                this.clock = new Clock(this.timeControl);
+                this.clock.Start();
+            }
+        }
+
         public bool PrincipalVariationEnabled { get; set; }
 
         public Engine(ISearcher searcher)
@@ -57,8 +74,9 @@ namespace Gladiator.Core
             Check.ArgumentNotNull(searcher, "searcher");
 
             this.searcher = searcher;
-            this.MaxSearchDepth = 5;
+            this.MaxSearchDepth = 100;
             this.PrincipalVariationEnabled = false;
+            this.timeControl = new FixedTimePerMoveTimeControl(TimeSpan.FromSeconds(30));
         }
 
         public void NewGame(IPosition<Representation.IBoard> initialPosition)
@@ -69,7 +87,7 @@ namespace Gladiator.Core
         public void DoMove(Move move)
         {
             this.currentGame.DoMove(move);
-
+            this.clock.Change();
             this.Think();
         }
 
@@ -91,7 +109,8 @@ namespace Gladiator.Core
             if (this.ThinkingTurn == this.CurrentGame.Turn)
             {
                 this.currentSearchExecution = this.searcher.InitSearch(this.CurrentGame.Position, new SearchOptions() { 
-                    SearchDepth = this.MaxSearchDepth
+                    SearchDepth = this.MaxSearchDepth,
+                    SearchTime = this.CalculateSearchTime()
                 });
                 this.currentSearchExecution.OnSearchFinished += this.MoveFound;
                 this.currentSearchExecution.OnPrincipalVariationChanged += this.SearchFoundPrincipalVariationChange;
@@ -104,8 +123,28 @@ namespace Gladiator.Core
             if(this.ThinkingTurn == this.currentGame.Turn)
             {
                 this.currentGame.DoMove(move);
+                this.clock.Change();
                 this.OnMoveDone(move);
             }
+        }
+
+        private TimeSpan CalculateSearchTime()
+        {
+            long remainingTime = (long)(this.clock.GetRemainingTime(this.thinkingTurn).TotalMilliseconds);
+            int remainingMoves = this.clock.GetMovesToNextTimeControl(this.thinkingTurn);
+            long increment = (long)this.clock.IncrementPerMove(this.thinkingTurn).TotalMilliseconds;
+
+            if(remainingMoves < 0)
+            {
+                remainingMoves = 20;
+            }
+
+            long searchTime = (long)((remainingTime / remainingMoves) + (increment * 0.95));
+            searchTime = searchTime > 300 ? searchTime - 200 : searchTime;
+            Console.WriteLine("# Remaining Time: {0} milliseconds, Remaining moves: {1} Search time: {2} milliseconds", remainingTime, remainingMoves, searchTime);
+            string commandLogPath = System.IO.Path.Combine(EnvironmentExtensions.GetExecutablePath(), "CommandLog.txt");
+            System.IO.File.AppendAllText(commandLogPath, string.Format("# Remaining Time: {0} milliseconds, Remaining moves: {1} Search time: {2} milliseconds", remainingTime, remainingMoves, searchTime) + Environment.NewLine);
+            return TimeSpan.FromMilliseconds(searchTime);
         }
 
         private void SearchFoundPrincipalVariationChange(Search.PrincipalVariationChange principalVariationChange)

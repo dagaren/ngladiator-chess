@@ -36,8 +36,9 @@ namespace Gladiator
             IConstructorInvoker constructorInvoker = new ConstructorInvoker();
             ICommandFactory commandFactory = new CommandFactory(container, constructorRetriever, constructorInvoker);
             
-            ICommandReader commandReader = new LoggedCommandReader(commandLogPath, new ConsoleCommandReader());
-            ICommandWriter commandWriter = new LoggedCommandWriter(commandLogPath, new  ConsoleCommandWriter());
+            ICommandReader commandReader = new ConsoleCommandReader();
+            ICommandWriter commandWriter = new ConsoleCommandWriter();
+
             List<ICommandMatcher<ICommand>> commandMatchers = GetCommandMatcheers(commandFactory);
             IProtocol protocol = new XBoardProtocol(commandMatchers);
             var controller = new Controller(commandReader, protocol);
@@ -97,6 +98,7 @@ namespace Gladiator
             commandMatchers.Add(new QuitCommandMatcher(commandFactory));
             commandMatchers.Add(new UserMoveCommandMatcher(commandFactory));
             commandMatchers.Add(new LevelCommandMatcher(commandFactory));
+            commandMatchers.Add(new StCommandMatcher(commandFactory));
             commandMatchers.Add(new MoveNowCommandMatcher(commandFactory));
             commandMatchers.Add(new ForceCommandMatcher(commandFactory));
             commandMatchers.Add(new PingCommandMatcher(commandFactory));

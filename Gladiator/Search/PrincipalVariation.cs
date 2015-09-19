@@ -61,7 +61,7 @@ namespace Gladiator.Search
             this.numMovesInDepth[ply + 1] = 0;
             this.movesMatrix[ply][ply] = move;
 
-            if(ply == 0)
+            if(ply == 0 && this.OnChanged != null)
             {
                 this.OnChanged();
             }

@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Check.cs" />
     <Compile Include="ConsoleExtensions.cs" />
+    <Compile Include="DefaultParser.cs" />
     <Compile Include="DictionaryExtensions.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="EnumExtensions.cs" />

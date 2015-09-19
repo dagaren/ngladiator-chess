@@ -13,7 +13,5 @@ namespace Gladiator.Core
         void DoMove(Move move);
 
         IEnumerable<Move> GetMoves();
-
-
     }
 }
