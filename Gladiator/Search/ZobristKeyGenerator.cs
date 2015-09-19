@@ -17,20 +17,20 @@ namespace Gladiator.Search
         static ZobristKeyGenerator()
         {
             Random random = new Random();
-
-            for(int i = 0; i < 12; i++)
+            
+            for(int i = 0; i < pieceRandoms.GetLength(0); i++)
             {
-                for (int j = 0; j < 64; j++)
+                for (int j = 0; j < pieceRandoms.GetLength(1); j++)
                 {
                     pieceRandoms[i, j] = random.NextULong();
                 }
             }
 
-            for(int i = 0; i < 12; i++)
+            for(int i = 0; i < castlingRandoms.GetLength(0); i++)
             {
-                for (int j = 0; j < 64; j++)
+                for (int j = 0; j < castlingRandoms.GetLength(1); j++)
                 {
-                    pieceRandoms[i, j] = random.NextULong();
+                    castlingRandoms[i, j] = random.NextULong();
                 }
             }
 

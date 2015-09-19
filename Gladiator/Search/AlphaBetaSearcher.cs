@@ -43,9 +43,9 @@ namespace Gladiator.Search
             quiescenceStrategy.RecursiveStrategy = qCounterStrategy;
 
             var mainStrategy = new AlphaBetaMainStrategy(moveSorter, this.commentWrite);
-            //var transpositionTableStrategy = new AlphaBetaTranspositionTableStrategy(transpositionTable, mainStrategy);
-            //var principalVariationStrategy = new PrincipalVariationAlphaBetaStrategy(principalVariationManager, transpositionTableStrategy);
-            var principalVariationStrategy = new PrincipalVariationAlphaBetaStrategy(principalVariationManager, mainStrategy);
+            var transpositionTableStrategy = new AlphaBetaTranspositionTableStrategy(transpositionTable, mainStrategy);
+            var principalVariationStrategy = new PrincipalVariationAlphaBetaStrategy(principalVariationManager, transpositionTableStrategy);
+            //var principalVariationStrategy = new PrincipalVariationAlphaBetaStrategy(principalVariationManager, mainStrategy);
             var cancellationStrategy = new AlphaBetaCancellation(cancellationToken, principalVariationStrategy);
             var counterStrategy = new AlphaBetaCounterStrategy(cancellationStrategy, nodeCounter);
             var finalPlyStrategy = new AlphaBetaFinalPlyStrategy(qCounterStrategy, counterStrategy);
@@ -76,8 +76,12 @@ namespace Gladiator.Search
                     initialStatus.BestMove = position.GetMoves(MoveSearchType.LegalMoves).Random();
                 }
             }
+            TimeSpan searchTime = stopwatch.Elapsed;
+            stopwatch.Stop();
+            double speed = nodeCounter.GetValue() / (searchTime.TotalSeconds * 1000);
 
-            Console.WriteLine("# Nodes searched: " + nodeCounter.GetValue());
+            Console.WriteLine("# Nodes searched: {0}", nodeCounter.GetValue());
+            Console.WriteLine("# Speed: {0:0.##} kN/s", speed);
             
             return initialStatus.BestMove;
         }

@@ -63,24 +63,18 @@ namespace Gladiator.Search.AlphaBeta
             }
 
             int score = this.nextStrategy.AlphaBeta(searchStatus);
-
-            //if(entry == null || searchStatus.RemainingPlies > entry.Depth)
-            //{
-            //if (entry == null || searchStatus.RemainingPlies < 2 || searchStatus.RemainingPlies > entry.Depth)
-            //{
-                TranspositionEntryType transpositionEntryType = TranspositionEntryType.Exact;
-                if(searchStatus.Score >= searchStatus.Beta)
-                {
-                    transpositionEntryType = TranspositionEntryType.FailHigh;
-                }
-                else if(searchStatus.Score <= searchStatus.Alpha)
-                {
-                    transpositionEntryType = TranspositionEntryType.FailLow;
-                }
-                transpositionTable.SaveEntry(positionHash, searchStatus.RemainingPlies, searchStatus.Score, transpositionEntryType, searchStatus.BestMove);
-            //}
-                //}
-
+            
+            TranspositionEntryType transpositionEntryType = TranspositionEntryType.Exact;
+            if(searchStatus.Score >= searchStatus.Beta)
+            {
+                transpositionEntryType = TranspositionEntryType.FailHigh;
+            }
+            else if(searchStatus.Score <= searchStatus.Alpha)
+            {
+                transpositionEntryType = TranspositionEntryType.FailLow;
+            }
+            transpositionTable.SaveEntry(positionHash, searchStatus.RemainingPlies, searchStatus.Score, transpositionEntryType, searchStatus.BestMove);
+            
             return score;
         }
     }
