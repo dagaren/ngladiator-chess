@@ -18,6 +18,8 @@ namespace Gladiator.Search
 
         private Timer timer;
 
+        private AlphaBetaStrategyBuilder strategyBuilder;
+
         public AlphaBetaSearcher(IEvaluator staticEvaluator, Action<string> commentWrite)
         {
             Check.ArgumentNotNull(staticEvaluator, "staticEvaluator");
@@ -25,6 +27,12 @@ namespace Gladiator.Search
 
             this.staticEvaluator = staticEvaluator;
             this.commentWrite = commentWrite;
+            this.strategyBuilder = new AlphaBetaStrategyBuilder()
+                                            .WithAspirationWindow()
+                                            .WithIterativeDeepening()
+                                            .WithQuiescenceSearch()
+                                            .WithTransposicionTable(new TranspositionTable(500000))
+                                            .WithStaticEvaluator(this.staticEvaluator);
         }
 
         protected override Move SearchAction(IPosition<IBoard> position, SearchOptions searchOptions, Action<PrincipalVariationChange> principalVariationChangeAction, CancellationTokenSource cancellationTokenSource)
@@ -36,32 +44,14 @@ namespace Gladiator.Search
             
             IPrincipalVariationManager principalVariationManager = new PrincipalVariation();
             INodeCounter nodeCounter = new NodeCounter();
+
+            this.strategyBuilder = this.strategyBuilder
+                                            .WithCancellationToken(cancellationTokenSource.Token)
+                                            .WithNodeCounter(nodeCounter)
+                                            .WithPrincipalVariationManager(principalVariationManager, principalVariationChangeAction);
             
-            IMoveSorter moveSorter = new BasicMoveSorter();
-            IMoveSorter mvvLvaSorter = new MvvLvaMoveSorter();
-            var transpositionTable = new TranspositionTable(500000);
-
-            var staticEvaluationStrategy = new AlphaBetaStaticEvaluationStrategy(this.staticEvaluator);
-            var quiescenceStrategy = new AlphaBetaQuiescenceStrategy(staticEvaluationStrategy, mvvLvaSorter, this.commentWrite);
-            var qprincipalVariationStrategy = new PrincipalVariationAlphaBetaStrategy(principalVariationManager, quiescenceStrategy);
-            var qcancellationStrategy = new AlphaBetaCancellation(cancellationTokenSource.Token, qprincipalVariationStrategy);
-            var qCounterStrategy = new AlphaBetaCounterStrategy(qcancellationStrategy, nodeCounter);
-
-            quiescenceStrategy.RecursiveStrategy = qCounterStrategy;
-
-            var mainStrategy = new AlphaBetaMainStrategy(moveSorter, this.commentWrite);
-            var transpositionTableStrategy = new AlphaBetaTranspositionTableStrategy(transpositionTable, mainStrategy);
-            var principalVariationStrategy = new PrincipalVariationAlphaBetaStrategy(principalVariationManager, transpositionTableStrategy);
-            //var principalVariationStrategy = new PrincipalVariationAlphaBetaStrategy(principalVariationManager, mainStrategy);
-            var cancellationStrategy = new AlphaBetaCancellation(cancellationTokenSource.Token, principalVariationStrategy);
-            var counterStrategy = new AlphaBetaCounterStrategy(cancellationStrategy, nodeCounter);
-            var finalPlyStrategy = new AlphaBetaFinalPlyStrategy(qCounterStrategy, counterStrategy);
-            mainStrategy.RecursiveStrategy = finalPlyStrategy;
-
-            var aspirationWindowStrategy = new AlphaBetaAspirationWindowStrategy(finalPlyStrategy);
-            var iterativeDeepeningStrategy = new AlphaBetaIterativeDeepeningStrategy(aspirationWindowStrategy);
-            var entryStrategy = new AlphaBetaEntryStrategy(iterativeDeepeningStrategy, principalVariationManager, nodeCounter, principalVariationChangeAction);
-
+            IAlphaBetaStrategy alphaBetaStrategy = this.strategyBuilder.Build();
+            
             SearchStatus initialStatus = new SearchStatus()
             {
                 Position = position,
@@ -74,7 +64,7 @@ namespace Gladiator.Search
             var stopwatch = Stopwatch.StartNew();
             try
             {
-                int score = entryStrategy.AlphaBeta(initialStatus);
+                int score = alphaBetaStrategy.AlphaBeta(initialStatus);
             }
             catch (OperationCanceledException)
             {

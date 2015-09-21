@@ -64,8 +64,10 @@
     <Compile Include="AlphaBeta\AlphaBetaScore.cs" />
     <Compile Include="AlphaBeta\AlphaBetaScoreExtensions.cs" />
     <Compile Include="AlphaBeta\AlphaBetaStaticEvaluationStrategy.cs" />
+    <Compile Include="AlphaBeta\AlphaBetaStrategyBuilder.cs" />
     <Compile Include="AlphaBeta\AlphaBetaTranspositionTableStrategy.cs" />
     <Compile Include="AlphaBeta\BasicMoveSorter.cs" />
+    <Compile Include="AlphaBeta\IAlphaBetaStrategeyBuilder.cs" />
     <Compile Include="AlphaBeta\IAlphaBetaStrategy.cs" />
     <Compile Include="AlphaBeta\IMoveSorter.cs" />
     <Compile Include="AlphaBeta\INodeCounter.cs" />

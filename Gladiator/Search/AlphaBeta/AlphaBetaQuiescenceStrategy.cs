@@ -20,20 +20,15 @@ namespace Gladiator.Search.AlphaBeta
 
         private readonly IMoveSorter moveSorter;
 
-        private Action<string> commentWrite;
-
         public AlphaBetaQuiescenceStrategy(
             IAlphaBetaStrategy staticEvaluationStrategy,
-            IMoveSorter moveSorter,
-            Action<string> commentWrite)
+            IMoveSorter moveSorter)
         {
             Check.ArgumentNotNull(staticEvaluationStrategy, "staticEvaluationStrategy");
             Check.ArgumentNotNull(moveSorter, "moveSorter");
-            Check.ArgumentNotNull(commentWrite, "commentWrite");
 
             this.staticEvaluationStrategy = staticEvaluationStrategy;
             this.moveSorter = moveSorter;
-            this.commentWrite = commentWrite;
         }
 
         public int AlphaBeta(SearchStatus searchStatus)

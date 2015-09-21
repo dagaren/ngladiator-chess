@@ -18,15 +18,11 @@ namespace Gladiator.Search.AlphaBeta
 
         private readonly IMoveSorter moveSorter;
 
-        private readonly Action<string> commentWrite;
-
-        public AlphaBetaMainStrategy(IMoveSorter moveSorter, Action<string> commentWrite)
+        public AlphaBetaMainStrategy(IMoveSorter moveSorter)
         {
             Check.ArgumentNotNull(moveSorter, "moveSorter");
-            Check.ArgumentNotNull(commentWrite, "commentWrite");
 
             this.moveSorter = moveSorter;
-            this.commentWrite = commentWrite;
         }
 
         public int AlphaBeta(SearchStatus searchStatus)
