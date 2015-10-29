@@ -13,6 +13,7 @@ using System.IO;
 using Gladiator.Core;
 using Gladiator.Search;
 using Gladiator.Evaluation;
+using Gladiator.Search.AlphaBeta;
 
 namespace Gladiator
 {
@@ -75,7 +76,15 @@ namespace Gladiator
             IEvaluator materialEvaluator = new MaterialEvaluator();
             IEvaluator positionEvaluator = new PositionEvaluator();
             IEvaluator staticEvaluator = new CompositeEvaluator(materialEvaluator, positionEvaluator);
-            ISearcher searcher = new AlphaBetaSearcher(staticEvaluator, commandWriter.Write);
+            INodeCounter nodeCounter = new NodeCounter();
+            var strategyBuilder = new AlphaBetaStrategyBuilder()
+                                            .WithAspirationWindow()
+                                            .WithIterativeDeepening()
+                                            .WithQuiescenceSearch()
+                                            .WithNodeCounter(nodeCounter)
+                                            .WithTransposicionTable(new TranspositionTable(500000))
+                                            .WithStaticEvaluator(staticEvaluator);
+            ISearcher searcher = new AlphaBetaSearcher(strategyBuilder);
             IEngine engine = new Engine(searcher);
             engine.OnMoveDone += moveCommand.Execute;
             engine.OnPrincipalVariationChange += principalVariationCommand.Execute;

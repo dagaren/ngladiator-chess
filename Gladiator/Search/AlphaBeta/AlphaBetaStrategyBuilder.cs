@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Gladiator.Search.AlphaBeta
 {
-    class AlphaBetaStrategyBuilder
+    public class AlphaBetaStrategyBuilder
     {
         private INodeCounter nodeCounter;
         private CancellationToken cancellationToken;
@@ -20,7 +20,7 @@ namespace Gladiator.Search.AlphaBeta
         private bool withQuiescenceSearch = false;
         private IEvaluator staticEvaluator;
 
-        public IAlphaBetaStrategy Build(NodeCounter nodeCounter, System.Threading.CancellationToken cancellationToken)
+        public IAlphaBetaStrategy Build(INodeCounter nodeCounter, System.Threading.CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

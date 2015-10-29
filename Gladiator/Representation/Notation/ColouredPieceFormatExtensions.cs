@@ -27,5 +27,25 @@ namespace Gladiator.Representation.Notation
                 default: return string.Empty;
             }
         }
+
+        public static ColouredPiece Parse(string input)
+        {
+            switch(input)
+            {
+                case "K": return ColouredPiece.WhiteKing;
+                case "k": return ColouredPiece.BlackKing;
+                case "Q": return ColouredPiece.WhiteQueen;
+                case "q": return ColouredPiece.BlackQueen;
+                case "B": return ColouredPiece.WhiteBishop;
+                case "b": return ColouredPiece.BlackBishop;
+                case "N": return ColouredPiece.WhiteKnight;
+                case "n": return ColouredPiece.BlackKnight;
+                case "R": return ColouredPiece.WhiteRook;
+                case "r": return ColouredPiece.BlackRook;
+                case "P": return ColouredPiece.WhitePawn;
+                case "p": return ColouredPiece.BlackPawn;
+                default: throw new ArgumentException(string.Format("Invalid coloured piece text: {0}", input));
+            }
+        }
     }
 }

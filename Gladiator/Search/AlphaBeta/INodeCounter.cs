@@ -2,7 +2,7 @@
 
 namespace Gladiator.Search.AlphaBeta
 {
-    interface INodeCounter
+    public interface INodeCounter
     {
         void Increment();
 

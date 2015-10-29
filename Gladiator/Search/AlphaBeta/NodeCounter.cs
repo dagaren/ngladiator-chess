@@ -2,7 +2,7 @@
 
 namespace Gladiator.Search.AlphaBeta
 {
-    class NodeCounter : INodeCounter
+    public class NodeCounter : INodeCounter
     {
         private long value;
 

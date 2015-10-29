@@ -3,7 +3,7 @@ using System;
 
 namespace Gladiator.Search
 {
-    class TranspositionEntry
+    public class TranspositionEntry
     {
         public TranspositionEntryType EntryType { get; set; }
 

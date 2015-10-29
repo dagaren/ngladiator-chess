@@ -11,6 +11,8 @@ namespace Gladiator.Search
 
         void Init();
 
+        void Wait();
+
         void Cancel();
     }
 }

@@ -36,6 +36,11 @@ namespace Gladiator.Search
             this.task.Wait();
         }
 
+        public void Wait()
+        {
+            this.task.Wait();
+        }
+
         private void InitSearch()
         {
             this.cancellationTokenSource = new CancellationTokenSource();
@@ -45,9 +50,12 @@ namespace Gladiator.Search
                            try
                            {
                                Move move = this.searchFunction(cancellationTokenSource, this.PrincipalVariationChange);
-                               OnSearchFinished(move);
+                               if(this.OnSearchFinished != null)
+                               {
+                                   this.OnSearchFinished(move);
+                               }
                            }
-                           catch (OperationCanceledException ex)
+                           catch (OperationCanceledException)
                            {
                            }
                        },
@@ -56,7 +64,10 @@ namespace Gladiator.Search
 
         private void PrincipalVariationChange(PrincipalVariationChange change)
         {
-            this.OnPrincipalVariationChanged(change);
+            if (this.OnPrincipalVariationChanged != null)
+            {
+                this.OnPrincipalVariationChanged(change);
+            }
         }
     }
 }

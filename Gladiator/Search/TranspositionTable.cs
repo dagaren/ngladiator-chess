@@ -3,7 +3,7 @@ using System;
 
 namespace Gladiator.Search
 {
-    class TranspositionTable
+    public class TranspositionTable
     {
         private uint size;
 

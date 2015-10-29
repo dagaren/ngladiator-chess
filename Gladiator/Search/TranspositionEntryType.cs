@@ -2,7 +2,7 @@
 
 namespace Gladiator.Search
 {
-    enum TranspositionEntryType
+    public enum TranspositionEntryType
     {
         Exact,
         FailLow,
