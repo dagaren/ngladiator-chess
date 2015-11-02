@@ -21,18 +21,8 @@ namespace Gladiator.Representation.Bitboard
                 AttackBitboards[Colour.White.Value(), square.GetValue()] = BitboardExtensions.FromSquares(square.NextInDiagonal(), square.NextInAntiDiagonal());
                 ReachBitboards[Colour.White.Value(), square.GetValue()] = square.NextInFile().GetBitboard();
 
-                if(square.GetRank() == Rank._2)
-                {
-                    ReachBitboards[Colour.White.Value(), square.GetValue()] |= square.NextInFile().NextInFile().GetBitboard();
-                }
-
                 AttackBitboards[Colour.Black.Value(), square.GetValue()] = BitboardExtensions.FromSquares(square.PreviousInDiagonal(), square.PreviousInAntiDiagonal());
                 ReachBitboards[Colour.Black.Value(), square.GetValue()] = square.PreviousInFile().GetBitboard();
-
-                if(square.GetRank() == Rank._7)
-                {
-                    ReachBitboards[Colour.Black.Value(),square.GetValue()] |= square.PreviousInFile().PreviousInFile().GetBitboard();
-                }
             }
         }
     }

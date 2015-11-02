@@ -15,7 +15,11 @@ namespace Gladiator.Representation.Bitboard.Tests
             Position<BitboardBoard> position)
         {
             Move[] moves = moveGenerator.GetMoves(position).ToArray();
-
+            Console.WriteLine("Generated moves:");
+            foreach(Move move in moves)
+            {
+                Console.Write(move.Format() + " ");
+            }
             Assert.AreEqual(expectedMoves.Count(), moves.Count());
             expectedMoves.ForEach(expectedMove => CollectionAssert.Contains(moves, expectedMove));
         }

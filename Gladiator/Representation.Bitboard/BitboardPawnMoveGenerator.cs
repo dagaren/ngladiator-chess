@@ -18,9 +18,10 @@ namespace Gladiator.Representation.Bitboard
             if(piece == ColouredPiece.WhitePawn)
             {
                 attackedBitboard |= PawnBitboards.ReachBitboards[Colour.White.Value(), source.GetValue()].And(position.Board.occupation.Inverse());
-                attackedBitboard = attackedBitboard.Unset(position.Board.occupation
-                                                      .Unset(position.Board.pieceOccupation[piece.GetColour().Value()])
-                                                      .ShiftRight(8).And(Rank._4.GetBitboard()));
+                if(source.GetRank() == Rank._2)
+                {
+                    attackedBitboard |= attackedBitboard.And(position.Board.occupation.Inverse()).ShiftRight(8).And(position.Board.occupation.Inverse());
+                }
                 attackedBitboard |= PawnBitboards.AttackBitboards[Colour.White.Value(), source.GetValue()].And(position.Board.colourOccupation[piece.GetColour().Opponent().Value()]);
 
                 if(source == position.EnPassantSquare.PreviousInDiagonal() || source == position.EnPassantSquare.PreviousInAntiDiagonal())
@@ -31,9 +32,10 @@ namespace Gladiator.Representation.Bitboard
             else if(piece == ColouredPiece.BlackPawn)
             {
                 attackedBitboard |= PawnBitboards.ReachBitboards[Colour.Black.Value(), source.GetValue()].And(position.Board.occupation.Inverse());
-                attackedBitboard = attackedBitboard.Unset(position.Board.occupation
-                                                      .Unset(position.Board.pieceOccupation[piece.GetColour().Value()])
-                                                      .ShiftLeft(8).And(Rank._5.GetBitboard()));
+                if(source.GetRank() == Rank._7)
+                {
+                    attackedBitboard |= attackedBitboard.And(position.Board.occupation.Inverse()).ShiftLeft(8).And(position.Board.occupation.Inverse());
+                }
                 attackedBitboard |= PawnBitboards.AttackBitboards[Colour.Black.Value(), source.GetValue()].And(position.Board.colourOccupation[piece.GetColour().Opponent().Value()]);
 
                 if (source == position.EnPassantSquare.NextInDiagonal() || source == position.EnPassantSquare.NextInAntiDiagonal())

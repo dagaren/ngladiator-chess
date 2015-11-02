@@ -384,5 +384,22 @@ namespace Gladiator.Representation.Bitboard.Tests
 
             TestMoveGenerator(moveGenerator, expectedMoves, position);
         }
+
+        [TestMethod]
+        public void GetMoves_AdjacentDoublePawns_Ok()
+        {
+            List<Move> expectedMoves = new MoveListBuilder()
+                                                .AddMove(Square.f6, Square.f5)
+                                                .Build();
+
+            var moveGenerator = new BitboardPawnMoveGenerator<Position<BitboardBoard>>();
+            Position<BitboardBoard> position = new BitboardPositionBuilder(moveGenerator)
+                                                .SetTurn(Colour.Black)
+                                                .PutPiece(ColouredPiece.BlackPawn, Square.f7)
+                                                .PutPiece(ColouredPiece.BlackPawn, Square.f6)
+                                                .Build();
+
+            TestMoveGenerator(moveGenerator, expectedMoves, position);
+        }
     }
 }
