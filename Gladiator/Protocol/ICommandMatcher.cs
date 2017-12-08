@@ -1,7 +1,7 @@
 ﻿namespace Dagaren.Gladiator.Protocol
 {
-    interface ICommandMatcher<out TCommand> where TCommand : ICommand
+    interface ICommandMatcher
     {
-        TCommand Match(string commandString);
+        ICommand Match(string commandString);
     }
 }

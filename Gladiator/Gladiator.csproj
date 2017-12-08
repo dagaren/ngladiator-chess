@@ -6,8 +6,4 @@
     <RootNamespace>Dagaren.Gladiator</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Protocol\Uci\" />
-  </ItemGroup>
-
 </Project>

@@ -1,6 +1,5 @@
 ﻿namespace Dagaren.Gladiator.Protocol.Uci
 {
-    [ProtocolCommand("Uci", @"^\s*debug\s+(?<enabled>on|off)\s*$")]
     class DebugCommand : ICommand
     {
         private readonly bool enabled;

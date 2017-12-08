@@ -4,11 +4,13 @@
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
 
-    class CommandMatcher<TCommand> : ICommandMatcher<TCommand> where TCommand : ICommand
+    class CommandMatcher : ICommandMatcher
     {
         private Regex regex;
 
         private ICommandFactory commandFactory;
+
+        private readonly IEnumerable<ICommandDescriptor> commandDescriptors;
 
         public CommandMatcher(Regex regex, ICommandFactory commandFactory)
         {
@@ -16,7 +18,7 @@
             this.commandFactory = commandFactory ?? throw new ArgumentNullException(nameof(regex));
         }
 
-        public TCommand Match(string commandString)
+        public ICommand Match(string commandString)
         {
             Match match = this.regex.Match(commandString);
 
@@ -28,6 +30,11 @@
             IDictionary<string, string> parameters = this.ParseParameters(match);
 
             return this.commandFactory.Construct<TCommand>(parameters);
+        }
+
+        public TCommand Match<TCommand>(string commandString) where TCommand : ICommand
+        {
+            throw new NotImplementedException();
         }
 
         private IDictionary<string, string> ParseParameters(Match match)

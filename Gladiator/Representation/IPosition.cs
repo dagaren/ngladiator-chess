@@ -1,0 +1,27 @@
+﻿namespace Gladiator.Representation
+{
+    using System.Collections.Generic;
+
+    public interface IPosition
+    {
+        IBoard Board { get; }
+
+        Colour Turn { get; set; }
+
+        Square EnPassantSquare { get; set; }
+
+        void SetCastlingRight(CastlingType type, Colour color, bool enabled);
+
+        bool GetCastlingRight(CastlingType type, Colour color);
+
+        FullMove DoMove(Move move);
+
+        void UndoMove(FullMove move);
+
+        IEnumerable<Move> GetMoves(MoveSearchType searchType);
+
+        bool IsInCheck(Colour turn);
+
+        bool IsValid();
+    }
+}
